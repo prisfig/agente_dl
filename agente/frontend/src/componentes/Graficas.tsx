@@ -1,0 +1,113 @@
+import { useState } from "react";
+
+export interface Serie {
+  nombre: string;
+  valores: (number | null)[];
+  color: string;
+  discontinua?: boolean;
+  grosor?: number;
+}
+
+export interface Marcador {
+  indice: number;
+  valor: number;
+  tipo: "compra" | "venta";
+  texto: string;
+}
+
+interface Props {
+  etiquetas: string[];
+  series: Serie[];
+  marcadores?: Marcador[];
+  alto?: number;
+  formato?: (v: number) => string;
+  lineaBase?: number;
+}
+
+const ANCHO = 900;
+const M = { izq: 70, der: 16, arr: 12, aba: 26 };
+
+export function GraficaLineas({ etiquetas, series, marcadores = [], alto = 300, formato = (v) => v.toFixed(0), lineaBase }: Props) {
+  const [hover, setHover] = useState<number | null>(null);
+  const todos = series.flatMap((s) => s.valores.filter((v): v is number => v != null));
+  marcadores.forEach((m) => todos.push(m.valor));
+  if (lineaBase != null) todos.push(lineaBase);
+  if (!todos.length || etiquetas.length < 2) return <div className="tenue">Sin datos suficientes para graficar.</div>;
+  let min = Math.min(...todos), max = Math.max(...todos);
+  if (min === max) { min -= 1; max += 1; }
+  const pad = (max - min) * 0.06;
+  min -= pad; max += pad;
+  const n = etiquetas.length;
+  const x = (i: number) => M.izq + (i / (n - 1)) * (ANCHO - M.izq - M.der);
+  const y = (v: number) => M.arr + (1 - (v - min) / (max - min)) * (alto - M.arr - M.aba);
+  const camino = (vals: (number | null)[]) => {
+    let d = "", abierto = false;
+    vals.forEach((v, i) => {
+      if (v == null) { abierto = false; return; }
+      d += `${abierto ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`;
+      abierto = true;
+    });
+    return d;
+  };
+  const ticksY = Array.from({ length: 5 }, (_, k) => min + ((max - min) * k) / 4);
+  const pasoX = Math.max(1, Math.ceil(n / 8));
+
+  const mover = (e: React.MouseEvent<SVGSVGElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * ANCHO;
+    const i = Math.round(((px - M.izq) / (ANCHO - M.izq - M.der)) * (n - 1));
+    setHover(i >= 0 && i < n ? i : null);
+  };
+
+  return (
+    <div>
+      <svg className="grafica" viewBox={`0 0 ${ANCHO} ${alto}`} onMouseMove={mover} onMouseLeave={() => setHover(null)}>
+        {ticksY.map((t, k) => (
+          <g key={k}>
+            <line x1={M.izq} x2={ANCHO - M.der} y1={y(t)} y2={y(t)} stroke="#1a2230" />
+            <text x={M.izq - 8} y={y(t) + 4} textAnchor="end">{formato(t)}</text>
+          </g>
+        ))}
+        {etiquetas.map((e, i) => (i % pasoX === 0 || i === n - 1) && (
+          <text key={i} x={x(i)} y={alto - 6} textAnchor="middle">{e.slice(5)}</text>
+        ))}
+        {lineaBase != null && <line x1={M.izq} x2={ANCHO - M.der} y1={y(lineaBase)} y2={y(lineaBase)} stroke="#3a4558" strokeDasharray="3 4" />}
+        {series.map((s) => (
+          <path key={s.nombre} d={camino(s.valores)} fill="none" stroke={s.color} strokeWidth={s.grosor ?? 2}
+            strokeDasharray={s.discontinua ? "6 5" : undefined} strokeLinejoin="round" />
+        ))}
+        {marcadores.map((m, k) => (
+          <g key={k}>
+            <path d={m.tipo === "compra"
+              ? `M${x(m.indice)},${y(m.valor) + 4} l-6,10 h12 z`
+              : `M${x(m.indice)},${y(m.valor) - 4} l-6,-10 h12 z`}
+              fill={m.tipo === "compra" ? "var(--verde)" : "var(--rojo)"}><title>{m.texto}</title></path>
+          </g>
+        ))}
+        {hover != null && (
+          <g>
+            <line x1={x(hover)} x2={x(hover)} y1={M.arr} y2={alto - M.aba} stroke="#3a4558" />
+            {series.map((s) => s.valores[hover] != null && (
+              <circle key={s.nombre} cx={x(hover)} cy={y(s.valores[hover] as number)} r={3.5} fill={s.color} />
+            ))}
+          </g>
+        )}
+      </svg>
+      <div className="leyenda">
+        {series.map((s) => (
+          <span key={s.nombre}><i style={{ background: s.color }} />{s.nombre}
+            {hover != null && s.valores[hover] != null && <b className="mono" style={{ color: "var(--texto)", marginLeft: 6 }}>{formato(s.valores[hover] as number)}</b>}
+          </span>
+        ))}
+        {hover != null && <span className="mono">{etiquetas[hover]}</span>}
+      </div>
+    </div>
+  );
+}
+
+export function Sparkline({ valores, color = "var(--azul)", ancho = 120, alto = 30 }: { valores: number[]; color?: string; ancho?: number; alto?: number }) {
+  if (valores.length < 2) return null;
+  const min = Math.min(...valores), max = Math.max(...valores) || 1;
+  const d = valores.map((v, i) => `${i ? "L" : "M"}${((i / (valores.length - 1)) * ancho).toFixed(1)},${(alto - 2 - ((v - min) / (max - min || 1)) * (alto - 4)).toFixed(1)}`).join("");
+  return <svg width={ancho} height={alto}><path d={d} fill="none" stroke={color} strokeWidth={1.6} /></svg>;
+}

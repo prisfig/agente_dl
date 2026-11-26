@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+ZECUSDT,cierre (precio),-2.1284,0.233242,no estacionaria
+ZECUSDT,rendimiento diario,-19.3712,0.0,estacionaria

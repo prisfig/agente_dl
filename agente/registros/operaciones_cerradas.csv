@@ -1,0 +1,16 @@
+simbolo,modo,cartera,fecha_compra,precio_compra,fecha_venta,precio_venta,resultado_usdt,rendimiento,salida
+BTCUSDT,vivo,con_llm,2026-11-14,64142.08,2026-11-20,58954.52,-4043.8,-0.080876,stop_movil
+BTCUSDT,replay,con_llm,2026-11-05,76087.64,2026-11-12,71466.21,-3036.91,-0.060738,stop_movil
+BNBUSDT,vivo,sin_llm,2026-11-20,540.91,2026-11-21,548.62,712.68,0.014254,senal
+BNBUSDT,vivo,con_llm,2026-11-19,580.15,2026-11-20,540.91,-3381.86,-0.067638,stop_movil
+DOTUSDT,vivo,con_llm,2026-11-19,0.713,2026-11-21,0.6526,-4235.62,-0.084712,stop_movil
+ETHUSDT,vivo,sin_llm,2026-11-20,1623.12,2026-11-21,1685.7,1927.76,0.038555,senal
+ETHUSDT,vivo,con_llm,2026-11-17,1824.97,2026-11-20,1623.12,-5530.23,-0.110605,stop_movil
+FILUSDT,vivo,con_llm,2026-11-19,0.5766,2026-11-21,0.5203,-4882.07,-0.097641,stop_movil
+NEARUSDT,vivo,con_llm,2026-11-19,3.2077,2026-11-20,2.8508,-5563.18,-0.111264,stop_movil
+SOLUSDT,vivo,sin_llm,2026-11-17,75.19,2026-11-20,68.88,-4196.02,-0.083921,stop_movil
+SOLUSDT,vivo,con_llm,2026-11-17,75.19,2026-11-20,68.88,-4196.02,-0.083921,stop_movil
+TRXUSDT,vivo,con_llm,2026-11-19,0.3105,2026-11-25,0.3041,-1030.59,-0.020612,stop_movil
+ZECUSDT,vivo,sin_llm,2026-11-20,759.52,2026-11-21,780.22,1362.7,0.027254,senal
+ZECUSDT,vivo,sin_llm,2026-11-24,739.71,2026-11-25,771.25,2190.01,0.042638,senal
+ZECUSDT,vivo,con_llm,2026-11-19,894.37,2026-11-20,759.52,-7538.79,-0.150777,stop_movil

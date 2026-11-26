@@ -1,0 +1,15 @@
+{
+  "regresion_lineal": {
+    "ventanas_mejor_que_cero_RMSE": 1
+  },
+  "lstm_ensamble3": {
+    "ventanas_mejor_que_cero_RMSE": 2,
+    "ventanas_mejor_que_LR_RMSE": 2,
+    "ventanas_mejor_que_LR_MAE": 2
+  },
+  "mlp_ensamble3": {
+    "ventanas_mejor_que_cero_RMSE": 1,
+    "ventanas_mejor_que_LR_RMSE": 1,
+    "ventanas_mejor_que_LR_MAE": 1
+  }
+}

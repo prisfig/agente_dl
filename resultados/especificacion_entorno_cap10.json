@@ -1,0 +1,115 @@
+{
+  "activo": "BTC/USDT diario (MEXC spot)",
+  "momento_de_decision": "cierre del día t",
+  "estado": {
+    "variables": [
+      "ret_lag_0",
+      "ret_lag_1",
+      "ret_lag_2",
+      "ret_lag_3",
+      "ret_lag_4",
+      "ret_lag_5",
+      "ret_lag_6",
+      "ret_lag_7",
+      "ret_lag_8",
+      "ret_lag_9",
+      "ret_lag_10",
+      "ret_lag_11",
+      "ret_lag_12",
+      "ret_lag_13",
+      "ret_lag_14",
+      "ret_lag_15",
+      "ret_lag_16",
+      "ret_lag_17",
+      "ret_lag_18",
+      "ret_lag_19",
+      "pronostico",
+      "volatilidad_20",
+      "fraccion_efectivo",
+      "en_posicion"
+    ],
+    "rendimientos_recientes": "r_t … r_{t-19}, r_t = P_t/P_{t-1} − 1",
+    "pronostico": "ensamble LSTM (20 neuronas, semillas [42, 123, 2024]) con los mismos 20 rendimientos",
+    "volatilidad": "desviación estándar muestral de r_t … r_{t-19}",
+    "cartera": "fracción en efectivo y posición (0/1)",
+    "normalizacion_para_red": "rezagos con el escalador de TR; pronóstico y volatilidad con media y desv. de TR",
+    "informacion_disponible": "solo hasta el cierre de t"
+  },
+  "acciones": {
+    "COMPRAR": "efectivo → 100 % BTC",
+    "MANTENER": "en posición: mantener la posición; en efectivo: permanecer en efectivo",
+    "VENDER": "cerrar la posición existente → efectivo",
+    "validas_en_efectivo": [
+      "COMPRAR",
+      "MANTENER"
+    ],
+    "validas_en_posicion": [
+      "MANTENER",
+      "VENDER"
+    ],
+    "accion_invalida": "se rechaza y se ejecuta MANTENER; se registra"
+  },
+  "restricciones": [
+    "sin apalancamiento",
+    "sin posiciones negativas",
+    "monto + costo ≤ efectivo disponible",
+    "solo se vende lo que se tiene"
+  ],
+  "ejecucion": "apertura de t+1",
+  "costos": "0.10% por compra y por venta, solo cuando cambia la posición",
+  "recompensa": {
+    "formula": "R_{t+1} = W_{t+1}/W_t − 1, W = efectivo + unidades × cierre (después de costos)",
+    "momento": "al cierre de t+1, asignada a (s_t, a_t)",
+    "fin_de_episodio": "liquidación al último cierre con costo de venta incluido en la última recompensa"
+  },
+  "episodios": {
+    "entrenamiento": "TR en 2 tramos contiguos",
+    "seleccion": "VA (1 tramo)",
+    "TE": "reservado; el entorno lo rechaza"
+  },
+  "capital_inicial": 100000,
+  "dqn_propuesto": {
+    "gamma_descuento": 0.99,
+    "epsilon_inicial_minimo_decaimiento": [
+      1.0,
+      0.05,
+      0.995
+    ],
+    "memoria": 10000,
+    "lote": 64,
+    "sincronizar_objetivo_cada": 500,
+    "red": "24 → Dense(32, ReLU) → Dense(32, ReLU) → 3 valores Q",
+    "variante": "DDQN con máscara de acciones válidas"
+  },
+  "referencias_VA": [
+    {
+      "politica": "Efectivo",
+      "rendimiento_neto": 0.0,
+      "max_drawdown": 0.0,
+      "operaciones_cerradas": 0.0,
+      "costos_totales": 0.0
+    },
+    {
+      "politica": "Comprar y mantener",
+      "rendimiento_neto": 0.7290640820938239,
+      "max_drawdown": -0.2809528618811721,
+      "operaciones_cerradas": 1.0,
+      "costos_totales": 272.9795875971794
+    },
+    {
+      "politica": "Regla Avance 3 (δ = 0.137%)",
+      "rendimiento_neto": 0.7973423766525174,
+      "max_drawdown": -0.27990379380574515,
+      "operaciones_cerradas": 28.0,
+      "costos_totales": 7665.556243933247
+    },
+    {
+      "politica": "Aleatoria (mediana de 200)",
+      "rendimiento_neto": 0.04915000565956407,
+      "max_drawdown": -0.2853295420153367,
+      "operaciones_cerradas": 111.0,
+      "costos_totales": 22435.75721746061
+    }
+  ],
+  "fecha_utc": "2026-11-07T00:52:40+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "python": "3.13.16",
+  "numpy": "2.4.6",
+  "pandas": "2.2.3",
+  "scikit-learn": "1.6.1",
+  "matplotlib": "3.10.0",
+  "requests": "2.32.4",
+  "plataforma": "Linux-6.6.159+-x86_64-with-glibc2.39",
+  "semilla": 42,
+  "fecha_ejecucion_utc": "2026-11-05T14:21:37+00:00"
+}

@@ -1,0 +1,29 @@
+{
+  "fuente": "MEXC Spot API v3, endpoint p\u00fablico GET /api/v3/klines",
+  "url": "https://api.mexc.com/api/v3/klines",
+  "simbolo": "ZECUSDT",
+  "intervalo": "1d",
+  "parametros": {
+    "startTime_inicial": "2017-01-01",
+    "limit": 1000,
+    "dias_por_bloque": 200
+  },
+  "version_descarga": 2,
+  "avisos_truncamiento": [],
+  "fecha_descarga_utc": "2026-11-20T02:01:32+00:00",
+  "descarga_ms": 1795140092223,
+  "bloques": 19,
+  "filas_recibidas": 2709,
+  "columnas": [
+    "open_time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "close_time",
+    "quote_volume"
+  ],
+  "zona_horaria": "Marcas de tiempo en milisegundos Unix (UTC)",
+  "sha256": "df99cca4c4a69a0316fe28ed14e1c2725a5ecd9f6495343dc15e635d49c1997c"
+}

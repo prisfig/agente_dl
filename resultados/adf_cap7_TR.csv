@@ -1,0 +1,3 @@
+serie,estadistico_ADF,p_valor,conclusion (5%)
+cierre (precio),-0.6421,0.861192,no estacionaria
+rendimiento diario,-32.1462,0.0,estacionaria

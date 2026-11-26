@@ -1,0 +1,17 @@
+{
+  "Mercado": "Criptomonedas",
+  "Activo (par)": "SOL/USDT (SOLUSDT)",
+  "Moneda base": "SOL",
+  "Moneda cotizada (precios)": "USDT",
+  "Plataforma de origen": "MEXC (mercado spot)",
+  "Fuente": "MEXC Spot API v3, endpoint público GET /api/v3/klines",
+  "Fecha de descarga (UTC)": "2026-11-18T01:36:43+00:00",
+  "Periodo procesado": "2020-07-08 a 2026-11-17",
+  "Observaciones válidas": 2324,
+  "Frecuencia": "Diaria",
+  "Zona horaria": "UTC; cada vela se identifica por la fecha UTC de su apertura",
+  "Calendario": "Continuo 24/7 (sin días inhábiles); los huecos se reportan y no se rellenan",
+  "Ajustes de precio": "No aplica: las criptomonedas no pagan dividendos ni tienen particiones; precios sin ajustar",
+  "Volumen": "Reportado por MEXC: volume en SOL y quote_volume en USDT; no se inventa ni se rellena",
+  "SHA-256 del crudo": "01f685797eadedae762d7ae8f5ce1838f66616244ff1ae0af465870879a5153e"
+}

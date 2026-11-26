@@ -1,0 +1,33 @@
+BNBUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.024543 frente a cero 0.024547 y regresión lineal 0.024659; ¿mejora a la mejor referencia más que el ruido entre semillas? no → selección general: cero. Predicciones casi constantes (cociente 0.029).
+BNBUSDT — filtro (VA): D cambia el rendimiento neto -34.77 puntos frente a C; estrategia elegida C con δ = 0.1572%.
+BNBUSDT — TE (evaluación única): sistema -29.29% (drawdown -48.8%), comprar y mantener -41.71%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+ADAUSDT — pronóstico (VA): LSTM 20 neuronas, ensamble RMSE 0.060382 frente a cero 0.060750 y regresión lineal 0.060804; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.064).
+ADAUSDT — filtro (VA): D cambia el rendimiento neto -83.00 puntos frente a C; estrategia elegida C con δ = 0.3606%.
+ADAUSDT — TE (evaluación única): sistema -17.23% (drawdown -36.3%), comprar y mantener -78.34%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+LTCUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.040710 frente a cero 0.040892 y regresión lineal 0.041178; ¿mejora a la mejor referencia más que el ruido entre semillas? no → selección general: cero. Predicciones no constantes (cociente 0.059).
+LTCUSDT — filtro (VA): D cambia el rendimiento neto -12.47 puntos frente a C; estrategia elegida C con δ = 0.0860%.
+LTCUSDT — TE (evaluación única): sistema -47.15% (drawdown -53.3%), comprar y mantener -62.35%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+TRXUSDT — pronóstico (VA): LSTM 40 neuronas, ensamble RMSE 0.054041 frente a cero 0.054251 y regresión lineal 0.054312; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.055).
+TRXUSDT — filtro (VA): D cambia el rendimiento neto -2.32 puntos frente a C; estrategia elegida C con δ = 0.2800%.
+TRXUSDT — TE (evaluación única): sistema -10.05% (drawdown -15.8%), comprar y mantener -11.56%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+GOLD(PAXG)USDT — pronóstico (VA): LSTM 40 neuronas, ensamble RMSE 0.015896 frente a cero 0.015945 y regresión lineal 0.016185; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones casi constantes (cociente 0.019).
+GOLD(PAXG)USDT — filtro (VA): D cambia el rendimiento neto -10.70 puntos frente a C; estrategia elegida C con δ = 0.0273%.
+GOLD(PAXG)USDT — TE (evaluación única): sistema -27.76% (drawdown -33.2%), comprar y mantener -19.80%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+DOGEUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.051138 frente a cero 0.051530 y regresión lineal 0.051962; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.077).
+DOGEUSDT — filtro (VA): D cambia el rendimiento neto +157.80 puntos frente a C; estrategia elegida D con δ = 0.2779%.
+DOGEUSDT — TE (evaluación única): sistema -50.89% (drawdown -62.0%), comprar y mantener -78.92%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+MXUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.024686 frente a cero 0.024549 y regresión lineal 0.026070; ¿mejora a la mejor referencia más que el ruido entre semillas? no → selección general: cero. Predicciones no constantes (cociente 0.106).
+MXUSDT — filtro (VA): D cambia el rendimiento neto -3.17 puntos frente a C; estrategia elegida C con δ = 0.1516%.
+MXUSDT — TE (evaluación única): sistema -28.39% (drawdown -35.0%), comprar y mantener -45.93%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+FILUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.066007 frente a cero 0.066079 y regresión lineal 0.067763; ¿mejora a la mejor referencia más que el ruido entre semillas? no → selección general: cero. Predicciones casi constantes (cociente 0.023).
+FILUSDT — filtro (VA): D cambia el rendimiento neto +11.83 puntos frente a C; estrategia elegida D con δ = 0.1777%.
+FILUSDT — TE (evaluación única): sistema -23.28% (drawdown -24.8%), comprar y mantener -55.70%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+BCHUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.040662 frente a cero 0.040624 y regresión lineal 0.040929; ¿mejora a la mejor referencia más que el ruido entre semillas? no → selección general: cero. Predicciones casi constantes (cociente 0.017).
+BCHUSDT — filtro (VA): D cambia el rendimiento neto -0.87 puntos frente a C; estrategia elegida C con δ = 0.1640%.
+BCHUSDT — TE (evaluación única): sistema -67.70% (drawdown -75.4%), comprar y mantener -64.53%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+ZECUSDT — pronóstico (VA): LSTM 20 neuronas, ensamble RMSE 0.066997 frente a cero 0.067411 y regresión lineal 0.068636; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones casi constantes (cociente 0.044).
+ZECUSDT — filtro (VA): D cambia el rendimiento neto -24.83 puntos frente a C; estrategia elegida C con δ = 0.1862%.
+ZECUSDT — TE (evaluación única): sistema +12.70% (drawdown -59.7%), comprar y mantener +206.79%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+NEARUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.053286 frente a cero 0.053133 y regresión lineal 0.054808; ¿mejora a la mejor referencia más que el ruido entre semillas? no → selección general: cero. Predicciones no constantes (cociente 0.050).
+NEARUSDT — filtro (VA): D cambia el rendimiento neto +1.83 puntos frente a C; estrategia elegida D con δ = 0.7621%.
+NEARUSDT — TE (evaluación única): sistema +6.73% (drawdown -16.4%), comprar y mantener +112.57%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.

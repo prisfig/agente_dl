@@ -1,0 +1,143 @@
+{
+  "fecha_utc": "2026-11-18T02:02:05+00:00",
+  "equipo": {
+    "plataforma": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "procesador": "arm64",
+    "python": "3.13.18"
+  },
+  "versiones": {
+    "tensorflow": "2.21.0",
+    "keras": "3.13.2",
+    "scikit-learn": "1.6.1",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3"
+  },
+  "tolerancia": 1e-06,
+  "orden_secuencia": "antiguo_a_reciente",
+  "activos": {
+    "ETHUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "C",
+      "delta": 0.004315,
+      "config_sha256": "c49885c80da9640950db5041c1244c6c9d6f8f6b577141e7ef03412ae8c771af",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra/ETHUSDT/modelos/lstm/ETHUSDT_lstm_n10_s42.keras": true,
+          "activos_extra/ETHUSDT/modelos/lstm/ETHUSDT_lstm_n10_s123.keras": true,
+          "activos_extra/ETHUSDT/modelos/lstm/ETHUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra/ETHUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra/ETHUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 446,
+        "n_esperado": 446,
+        "primer_objetivo": "2025-08-29",
+        "ultimo_objetivo": "2026-11-17",
+        "max_dif_abs": 7.0832156112699e-09,
+        "media_dif_abs": 7.846671706978947e-10,
+        "senales_iguales": 446,
+        "segundos": 0.421,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-17",
+        "archivo": "ETHUSDT_1d_mexc_recientes_20261118T014415Z.csv",
+        "cierre_en_corte": 1824.97,
+        "colab": 0.0007183331763371,
+        "local": 0.0007183329435065389,
+        "dif_abs": 2.328305611460843e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.066,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "SOLUSDT": {
+      "neuronas": 20,
+      "parametros": 2201,
+      "estrategia": "C",
+      "delta": 0.00122,
+      "config_sha256": "6d5cea915fec4536807f469d8b6d3d7344db069bf1506cfefa36d0c8f5b63f21",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra/SOLUSDT/modelos/lstm/SOLUSDT_lstm_n20_s42.keras": true,
+          "activos_extra/SOLUSDT/modelos/lstm/SOLUSDT_lstm_n20_s123.keras": true,
+          "activos_extra/SOLUSDT/modelos/lstm/SOLUSDT_lstm_n20_s2024.keras": true,
+          "activos_extra/SOLUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra/SOLUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 346,
+        "n_esperado": 346,
+        "primer_objetivo": "2025-12-07",
+        "ultimo_objetivo": "2026-11-17",
+        "max_dif_abs": 1.643215463351111e-08,
+        "media_dif_abs": 1.7715629857772402e-09,
+        "senales_iguales": 346,
+        "segundos": 0.367,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-17",
+        "archivo": "SOLUSDT_1d_mexc_recientes_20261118T014416Z.csv",
+        "cierre_en_corte": 75.19,
+        "colab": 0.0109445890411734,
+        "local": 0.010944587178528309,
+        "dif_abs": 1.8626450919850823e-09,
+        "senal_colab": "comprar",
+        "senal_local": "comprar",
+        "latencia_s": 0.065,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "XRPUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "C",
+      "delta": 0.003708,
+      "config_sha256": "fcef205fa3397c362576b6db684b1ae14931a0d906f5d6dedfd1476aad1820de",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra/XRPUSDT/modelos/lstm/XRPUSDT_lstm_n10_s42.keras": true,
+          "activos_extra/XRPUSDT/modelos/lstm/XRPUSDT_lstm_n10_s123.keras": true,
+          "activos_extra/XRPUSDT/modelos/lstm/XRPUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra/XRPUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra/XRPUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 411,
+        "n_esperado": 411,
+        "primer_objetivo": "2025-10-03",
+        "ultimo_objetivo": "2026-11-17",
+        "max_dif_abs": 8.854065631710983e-09,
+        "media_dif_abs": 1.253091210993267e-09,
+        "senales_iguales": 411,
+        "segundos": 0.364,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-17",
+        "archivo": "XRPUSDT_1d_mexc_recientes_20261118T014417Z.csv",
+        "cierre_en_corte": 0.9837,
+        "colab": 0.0011772055877372,
+        "local": 0.0011772055877372622,
+        "dif_abs": 6.223320470066795e-17,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.064,
+        "coincide": true
+      },
+      "coincide_todo": true
+    }
+  },
+  "coincide_todo": true
+}

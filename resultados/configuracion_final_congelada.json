@@ -1,0 +1,65 @@
+{
+  "modelo_pronostico": "lstm_A",
+  "neuronas": 20,
+  "semillas": [
+    42,
+    123,
+    2024
+  ],
+  "variables": [
+    "ret_lag_0",
+    "ret_lag_1",
+    "ret_lag_2",
+    "ret_lag_3",
+    "ret_lag_4",
+    "ret_lag_5",
+    "ret_lag_6",
+    "ret_lag_7",
+    "ret_lag_8",
+    "ret_lag_9",
+    "ret_lag_10",
+    "ret_lag_11",
+    "ret_lag_12",
+    "ret_lag_13",
+    "ret_lag_14",
+    "ret_lag_15",
+    "ret_lag_16",
+    "ret_lag_17",
+    "ret_lag_18",
+    "ret_lag_19"
+  ],
+  "checkpoints": [
+    "modelos/cap11/cap11_lstm_A_n20_s42.keras",
+    "modelos/cap11/cap11_lstm_A_n20_s123.keras",
+    "modelos/cap11/cap11_lstm_A_n20_s2024.keras"
+  ],
+  "escaladores": [
+    "modelos/cap11/escalador_A_cap11.joblib",
+    "modelos/cap11/escalador_B_cap11.joblib",
+    "modelos/cap11/escalador_canales_cap11.joblib",
+    "modelos/cap11/escalador_y_cap11.joblib"
+  ],
+  "estrategia": "D",
+  "delta": 0.000866,
+  "filtro": "cierre > SMA20",
+  "versiones_reportadas_en_TE": {
+    "pronostico": [
+      "cero",
+      "regresion_lineal_B",
+      "mlp_A",
+      "lstm_A"
+    ],
+    "estrategias": {
+      "C": 0.000866,
+      "D": 0.000866,
+      "LR": 0.001233,
+      "comprar_y_mantener": null,
+      "efectivo": null
+    }
+  },
+  "criterios": "versiones A/B por RMSE de VA (regla del ruido entre semillas); δ por rendimiento neto en VA (empate: drawdown); C/D por el mismo criterio",
+  "costo": 0.001,
+  "capital_inicial": 100000,
+  "sha256": "97f125d0515485024de0eb149a2f7cc76f7ad50a1a15309e18eba133c5e037c0",
+  "congelado_utc": "2026-11-12T14:25:40+00:00"
+}

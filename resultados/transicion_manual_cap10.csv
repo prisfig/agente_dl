@@ -1,0 +1,47 @@
+etapa,concepto,formula,valor,transicion
+1. Estado s_t,Fecha de decisión (cierre de t),,2024-06-03,compra
+1. Estado s_t,Información disponible hasta,nada posterior al cierre de t,2024-06-03,compra
+1. Estado s_t,r_t (ret_lag_0),P_t / P_{t-1} − 1,+0.015410,compra
+1. Estado s_t,r_{t-1} … r_{t-19},19 rendimientos anteriores,-0.000018 … +0.075174,compra
+1. Estado s_t,Pronóstico ŷ_t,ensamble LSTM con r_t … r_{t-19},+0.001736,compra
+1. Estado s_t,Volatilidad 20 d,desv. est. muestral de r_t … r_{t-19},0.027394,compra
+1. Estado s_t,Efectivo / unidades,,"100,000.00 USDT / 0.000000 BTC",compra
+1. Estado s_t,Patrimonio W_t,efectivo + unidades × P_t,"100,000.00 + 0.000000 × 68,809.89 = 100,000.00",compra
+2. Acción a_t,Acción,señal: ŷ_t > δ = 0.1374%,COMPRAR,compra
+3. Ejecución,Fecha y precio,apertura de t+1,"2024-06-04 a 68,809.89",compra
+3. Ejecución,Monto invertido,efectivo / (1 + 0.001),"100,000.00 / 1.001 = 99,900.10",compra
+3. Ejecución,Costo,monto × 0.001,99.90,compra
+3. Ejecución,Unidades compradas,monto / O_{t+1},"99,900.10 / 68,809.89 = 1.451828 BTC",compra
+3. Ejecución,Restricción,monto + costo ≤ efectivo,"100,000.00 ≤ 100,000.00",compra
+4. Recompensa,Valoración,cierre de t+1,"2024-06-04 a 70,537.83",compra
+4. Recompensa,Patrimonio W_{t+1},efectivo + unidades × P_{t+1},"0.00 + 1.451828 × 70,537.83 = 102,408.77",compra
+4. Recompensa,R_{t+1},W_{t+1} / W_t − 1 (ya incluye costos),"102,408.77 / 100,000.00 − 1 = +2.408771%",compra
+4. Recompensa,Cuándo se calcula,"al cierre de t+1, asignada a (s_t, a_t)",2024-06-04,compra
+5. Nuevo estado s_{t+1},Fecha de decisión,cierre de t+1,2024-06-04,compra
+5. Nuevo estado s_{t+1},r_{t+1} (nuevo ret_lag_0),P_{t+1} / P_t − 1 (ya observado),+0.025112,compra
+5. Nuevo estado s_{t+1},Rezagos recorridos,ret_lag_k(t+1) = ret_lag_{k−1}(t),ret_lag_1 = +0.015410,compra
+5. Nuevo estado s_{t+1},Pronóstico ŷ_{t+1},nuevo pronóstico con r_{t+1} … r_{t-18},+0.001988,compra
+5. Nuevo estado s_{t+1},Efectivo / unidades / posición,,0.00 / 1.451828 / 1,compra
+1. Estado s_t,Fecha de decisión (cierre de t),,2024-06-08,venta
+1. Estado s_t,Información disponible hasta,nada posterior al cierre de t,2024-06-08,venta
+1. Estado s_t,r_t (ret_lag_0),P_t / P_{t-1} − 1,-0.000651,venta
+1. Estado s_t,r_{t-1} … r_{t-19},19 rendimientos anteriores,-0.020388 … +0.078049,venta
+1. Estado s_t,Pronóstico ŷ_t,ensamble LSTM con r_t … r_{t-19},+0.001349,venta
+1. Estado s_t,Volatilidad 20 d,desv. est. muestral de r_t … r_{t-19},0.022069,venta
+1. Estado s_t,Efectivo / unidades,,0.00 USDT / 1.451828 BTC,venta
+1. Estado s_t,Patrimonio W_t,efectivo + unidades × P_t,"0.00 + 1.451828 × 69,310.47 = 100,626.86",venta
+2. Acción a_t,Acción,señal: ŷ_t ≤ δ = 0.1374%,VENDER,venta
+3. Ejecución,Fecha y precio,apertura de t+1,"2024-06-09 a 69,310.47",venta
+3. Ejecución,Venta bruta,unidades × O_{t+1},"1.451828 × 69,310.47 = 100,626.86",venta
+3. Ejecución,Costo,venta × 0.001,100.63,venta
+3. Ejecución,Efectivo después,venta − costo,"100,526.23",venta
+3. Ejecución,Restricción,solo se vende lo que se tiene,"1.451828 BTC vendidos, quedan 0",venta
+4. Recompensa,Valoración,cierre de t+1,"2024-06-09 a 69,648.14",venta
+4. Recompensa,Patrimonio W_{t+1},efectivo + unidades × P_{t+1},"100,526.23 + 0.000000 × 69,648.14 = 100,526.23",venta
+4. Recompensa,R_{t+1},W_{t+1} / W_t − 1 (ya incluye costos),"100,526.23 / 100,626.86 − 1 = -0.100000%",venta
+4. Recompensa,Cuándo se calcula,"al cierre de t+1, asignada a (s_t, a_t)",2024-06-09,venta
+5. Nuevo estado s_{t+1},Fecha de decisión,cierre de t+1,2024-06-09,venta
+5. Nuevo estado s_{t+1},r_{t+1} (nuevo ret_lag_0),P_{t+1} / P_t − 1 (ya observado),+0.004872,venta
+5. Nuevo estado s_{t+1},Rezagos recorridos,ret_lag_k(t+1) = ret_lag_{k−1}(t),ret_lag_1 = -0.000651,venta
+5. Nuevo estado s_{t+1},Pronóstico ŷ_{t+1},nuevo pronóstico con r_{t+1} … r_{t-18},+0.001263,venta
+5. Nuevo estado s_{t+1},Efectivo / unidades / posición,,"100,526.23 / 0.000000 / 0",venta

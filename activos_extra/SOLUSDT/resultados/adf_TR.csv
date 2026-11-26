@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+SOLUSDT,cierre (precio),-1.8024,0.37929,no estacionaria
+SOLUSDT,rendimiento diario,-8.3819,0.0,estacionaria

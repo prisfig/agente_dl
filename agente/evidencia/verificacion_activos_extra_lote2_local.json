@@ -1,0 +1,472 @@
+{
+  "fecha_utc": "2026-11-20T03:04:10+00:00",
+  "equipo": {
+    "plataforma": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "procesador": "arm64",
+    "python": "3.13.18"
+  },
+  "versiones": {
+    "tensorflow": "2.21.0",
+    "keras": "3.13.2",
+    "scikit-learn": "1.6.1",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3"
+  },
+  "carpeta": "activos_extra_lote2",
+  "tolerancia": 1e-06,
+  "orden_secuencia": "antiguo_a_reciente",
+  "activos": {
+    "BNBUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "C",
+      "delta": 0.001572,
+      "config_sha256": "a7a0d8feb9b07d9c523177bf8c86a54653de1c6ba351a6b996dd42bb159404b1",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/BNBUSDT/modelos/lstm/BNBUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/BNBUSDT/modelos/lstm/BNBUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/BNBUSDT/modelos/lstm/BNBUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/BNBUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/BNBUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 417,
+        "n_esperado": 417,
+        "primer_objetivo": "2025-09-29",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 1.5219739353360129e-09,
+        "media_dif_abs": 1.9895438878374272e-10,
+        "senales_iguales": 417,
+        "segundos": 0.462,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "BNBUSDT_1d_mexc_recientes_20261120T022020Z.csv",
+        "cierre_en_corte": 580.15,
+        "colab": 0.0014786280225962,
+        "local": 0.001478627324104309,
+        "dif_abs": 6.984918908461285e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.066,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "ADAUSDT": {
+      "neuronas": 20,
+      "parametros": 2201,
+      "estrategia": "C",
+      "delta": 0.003606,
+      "config_sha256": "234c09a62c675518a824730ad4e7b938db506a98a0546381ac15e9700762567d",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/ADAUSDT/modelos/lstm/ADAUSDT_lstm_n20_s42.keras": true,
+          "activos_extra_lote2/ADAUSDT/modelos/lstm/ADAUSDT_lstm_n20_s123.keras": true,
+          "activos_extra_lote2/ADAUSDT/modelos/lstm/ADAUSDT_lstm_n20_s2024.keras": true,
+          "activos_extra_lote2/ADAUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/ADAUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 403,
+        "n_esperado": 403,
+        "primer_objetivo": "2025-10-13",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 5.6517757314467065e-09,
+        "media_dif_abs": 5.997622355496298e-10,
+        "senales_iguales": 403,
+        "segundos": 0.387,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "ADAUSDT_1d_mexc_recientes_20261120T022020Z.csv",
+        "cierre_en_corte": 0.1519,
+        "colab": 0.000479154929053,
+        "local": 0.00047915446339175105,
+        "dif_abs": 4.6566124892698235e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.071,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "LTCUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "C",
+      "delta": 0.00086,
+      "config_sha256": "4f6849481bcb175df231be856b6308971c7500269626b1d60ddc3ddfbc6eef5a",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/LTCUSDT/modelos/lstm/LTCUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/LTCUSDT/modelos/lstm/LTCUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/LTCUSDT/modelos/lstm/LTCUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/LTCUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/LTCUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 449,
+        "n_esperado": 449,
+        "primer_objetivo": "2025-08-28",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 4.848535661069325e-09,
+        "media_dif_abs": 5.564815964142685e-10,
+        "senales_iguales": 449,
+        "segundos": 0.399,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "LTCUSDT_1d_mexc_recientes_20261120T022021Z.csv",
+        "cierre_en_corte": 42.31,
+        "colab": -8.540589624317363e-05,
+        "local": -8.540694398107007e-05,
+        "dif_abs": 1.0477378964424133e-09,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.069,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "TRXUSDT": {
+      "neuronas": 40,
+      "parametros": 8401,
+      "estrategia": "C",
+      "delta": 0.0028,
+      "config_sha256": "fef1dcaf2159d93000798744c26af56b443299bdbe2ed2ed4ecc4eb7cee594a0",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/TRXUSDT/modelos/lstm/TRXUSDT_lstm_n40_s42.keras": true,
+          "activos_extra_lote2/TRXUSDT/modelos/lstm/TRXUSDT_lstm_n40_s123.keras": true,
+          "activos_extra_lote2/TRXUSDT/modelos/lstm/TRXUSDT_lstm_n40_s2024.keras": true,
+          "activos_extra_lote2/TRXUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/TRXUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 427,
+        "n_esperado": 427,
+        "primer_objetivo": "2025-09-19",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 2.0315058482547714e-09,
+        "media_dif_abs": 4.407700016215684e-10,
+        "senales_iguales": 427,
+        "segundos": 0.461,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "TRXUSDT_1d_mexc_recientes_20261120T022022Z.csv",
+        "cierre_en_corte": 0.3105,
+        "colab": 0.000686447310727,
+        "local": 0.000686447776388377,
+        "dif_abs": 4.656613769712589e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.066,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "GOLD(PAXG)USDT": {
+      "neuronas": 40,
+      "parametros": 8401,
+      "estrategia": "C",
+      "delta": 0.000273,
+      "config_sha256": "10c46050fc505edb2b0ff47673e7c08e3dd8a6e42472372063e3162b6889ae9a",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/GOLD(PAXG)USDT/modelos/lstm/GOLD(PAXG)USDT_lstm_n40_s42.keras": true,
+          "activos_extra_lote2/GOLD(PAXG)USDT/modelos/lstm/GOLD(PAXG)USDT_lstm_n40_s123.keras": true,
+          "activos_extra_lote2/GOLD(PAXG)USDT/modelos/lstm/GOLD(PAXG)USDT_lstm_n40_s2024.keras": true,
+          "activos_extra_lote2/GOLD(PAXG)USDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/GOLD(PAXG)USDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 242,
+        "n_esperado": 242,
+        "primer_objetivo": "2026-03-23",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 2.962093859039047e-10,
+        "media_dif_abs": 6.591601086468669e-11,
+        "senales_iguales": 242,
+        "segundos": 0.371,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "GOLD(PAXG)USDT_1d_mexc_recientes_20261120T022023Z.csv",
+        "cierre_en_corte": 3594.88,
+        "colab": -0.0001234416558872,
+        "local": -0.0001234414812643081,
+        "dif_abs": 1.7462289191136522e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.065,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "DOGEUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "D",
+      "delta": 0.002779,
+      "config_sha256": "f50de646b92a2375d1b1cd40e8b3b48abae5cbb1673fa713ebac32a3c3b79a05",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/DOGEUSDT/modelos/lstm/DOGEUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/DOGEUSDT/modelos/lstm/DOGEUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/DOGEUSDT/modelos/lstm/DOGEUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/DOGEUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/DOGEUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 433,
+        "n_esperado": 433,
+        "primer_objetivo": "2025-09-13",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 2.6754168093185565e-09,
+        "media_dif_abs": 8.37192582465307e-10,
+        "senales_iguales": 433,
+        "segundos": 0.383,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "DOGEUSDT_1d_mexc_recientes_20261120T022023Z.csv",
+        "cierre_en_corte": 0.05819,
+        "colab": 0.0053346417844295,
+        "local": 0.005334641318768263,
+        "dif_abs": 4.6566123700075845e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.067,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "MXUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "C",
+      "delta": 0.001516,
+      "config_sha256": "be0e95ca969fb6841471d266e925dee1f82277c653a463e2d4c5f76eec477628",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/MXUSDT/modelos/lstm/MXUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/MXUSDT/modelos/lstm/MXUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/MXUSDT/modelos/lstm/MXUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/MXUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/MXUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 456,
+        "n_esperado": 456,
+        "primer_objetivo": "2025-08-21",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 5.930682967674513e-09,
+        "media_dif_abs": 1.2869489921953322e-09,
+        "senales_iguales": 456,
+        "segundos": 0.388,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "MXUSDT_1d_mexc_recientes_20261120T022024Z.csv",
+        "cierre_en_corte": 1.4129,
+        "colab": 0.0008001599344424,
+        "local": 0.0008001585374586284,
+        "dif_abs": 1.3969837716091768e-09,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.074,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "FILUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "D",
+      "delta": 0.001777,
+      "config_sha256": "55f77b1176a669ffce3194d2ec2c577b421ae4c8396f0ab019eaf266b6039063",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/FILUSDT/modelos/lstm/FILUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/FILUSDT/modelos/lstm/FILUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/FILUSDT/modelos/lstm/FILUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/FILUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/FILUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 332,
+        "n_esperado": 332,
+        "primer_objetivo": "2025-12-23",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 1.7667949824516638e-09,
+        "media_dif_abs": 3.157193473958242e-10,
+        "senales_iguales": 332,
+        "segundos": 0.421,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "FILUSDT_1d_mexc_recientes_20261120T022025Z.csv",
+        "cierre_en_corte": 0.5766,
+        "colab": -0.0009160391055047,
+        "local": -0.0009160387562587857,
+        "dif_abs": 3.492459143064619e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.071,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "BCHUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "C",
+      "delta": 0.00164,
+      "config_sha256": "57d7ac453e90585e5f676542a397e4414959f7f7b428df4a056d21bcd041927d",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/BCHUSDT/modelos/lstm/BCHUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/BCHUSDT/modelos/lstm/BCHUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/BCHUSDT/modelos/lstm/BCHUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/BCHUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/BCHUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 436,
+        "n_esperado": 436,
+        "primer_objetivo": "2025-09-10",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 3.5097209752192604e-09,
+        "media_dif_abs": 3.246544580524582e-10,
+        "senales_iguales": 436,
+        "segundos": 0.372,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "BCHUSDT_1d_mexc_recientes_20261120T022026Z.csv",
+        "cierre_en_corte": 206.3,
+        "colab": 0.0023581278510391,
+        "local": 0.002358127385377884,
+        "dif_abs": 4.6566121618407674e-10,
+        "senal_colab": "comprar",
+        "senal_local": "comprar",
+        "latencia_s": 0.076,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "ZECUSDT": {
+      "neuronas": 20,
+      "parametros": 2201,
+      "estrategia": "C",
+      "delta": 0.001862,
+      "config_sha256": "128107648f8e861aa24f0d1311772bb357fac99ed19bb3f72a3acc31b657ba92",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s42.keras": true,
+          "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s123.keras": true,
+          "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s2024.keras": true,
+          "activos_extra_lote2/ZECUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/ZECUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 404,
+        "n_esperado": 404,
+        "primer_objetivo": "2025-10-12",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 5.544232474161137e-09,
+        "media_dif_abs": 7.005873470562649e-10,
+        "senales_iguales": 404,
+        "segundos": 0.374,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "ZECUSDT_1d_mexc_recientes_20261120T022027Z.csv",
+        "cierre_en_corte": 894.37,
+        "colab": 0.0002461744297761,
+        "local": 0.00024617373128421605,
+        "dif_abs": 6.984918839614447e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.067,
+        "coincide": true
+      },
+      "coincide_todo": true
+    },
+    "NEARUSDT": {
+      "neuronas": 10,
+      "parametros": 601,
+      "estrategia": "D",
+      "delta": 0.007621,
+      "config_sha256": "392b0061d6fcfee0f07119ea66d4f68dddbc8cb1b63186238cbb307fccf4547c",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote2/NEARUSDT/modelos/lstm/NEARUSDT_lstm_n10_s42.keras": true,
+          "activos_extra_lote2/NEARUSDT/modelos/lstm/NEARUSDT_lstm_n10_s123.keras": true,
+          "activos_extra_lote2/NEARUSDT/modelos/lstm/NEARUSDT_lstm_n10_s2024.keras": true,
+          "activos_extra_lote2/NEARUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote2/NEARUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 332,
+        "n_esperado": 332,
+        "primer_objetivo": "2025-12-23",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 4.725480582030463e-09,
+        "media_dif_abs": 1.3723495794899242e-09,
+        "senales_iguales": 332,
+        "segundos": 0.361,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "NEARUSDT_1d_mexc_recientes_20261120T022027Z.csv",
+        "cierre_en_corte": 3.2077,
+        "colab": -0.0008244575001299,
+        "local": -0.0008244584314525127,
+        "dif_abs": 9.31322612779395e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.063,
+        "coincide": true
+      },
+      "coincide_todo": true
+    }
+  },
+  "coincide_todo": true
+}

@@ -1,0 +1,33 @@
+simbolo,base,cotizada,estado,spot_permitido,volumen_24h_usdt,rango_volumen,primera_vela_en_ventana,decision,motivo
+BTCUSDT,BTC,USDT,1,True,328784268.02,1,,descartado,ya está en el agente
+ETHUSDT,ETH,USDT,1,True,228008171.78,2,,descartado,ya está en el agente
+USDCUSDT,USDC,USDT,1,True,140824295.40266,3,,descartado,stablecoin
+SOLUSDT,SOL,USDT,1,True,62965464.18,4,,descartado,ya está en el agente
+XRPUSDT,XRP,USDT,1,True,39263498.5405,5,,descartado,ya está en el agente
+ENAUSDT,ENA,USDT,1,True,20996162.45793,6,,descartado,menos de 1560 días de velas diarias
+BNBUSDT,BNB,USDT,1,True,12706079.57,7,2022-08-13,seleccionado,
+GOLD(XAUT)USDT,GOLD(XAUT),USDT,1,True,7992950.22,8,,descartado,menos de 1560 días de velas diarias
+ADAUSDT,ADA,USDT,1,True,7967085.5879,9,2022-08-13,seleccionado,
+LTCUSDT,LTC,USDT,1,True,7636520.68,10,2022-08-13,seleccionado,
+LITUSDT,LIT,USDT,1,True,7027411.183,11,,descartado,menos de 1560 días de velas diarias
+TRXUSDT,TRX,USDT,1,True,6989065.0319,12,2022-08-13,seleccionado,
+PUMPUSDT,PUMP,USDT,1,True,5854944.285768,13,,descartado,menos de 1560 días de velas diarias
+GOLD(PAXG)USDT,GOLD(PAXG),USDT,1,True,5730595.7,14,2022-08-13,seleccionado,
+DOGEUSDT,DOGE,USDT,1,True,4527571.82539,15,2022-08-13,seleccionado,
+INJUSDT,INJ,USDT,1,True,3336738.662,16,,descartado,menos de 1560 días de velas diarias
+CTUSDT,CT,USDT,1,True,3313305.4824,17,,descartado,menos de 1560 días de velas diarias
+ETHFIUSDT,ETHFI,USDT,1,True,2911146.8582,18,,descartado,menos de 1560 días de velas diarias
+UPCUSDT,UPC,USDT,1,True,1983283.9931,19,,descartado,menos de 1560 días de velas diarias
+MXUSDT,MX,USDT,1,True,1691042.743,20,2022-08-13,seleccionado,
+MEYUSDT,MEY,USDT,1,True,1601826.96175,21,,descartado,menos de 1560 días de velas diarias
+AEROUSDT,AERO,USDT,1,True,1359592.2467,22,,descartado,menos de 1560 días de velas diarias
+FILUSDT,FIL,USDT,1,True,1238895.948,23,2022-08-13,seleccionado,
+BCHUSDT,BCH,USDT,1,True,1211795.9,24,2022-08-13,seleccionado,
+BULLAUSDT,BULLA,USDT,1,True,1080398.313058,25,,descartado,menos de 1560 días de velas diarias
+TRUMPUSDT,TRUMP,USDT,1,True,1073707.737,26,,descartado,menos de 1560 días de velas diarias
+FOXSYUSDT,FOXSY,USDT,1,True,1062761.7643604,27,,descartado,menos de 1560 días de velas diarias
+KIIUSDT,KII,USDT,1,True,1028032.55318,28,,descartado,menos de 1560 días de velas diarias
+ASTERUSDT,ASTER,USDT,1,True,986227.4702,29,,descartado,menos de 1560 días de velas diarias
+ZECUSDT,ZEC,USDT,1,True,974226.1,30,2022-08-13,seleccionado,
+COINDEPOUSDT,COINDEPO,USDT,1,True,953030.76852,31,,descartado,menos de 1560 días de velas diarias
+NEARUSDT,NEAR,USDT,1,True,850766.6607,32,2022-08-13,seleccionado,

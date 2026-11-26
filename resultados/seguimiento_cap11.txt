@@ -1,0 +1,8 @@
+Como VARIABLE (A vs B, VA): en la LSTM el RMSE cambia +0.19 % y el MAE +0.31 %; en la regresión lineal, -0.12 % y -0.34 %.
+  ¿Mejora más que la variación entre semillas? no → versión elegida: A.
+  Correlación (Spearman, TR) con y_t: dist_sma20 +0.004, vol20 +0.010.
+  vol20 se calcula con los mismos 20 rendimientos que ya ve el modelo: aporta una transformación, no datos nuevos.
+Como FILTRO (C vs D, VA): D cambia el rendimiento neto +3.63 puntos porcentuales frente a C, el drawdown de -43.3% a -26.3% y las operaciones de 24 a 20.
+En TE (evaluación única): C -45.93%, D -3.25%, comprar y mantener -31.57%.
+Conclusión: como variable de pronóstico, el indicador agrega complejidad sin una mejora distinguible del ruido; como filtro de señal, mejora la estrategia en VA.
+Hipótesis H1 (Avance 1): "dist_sma20 aporta información sobre y_t y reduce MAE/RMSE en VA" → no se sostiene en VA (se conserva H0). Ningún resultado confirma ganancias futuras.

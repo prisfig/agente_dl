@@ -1,0 +1,59 @@
+{
+  "generado_utc": "2026-11-18T01:44:19+00:00",
+  "raiz": "carpeta DL_Finanzas (rutas relativas)",
+  "nota": "Cada activo tiene su propio modelo, escaladores, δ y estrategia, elegidos con su VA y evaluados una vez en su TE. No se usan pesos ni escalas de BTC.",
+  "activos": {
+    "ETHUSDT": {
+      "config_congelada": "activos_extra/ETHUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "c49885c80da9640950db5041c1244c6c9d6f8f6b577141e7ef03412ae8c771af",
+      "checkpoints": [
+        "activos_extra/ETHUSDT/modelos/lstm/ETHUSDT_lstm_n10_s42.keras",
+        "activos_extra/ETHUSDT/modelos/lstm/ETHUSDT_lstm_n10_s123.keras",
+        "activos_extra/ETHUSDT/modelos/lstm/ETHUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra/ETHUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra/ETHUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "C",
+      "delta": 0.004315,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-17",
+      "rendimiento_neto_TE": -0.38754023512644786
+    },
+    "SOLUSDT": {
+      "config_congelada": "activos_extra/SOLUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "6d5cea915fec4536807f469d8b6d3d7344db069bf1506cfefa36d0c8f5b63f21",
+      "checkpoints": [
+        "activos_extra/SOLUSDT/modelos/lstm/SOLUSDT_lstm_n20_s42.keras",
+        "activos_extra/SOLUSDT/modelos/lstm/SOLUSDT_lstm_n20_s123.keras",
+        "activos_extra/SOLUSDT/modelos/lstm/SOLUSDT_lstm_n20_s2024.keras"
+      ],
+      "escalador_x": "activos_extra/SOLUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra/SOLUSDT/modelos/escalador_y.joblib",
+      "neuronas": 20,
+      "estrategia": "C",
+      "delta": 0.00122,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-17",
+      "rendimiento_neto_TE": 0.06741206202752359
+    },
+    "XRPUSDT": {
+      "config_congelada": "activos_extra/XRPUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "fcef205fa3397c362576b6db684b1ae14931a0d906f5d6dedfd1476aad1820de",
+      "checkpoints": [
+        "activos_extra/XRPUSDT/modelos/lstm/XRPUSDT_lstm_n10_s42.keras",
+        "activos_extra/XRPUSDT/modelos/lstm/XRPUSDT_lstm_n10_s123.keras",
+        "activos_extra/XRPUSDT/modelos/lstm/XRPUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra/XRPUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra/XRPUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "C",
+      "delta": 0.003708,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-17",
+      "rendimiento_neto_TE": -0.15264114493059733
+    }
+  },
+  "excluidos": {}
+}

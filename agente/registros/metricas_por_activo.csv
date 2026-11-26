@@ -1,0 +1,49 @@
+simbolo,modo,cartera,primera_vela,ultima_vela,ciclos,patrimonio_final,rendimiento_neto,drawdown_max,ordenes,compras,ventas,operaciones_cerradas,ganadas,win_rate,posicion_abierta,acciones_rechazadas,rechazos_por_motivo
+BTCUSDT,vivo,sin_llm,2026-11-14,2026-11-25,12,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+BTCUSDT,vivo,con_llm,2026-11-14,2026-11-25,12,46140.9,-0.077182,-0.103613,3,2,1,1,0,0.0,si,1,perdida_diaria=1; stop_movil=1
+BTCUSDT,vivo,comprar_y_mantener,2026-11-14,2026-11-25,12,47125.41,-0.057492,-0.097891,1,1,0,0,0,,si,0,
+BTCUSDT,replay,sin_llm,2026-11-05,2026-11-14,10,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+BTCUSDT,replay,con_llm,2026-11-05,2026-11-14,10,46963.09,-0.060738,-0.060738,2,1,1,1,0,0.0,no,3,compra_bloqueada=2; perdida_diaria=1; stop_movil=1
+BTCUSDT,replay,comprar_y_mantener,2026-11-05,2026-11-14,10,42150.14,-0.156997,-0.156997,1,1,0,0,0,,si,0,
+ADAUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+ADAUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,48025.02,-0.0395,-0.057275,1,1,0,0,0,,si,0,
+ADAUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,48025.02,-0.0395,-0.057275,1,1,0,0,0,,si,0,
+BCHUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,49854.58,-0.002908,-0.055744,1,1,0,0,0,,si,0,
+BCHUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,49854.58,-0.002908,-0.055744,1,1,0,0,0,,si,6,compra_rechazada=6; perdida_diaria=1
+BCHUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,49854.58,-0.002908,-0.055744,1,1,0,0,0,,si,0,
+BNBUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50712.68,0.014254,0.0,2,1,1,1,1,1.0,no,0,
+BNBUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,47079.54,-0.058409,-0.067841,3,2,1,1,0,0.0,si,1,compra_rechazada=1; perdida_diaria=1; stop_movil=1
+BNBUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,47750.6,-0.044988,-0.067637,1,1,0,0,0,,si,0,
+DOGEUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+DOGEUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,48109.64,-0.037807,-0.065303,1,1,0,0,0,,si,0,
+DOGEUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,48109.64,-0.037807,-0.065303,1,1,0,0,0,,si,0,
+DOTUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+DOTUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,45646.64,-0.087067,-0.091915,3,2,1,1,0,0.0,si,1,stop_movil=1
+DOTUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,46220.2,-0.075596,-0.084712,1,1,0,0,0,,si,0,
+ETHUSDT,vivo,sin_llm,2026-11-17,2026-11-25,9,51927.76,0.038555,0.0,2,1,1,1,1,1.0,no,0,
+ETHUSDT,vivo,con_llm,2026-11-17,2026-11-25,9,44656.02,-0.10688,-0.113575,3,2,1,1,0,0.0,si,1,compra_rechazada=1; perdida_diaria=1; stop_movil=1
+ETHUSDT,vivo,comprar_y_mantener,2026-11-17,2026-11-25,9,46377.75,-0.072445,-0.110605,1,1,0,0,0,,si,0,
+FILUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+FILUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,44597.47,-0.108051,-0.128056,3,2,1,1,0,0.0,si,1,perdida_diaria=1; stop_movil=1
+FILUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,47554.63,-0.048907,-0.097641,1,1,0,0,0,,si,0,
+LTCUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,1,1,0,0,0,,si,0,
+LTCUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,50579.06,0.011581,-0.059088,1,1,0,0,0,,si,1,compra_rechazada=1
+LTCUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,50579.06,0.011581,-0.059088,1,1,0,0,0,,si,0,
+MXUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+MXUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,49907.99,-0.00184,-0.007042,1,1,0,0,0,,si,0,
+MXUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,49907.99,-0.00184,-0.007042,1,1,0,0,0,,si,0,
+NEARUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+NEARUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,46912.45,-0.061751,-0.1124,3,2,1,1,0,0.0,si,1,perdida_diaria=1; stop_movil=1
+NEARUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,47615.11,-0.047698,-0.111264,1,1,0,0,0,,si,0,
+SOLUSDT,vivo,sin_llm,2026-11-17,2026-11-25,9,45927.77,-0.081445,-0.091218,3,2,1,1,0,0.0,si,1,perdida_diaria=1; stop_movil=1
+SOLUSDT,vivo,con_llm,2026-11-17,2026-11-25,9,45927.77,-0.081445,-0.091218,3,2,1,1,0,0.0,si,7,compra_rechazada=7; perdida_diaria=2; stop_movil=1
+SOLUSDT,vivo,comprar_y_mantener,2026-11-17,2026-11-25,9,46874.59,-0.062508,-0.08392,1,1,0,0,0,,si,0,
+TRXUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+TRXUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,48969.41,-0.020612,-0.027053,2,1,1,1,0,0.0,no,1,stop_movil=1
+TRXUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,48969.41,-0.020612,-0.027053,1,1,0,0,0,,si,0,
+XRPUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,50000.0,0.0,0.0,0,0,0,0,0,,no,0,
+XRPUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,48838.79,-0.023224,-0.051343,1,1,0,0,0,,si,0,
+XRPUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,48838.79,-0.023224,-0.051343,1,1,0,0,0,,si,0,
+ZECUSDT,vivo,sin_llm,2026-11-19,2026-11-25,7,53552.71,0.071054,0.0,4,2,2,2,2,1.0,no,0,
+ZECUSDT,vivo,con_llm,2026-11-19,2026-11-25,7,41973.05,-0.160539,-0.194868,3,2,1,1,0,0.0,si,2,compra_rechazada=2; perdida_diaria=2; stop_movil=1
+ZECUSDT,vivo,comprar_y_mantener,2026-11-19,2026-11-25,7,43116.98,-0.13766,-0.172925,1,1,0,0,0,,si,0,

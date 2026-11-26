@@ -1,0 +1,62 @@
+{
+  "fecha_utc": "2026-11-20T03:19:34+00:00",
+  "equipo": {
+    "plataforma": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "procesador": "arm64",
+    "python": "3.13.18"
+  },
+  "versiones": {
+    "tensorflow": "2.21.0",
+    "keras": "3.13.2",
+    "scikit-learn": "1.6.1",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3"
+  },
+  "carpeta": "activos_extra_lote3",
+  "tolerancia": 1e-06,
+  "orden_secuencia": "antiguo_a_reciente",
+  "activos": {
+    "DOTUSDT": {
+      "neuronas": 40,
+      "parametros": 8401,
+      "estrategia": "C",
+      "delta": 0.002394,
+      "config_sha256": "f1bba0a173ee105f63b60191b094c9baefb2ce012b11622361b673970e6c2198",
+      "huellas": {
+        "todas_coinciden": true,
+        "detalle": {
+          "activos_extra_lote3/DOTUSDT/modelos/lstm/DOTUSDT_lstm_n40_s42.keras": true,
+          "activos_extra_lote3/DOTUSDT/modelos/lstm/DOTUSDT_lstm_n40_s123.keras": true,
+          "activos_extra_lote3/DOTUSDT/modelos/lstm/DOTUSDT_lstm_n40_s2024.keras": true,
+          "activos_extra_lote3/DOTUSDT/modelos/escalador_x_rezagos20.joblib": true,
+          "activos_extra_lote3/DOTUSDT/modelos/escalador_y.joblib": true
+        }
+      },
+      "TE": {
+        "n": 339,
+        "n_esperado": 339,
+        "primer_objetivo": "2025-12-16",
+        "ultimo_objetivo": "2026-11-19",
+        "max_dif_abs": 6.1316201664662895e-09,
+        "media_dif_abs": 1.296955499918427e-09,
+        "senales_iguales": 339,
+        "segundos": 0.424,
+        "coincide": true
+      },
+      "futuro": {
+        "fecha_corte": "2026-11-19",
+        "archivo": "DOTUSDT_1d_mexc_recientes_20261120T031309Z.csv",
+        "cierre_en_corte": 0.713,
+        "colab": -0.0011326256208121,
+        "local": -0.0011326258536428213,
+        "dif_abs": 2.328307212827452e-10,
+        "senal_colab": "efectivo",
+        "senal_local": "efectivo",
+        "latencia_s": 0.065,
+        "coincide": true
+      },
+      "coincide_todo": true
+    }
+  },
+  "coincide_todo": true
+}

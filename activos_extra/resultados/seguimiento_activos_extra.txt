@@ -1,0 +1,9 @@
+ETHUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.038172 frente a cero 0.038442 y regresión lineal 0.038514; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.075).
+ETHUSDT — filtro (VA): D cambia el rendimiento neto -2.19 puntos frente a C; estrategia elegida C con δ = 0.4315%.
+ETHUSDT — TE (evaluación única): sistema -38.75% (drawdown -43.7%), comprar y mantener -59.63%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+SOLUSDT — pronóstico (VA): LSTM 20 neuronas, ensamble RMSE 0.045624 frente a cero 0.046140 y regresión lineal 0.046882; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.123).
+SOLUSDT — filtro (VA): D cambia el rendimiento neto -25.33 puntos frente a C; estrategia elegida C con δ = 0.1220%.
+SOLUSDT — TE (evaluación única): sistema +6.74% (drawdown -36.6%), comprar y mantener -43.23%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.
+XRPUSDT — pronóstico (VA): LSTM 10 neuronas, ensamble RMSE 0.048292 frente a cero 0.049323 y regresión lineal 0.049048; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.102).
+XRPUSDT — filtro (VA): D cambia el rendimiento neto -324.81 puntos frente a C; estrategia elegida C con δ = 0.3708%.
+XRPUSDT — TE (evaluación única): sistema -15.26% (drawdown -30.2%), comprar y mantener -67.69%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.

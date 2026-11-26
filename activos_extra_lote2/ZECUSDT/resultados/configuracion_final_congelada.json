@@ -1,0 +1,91 @@
+{
+  "activo": "ZECUSDT",
+  "moneda_base": "ZEC",
+  "intervalo": "1d",
+  "modelo_pronostico": "lstm_A",
+  "neuronas": 20,
+  "semillas": [
+    42,
+    123,
+    2024
+  ],
+  "variables": [
+    "ret_lag_0",
+    "ret_lag_1",
+    "ret_lag_2",
+    "ret_lag_3",
+    "ret_lag_4",
+    "ret_lag_5",
+    "ret_lag_6",
+    "ret_lag_7",
+    "ret_lag_8",
+    "ret_lag_9",
+    "ret_lag_10",
+    "ret_lag_11",
+    "ret_lag_12",
+    "ret_lag_13",
+    "ret_lag_14",
+    "ret_lag_15",
+    "ret_lag_16",
+    "ret_lag_17",
+    "ret_lag_18",
+    "ret_lag_19"
+  ],
+  "contrato_entrada": "ret_lag_0..ret_lag_19 (r_t … r_{t-19}); escalador_x; secuencia antiguo → reciente (1, 20, 1); salida inversa con escalador_y; promedio de 3 semillas",
+  "checkpoints": [
+    "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s42.keras",
+    "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s123.keras",
+    "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s2024.keras"
+  ],
+  "sha256_checkpoints": {
+    "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s42.keras": "e000ef09690209dab6e05955821236eab11d293d307177c79a5b020af22a6932",
+    "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s123.keras": "01af2aa8a8d20819e5c1822a1492a94e99429e11fdf1fc70d9f2f7f80d77d03c",
+    "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s2024.keras": "d514334252347de444363918b5304c4b8f0ec2d0c6ad7fd51b56ebbe418a5c06"
+  },
+  "escalador_x": "activos_extra_lote2/ZECUSDT/modelos/escalador_x_rezagos20.joblib",
+  "escalador_y": "activos_extra_lote2/ZECUSDT/modelos/escalador_y.joblib",
+  "sha256_escaladores": {
+    "activos_extra_lote2/ZECUSDT/modelos/escalador_x_rezagos20.joblib": "c2d0dd44ff3bca0707a000118699344ec66e2cb32e499e457dc169c573fa0eaa",
+    "activos_extra_lote2/ZECUSDT/modelos/escalador_y.joblib": "bb969fae8be0f2b5b63244f4ffe430dcac47cc945d3279a392f70fd2db32172c"
+  },
+  "estrategia": "C",
+  "delta": 0.001862,
+  "filtro": "ninguno",
+  "versiones_reportadas_en_TE": {
+    "pronostico": [
+      "cero",
+      "regresion_lineal",
+      "lstm_A"
+    ],
+    "estrategias": {
+      "C": 0.001862,
+      "D": 0.001862,
+      "LR": 0.000983,
+      "comprar_y_mantener": null,
+      "efectivo": null
+    }
+  },
+  "criterios": "neuronas por RMSE de VA (semilla 42); δ por rendimiento neto en VA (empate: drawdown); C/D por el mismo criterio",
+  "costo": 0.001,
+  "capital_inicial": 100000,
+  "particiones": {
+    "TR": {
+      "n": 1880,
+      "primer_objetivo": "2019-07-13",
+      "ultimo_objetivo": "2024-09-03"
+    },
+    "VA": {
+      "n": 403,
+      "primer_objetivo": "2024-09-04",
+      "ultimo_objetivo": "2025-10-11"
+    },
+    "TE": {
+      "n": 404,
+      "primer_objetivo": "2025-10-12",
+      "ultimo_objetivo": "2026-11-19"
+    }
+  },
+  "sha256_crudo": "df99cca4c4a69a0316fe28ed14e1c2725a5ecd9f6495343dc15e635d49c1997c",
+  "sha256": "128107648f8e861aa24f0d1311772bb357fac99ed19bb3f72a3acc31b657ba92",
+  "congelado_utc": "2026-11-20T02:19:33+00:00"
+}

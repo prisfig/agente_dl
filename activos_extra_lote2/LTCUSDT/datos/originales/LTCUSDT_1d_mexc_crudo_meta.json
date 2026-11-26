@@ -1,0 +1,29 @@
+{
+  "fuente": "MEXC Spot API v3, endpoint p\u00fablico GET /api/v3/klines",
+  "url": "https://api.mexc.com/api/v3/klines",
+  "simbolo": "LTCUSDT",
+  "intervalo": "1d",
+  "parametros": {
+    "startTime_inicial": "2017-01-01",
+    "limit": 1000,
+    "dias_por_bloque": 200
+  },
+  "version_descarga": 2,
+  "avisos_truncamiento": [],
+  "fecha_descarga_utc": "2026-11-20T02:00:31+00:00",
+  "descarga_ms": 1795140031441,
+  "bloques": 19,
+  "filas_recibidas": 3313,
+  "columnas": [
+    "open_time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "close_time",
+    "quote_volume"
+  ],
+  "zona_horaria": "Marcas de tiempo en milisegundos Unix (UTC)",
+  "sha256": "9991e35620a5a3c04fd7d1a8c5512734aac66fa3bc81ca1d78a1f7ac12391d58"
+}

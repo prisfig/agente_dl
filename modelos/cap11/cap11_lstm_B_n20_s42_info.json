@@ -1,0 +1,10 @@
+{
+  "epocas": 26,
+  "mejor_epoca": 1,
+  "tiempo_s": 14.89,
+  "dispositivo_pesos": "/job:localhost/replica:0/task:0/device:GPU:0",
+  "gpu": "Tesla T4",
+  "lote": 32,
+  "params_entrenables": 2361,
+  "capas": "LSTM(20, tanh) \u2192 Dense(20, relu) \u2192 Dense(1)"
+}

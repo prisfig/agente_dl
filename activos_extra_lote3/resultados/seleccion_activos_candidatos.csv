@@ -1,0 +1,38 @@
+simbolo,base,cotizada,estado,spot_permitido,volumen_24h_usdt,rango_volumen,primera_vela_en_ventana,decision,motivo
+BTCUSDT,BTC,USDT,1,True,345166260.53,1,,descartado,ya está en el agente o fue excluido en el lote 2
+ETHUSDT,ETH,USDT,1,True,241576044.06,2,,descartado,ya está en el agente o fue excluido en el lote 2
+USDCUSDT,USDC,USDT,1,True,144567934.5556,3,,descartado,stablecoin
+SOLUSDT,SOL,USDT,1,True,68700712.86,4,,descartado,ya está en el agente o fue excluido en el lote 2
+XRPUSDT,XRP,USDT,1,True,40149515.5754,5,,descartado,ya está en el agente o fue excluido en el lote 2
+ENAUSDT,ENA,USDT,1,True,22214500.62394,6,,descartado,menos de 1560 días de velas diarias
+BNBUSDT,BNB,USDT,1,True,13159878.8,7,,descartado,ya está en el agente o fue excluido en el lote 2
+GOLD(XAUT)USDT,GOLD(XAUT),USDT,1,True,8930302.87,8,,descartado,"respaldado por otro activo (oro, etc.)"
+ADAUSDT,ADA,USDT,1,True,8681133.0604,9,,descartado,ya está en el agente o fue excluido en el lote 2
+LTCUSDT,LTC,USDT,1,True,7974509.42,10,,descartado,ya está en el agente o fue excluido en el lote 2
+TRXUSDT,TRX,USDT,1,True,7814322.1561,11,,descartado,ya está en el agente o fue excluido en el lote 2
+LITUSDT,LIT,USDT,1,True,7233766.1175,12,,descartado,menos de 1560 días de velas diarias
+PUMPUSDT,PUMP,USDT,1,True,6105591.270561,13,,descartado,menos de 1560 días de velas diarias
+GOLD(PAXG)USDT,GOLD(PAXG),USDT,1,True,5931663.14,14,,descartado,ya está en el agente o fue excluido en el lote 2
+DOGEUSDT,DOGE,USDT,1,True,4898565.89638,15,,descartado,ya está en el agente o fue excluido en el lote 2
+INJUSDT,INJ,USDT,1,True,3518826.355,16,,descartado,menos de 1560 días de velas diarias
+CTUSDT,CT,USDT,1,True,3406775.8048,17,,descartado,menos de 1560 días de velas diarias
+ETHFIUSDT,ETHFI,USDT,1,True,2840245.9666,18,,descartado,menos de 1560 días de velas diarias
+UPCUSDT,UPC,USDT,1,True,1983936.1178,19,,descartado,menos de 1560 días de velas diarias
+MXUSDT,MX,USDT,1,True,1724128.8923,20,,descartado,ya está en el agente o fue excluido en el lote 2
+MEYUSDT,MEY,USDT,1,True,1674629.74162,21,,descartado,menos de 1560 días de velas diarias
+AEROUSDT,AERO,USDT,1,True,1434859.8322,22,,descartado,menos de 1560 días de velas diarias
+FILUSDT,FIL,USDT,1,True,1311231.8709,23,,descartado,ya está en el agente o fue excluido en el lote 2
+BCHUSDT,BCH,USDT,1,True,1265590.9,24,,descartado,ya está en el agente o fue excluido en el lote 2
+TRUMPUSDT,TRUMP,USDT,1,True,1125575.409,25,,descartado,menos de 1560 días de velas diarias
+KIIUSDT,KII,USDT,1,True,1060339.34778,26,,descartado,menos de 1560 días de velas diarias
+FOXSYUSDT,FOXSY,USDT,1,True,1055145.2990406,27,,descartado,menos de 1560 días de velas diarias
+BULLAUSDT,BULLA,USDT,1,True,1031106.095736,28,,descartado,menos de 1560 días de velas diarias
+ASTERUSDT,ASTER,USDT,1,True,1030950.3577,29,,descartado,menos de 1560 días de velas diarias
+ZECUSDT,ZEC,USDT,1,True,981285.93,30,,descartado,ya está en el agente o fue excluido en el lote 2
+COINDEPOUSDT,COINDEPO,USDT,1,True,953133.7268,31,,descartado,menos de 1560 días de velas diarias
+ZROUSDT,ZRO,USDT,1,True,878146.8015,32,,descartado,menos de 1560 días de velas diarias
+NEARUSDT,NEAR,USDT,1,True,843629.242,33,,descartado,ya está en el agente o fue excluido en el lote 2
+EVAAUSDT,EVAA,USDT,1,True,710263.4419,34,,descartado,menos de 1560 días de velas diarias
+MTOUSDT,MTO,USDT,1,True,708427.175451,35,,descartado,menos de 1560 días de velas diarias
+PYTHUSDT,PYTH,USDT,1,True,705360.99421,36,,descartado,menos de 1560 días de velas diarias
+DOTUSDT,DOT,USDT,1,True,690295.1521,37,2022-08-13,seleccionado,

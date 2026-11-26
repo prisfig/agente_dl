@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+TRXUSDT,cierre (precio),-0.9834,0.759257,no estacionaria
+TRXUSDT,rendimiento diario,-11.3878,0.0,estacionaria

@@ -1,0 +1,2 @@
+activo,neuronas,RMSE_VA_media_semillas,RMSE_VA_std_semillas,RMSE_VA_ensamble,MAE_VA_ensamble,prec_dir_VA_ensamble,RMSE_VA_cero,RMSE_VA_regresion_lineal,mejor_referencia,supera_mejor_referencia_mas_que_ruido,seleccion_general,mejor_epoca_media,desv_pred_VA / desv_real_VA,fraccion_pred_VA_positivas,casi_constante
+ETHUSDT,10,0.03827720403467215,0.00015853987770469286,0.03817211494801904,0.026882873927176837,0.5247747747747747,0.03844159446903741,0.03851409354338793,cero,True,LSTM,27.0,0.07492132535172057,0.8423423423423423,False

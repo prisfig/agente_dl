@@ -1,0 +1,3 @@
+DOTUSDT — pronóstico (VA): LSTM 40 neuronas, ensamble RMSE 0.044362 frente a cero 0.044553 y regresión lineal 0.045451; ¿mejora a la mejor referencia más que el ruido entre semillas? sí → selección general: LSTM. Predicciones no constantes (cociente 0.062).
+DOTUSDT — filtro (VA): D cambia el rendimiento neto -27.56 puntos frente a C; estrategia elegida C con δ = 0.2394%.
+DOTUSDT — TE (evaluación única): sistema -5.18% (drawdown -31.7%), comprar y mantener -62.61%. Meta de +20%: no alcanzada. Ningún resultado confirma ganancias futuras.

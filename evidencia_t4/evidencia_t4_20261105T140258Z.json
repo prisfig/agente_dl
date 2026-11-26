@@ -1,0 +1,16 @@
+{
+  "fecha_utc": "20261105T140258Z",
+  "entorno_colab": true,
+  "semilla": 42,
+  "nvidia_smi_gpu": "Tesla T4, 580.82.07, 15360 MiB",
+  "tensorflow": "2.21.0",
+  "tf_construido_con_cuda": true,
+  "tf_gpus": [
+    "/physical_device:GPU:0"
+  ],
+  "operacion_dispositivo": "/job:localhost/replica:0/task:0/device:GPU:0",
+  "tf_nombre_gpu": "Tesla T4",
+  "compute_capability": "(7, 5)",
+  "matmul_4000x4000_s": 0.1041,
+  "T4_OK": true
+}

@@ -1,0 +1,73 @@
+{
+  "version": "1.9",
+  "descripcion": "Configuración de DEMOSTRACIÓN de errores (protocolo, sección de errores). Base de datos aparte; no afecta los ciclos en vivo.",
+  "mercado": {
+    "url_base": "https://api.mexc.com",
+    "simbolo": "BTCUSDT",
+    "activo_base": "BTC",
+    "activo_cotizado": "USDT",
+    "intervalo": "1d",
+    "velas_contexto": 60,
+    "timeout_s": 10,
+    "reintentos": 3,
+    "espera_inicial_s": 2.0,
+    "reglas_par_respaldo": {
+      "paso_cantidad": "0.000001",
+      "monto_minimo": "1",
+      "nota": "Se usan solo si /api/v3/exchangeInfo no responde; en operación normal se leen de MEXC."
+    }
+  },
+  "paper": {
+    "capital_inicial": 50000,
+    "costo_compra": 0.0,
+    "costo_venta": 0.0,
+    "deslizamiento": 0.0,
+    "supuesto_ejecucion": "Señal al cierre de la vela t; ejecución al precio de apertura de t+1. En MEXC la apertura de t+1 es igual al cierre de t, por lo que se ejecuta a ese precio. Deslizamiento supuesto: 0 % (parámetro configurable)."
+  },
+  "riesgo": {
+    "exposicion_maxima": 1.0,
+    "perdida_diaria_maxima": 0.03,
+    "stop_movil_k_vol": 2.0,
+    "antiguedad_maxima_horas": 0.05,
+    "nota": "exposicion_maxima: fracción máxima del patrimonio en BTC (sin apalancamiento, ≤ 1). perdida_diaria_maxima: si el patrimonio cae esta fracción entre dos cierres, se bloquean nuevas compras hasta que el usuario rearme el control. Las ventas que reducen riesgo siguen permitidas. stop_movil: nivel = cierre × (1 − k·vol20); solo sube; se revisa al cierre y se ejecuta en la apertura siguiente."
+  },
+  "llm": {
+    "url_gateway": "http://127.0.0.1:8001",
+    "modelo": "llama3.2:3b",
+    "timeout_s": 90,
+    "keep_alive": "30m",
+    "temperatura": 0,
+    "semilla": 42,
+    "reintentos": 3,
+    "espera_inicial_s": 2.0,
+    "max_llamadas_herramientas": 3,
+    "max_tokens_respuesta": 400,
+    "nota_max_tokens": "Límite de tokens por respuesta (num_predict). Con temperatura 0 no cambia las respuestas que terminan antes; corta las generaciones desbocadas (XRP, 17 nov). Respuestas normales: 37–168 tokens."
+  },
+  "escaner": {
+    "simbolos": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XRPUSDT",
+      "BNBUSDT",
+      "DOGEUSDT"
+    ],
+    "nota": "Solo informativo. El agente solo opera BTCUSDT: el modelo no se ha validado en otros pares."
+  },
+  "ciclo": {
+    "minutos_tras_cierre": 5,
+    "revision_cada_s": 86400
+  },
+  "modelo": {
+    "config_congelada": "resultados/configuracion_final_congelada.json",
+    "escalador_x": "modelos/cap11/escalador_A_cap11.joblib",
+    "escalador_y": "modelos/cap11/escalador_y_cap11.joblib",
+    "verificacion_local": "agente/evidencia/verificacion_modelo_local.json"
+  },
+  "base_datos": "agente/datos/demo_errores.sqlite3",
+  "demostracion": {
+    "escenario": "dato atrasado",
+    "descripcion": "Antigüedad máxima del dato reducida a 0.05 h (3 min): cualquier vela cerrada hace más de 3 min se considera atrasada."
+  }
+}

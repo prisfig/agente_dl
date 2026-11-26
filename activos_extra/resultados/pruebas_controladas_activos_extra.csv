@@ -1,0 +1,6 @@
+activo,prueba,esperado,obtenido,correcto,mensaje
+ETHUSDT,Conjunto vacío,DatosVaciosError,DatosVaciosError,True,El archivo crudo está vacío: no hay nada que auditar.
+ETHUSDT,Fecha duplicada con precios distintos,FechaDuplicadaError,FechaDuplicadaError,True,1 fechas repetidas con precios distintos (ej. ['2026-07-02']). Revise la fuente; no se elige una al azar.
+ETHUSDT,Precio negativo e infinito (2 filas retiradas sin imputar),recuperación,sin excepción,True,
+ETHUSDT,LSTM con 19 rezagos,DimensionError,DimensionError,True,"prueba: forma esperada (ejemplos, 20, 1), recibida (50, 19, 1). Revise el número de rezagos y el reshape (ejemplos × pasos × variables para LSTM)."
+ETHUSDT,LSTM sin eje de variables,DimensionError,DimensionError,True,"prueba: forma esperada (ejemplos, 20, 1), recibida (50, 20). Revise el número de rezagos y el reshape (ejemplos × pasos × variables para LSTM)."

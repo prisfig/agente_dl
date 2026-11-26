@@ -1,0 +1,29 @@
+{
+  "fuente": "MEXC Spot API v3, endpoint p\u00fablico GET /api/v3/klines",
+  "url": "https://api.mexc.com/api/v3/klines",
+  "simbolo": "ETHUSDT",
+  "intervalo": "1d",
+  "parametros": {
+    "startTime_inicial": "2017-01-01",
+    "limit": 1000,
+    "dias_por_bloque": 200
+  },
+  "version_descarga": 2,
+  "avisos_truncamiento": [],
+  "fecha_descarga_utc": "2026-11-18T01:36:34+00:00",
+  "descarga_ms": 1794965794224,
+  "bloques": 19,
+  "filas_recibidas": 3311,
+  "columnas": [
+    "open_time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "close_time",
+    "quote_volume"
+  ],
+  "zona_horaria": "Marcas de tiempo en milisegundos Unix (UTC)",
+  "sha256": "4b319abc62fdae04fe0351eff719ad7b4b6d733211f272fb7ea3d1f2f7efda90"
+}

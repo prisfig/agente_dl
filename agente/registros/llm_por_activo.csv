@@ -1,0 +1,17 @@
+simbolo,modo,ciclos,propone_comprar,propone_mantener,propone_vender,comprar_sin_senal_del_modelo,senales_comprar_del_modelo,justificaciones_con_aviso,ciclos_con_reintento,latencia_llm_media_s,latencia_llm_max_s,latencia_ciclo_media_s
+BTCUSDT,vivo,12,2,10,0,2,0,2,0,16.7,23.9,17.1
+BTCUSDT,replay,10,3,7,0,3,0,3,0,13.0,22.4,13.4
+ADAUSDT,vivo,7,1,6,0,1,0,0,0,10.4,11.9,10.8
+BCHUSDT,vivo,7,7,0,0,0,7,0,0,11.9,13.5,12.4
+BNBUSDT,vivo,7,3,4,0,2,1,0,0,11.5,16.2,12.0
+DOGEUSDT,vivo,7,1,6,0,1,0,0,0,11.8,13.0,12.2
+DOTUSDT,vivo,7,2,5,0,2,0,0,0,13.3,28.1,13.9
+ETHUSDT,vivo,9,3,6,0,2,1,0,0,11.9,19.8,12.3
+FILUSDT,vivo,7,2,5,0,2,0,0,0,10.8,11.1,11.2
+LTCUSDT,vivo,7,2,5,0,1,1,0,0,10.8,12.8,11.2
+MXUSDT,vivo,7,1,6,0,1,0,2,0,10.9,11.6,11.4
+NEARUSDT,vivo,7,2,5,0,2,0,0,0,11.8,12.8,12.9
+SOLUSDT,vivo,9,9,0,0,0,9,0,0,10.9,13.6,11.3
+TRXUSDT,vivo,7,1,6,0,1,0,0,0,11.0,12.9,11.4
+XRPUSDT,vivo,7,1,6,0,1,0,0,0,11.0,14.7,11.3
+ZECUSDT,vivo,7,4,3,0,2,2,0,0,11.9,14.0,12.7

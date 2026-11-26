@@ -1,0 +1,9 @@
+decision,datos_usados,avance
+Escaladores de X y de y (modelos finales),TR,Avances 1 y 2
+Escaladores en cada ventana expansiva,Entrenamiento de esa ventana (dentro de TR),Avance 3
+Época de parada en cada ventana,Validación interna = último 15 % del entrenamiento de la ventana,Avance 3
+Arquitectura y número de neuronas,VA,Avance 2
+Umbrales candidatos δ,Predicciones del modelo en TR,Avance 3
+Umbral elegido δ,VA (rendimiento neto; empate: drawdown),Avance 3
+Robustez de la regla,Bloques de TR (solo comprobación),Avance 3
+Diferenciación fraccionaria,TR (solo exploración),Avance 3

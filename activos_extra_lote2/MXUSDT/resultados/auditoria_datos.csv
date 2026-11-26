@@ -1,0 +1,15 @@
+control,filas_afectadas,accion,detalle
+Filas recibidas,3053,ninguna,
+Valores no numéricos convertidos a NaN,0,se tratan como no válidos,
+Vela no cerrada al descargar,1,eliminada,2026-11-20
+Hora de apertura de la vela diaria,0,registrada,{'00:00 UTC': 3052}
+Fechas fuera de orden,0,reordenadas cronológicamente,
+Fechas duplicadas idénticas,0,se conservó la primera,
+Precios no finitos o no positivos,0,fila retirada (sin imputar),[]
+Volumen faltante,0,se conserva sin inventar,
+Volumen igual a cero,0,se conserva; día sin negociación reportado,
+Incoherencia OHLC,0,"reportada, sin modificar",
+Velas con otra hora de corte,0,retiradas: se conserva solo la alineación vigente (00:00 UTC),
+Días faltantes en calendario continuo,0,no se rellenan,
+Rendimientos extremos (|z robusto| > 6),126,"marcados, no eliminados","[{'fecha': '2018-07-14', 'rendimiento': '-0.2973'}, {'fecha': '2018-07-17', 'rendimiento': '0.1572'}, {'fecha': '2018-07-26', 'rendimiento': '0.2323'}, {'fecha': '2018-07-27', 'rendimiento': '0.2213'}, {'fecha': '2018-07-29', 'rendimiento': '0.2502'}, {'fecha': '2018-08-01', 'rendimiento': '0.4206'}, {'fecha': '2018-08-03', 'rendimiento': '-0.3996'}, {'fecha': '2018-08-04', 'rendimiento': '-0.4253'}, {'fecha': '2018-08-05', 'rendimiento': '0.6292'}, {'fecha': '2018-08-10', 'rendimiento': '-0.314"
+Observaciones válidas finales,3052,cumple mínimo de 1500,

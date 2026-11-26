@@ -1,0 +1,29 @@
+{
+  "fuente": "MEXC Spot API v3, endpoint p\u00fablico GET /api/v3/klines",
+  "url": "https://api.mexc.com/api/v3/klines",
+  "simbolo": "DOTUSDT",
+  "intervalo": "1d",
+  "parametros": {
+    "startTime_inicial": "2017-01-01",
+    "limit": 1000,
+    "dias_por_bloque": 200
+  },
+  "version_descarga": 2,
+  "avisos_truncamiento": [],
+  "fecha_descarga_utc": "2026-11-20T03:11:08+00:00",
+  "descarga_ms": 1795144268884,
+  "bloques": 19,
+  "filas_recibidas": 2282,
+  "columnas": [
+    "open_time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "close_time",
+    "quote_volume"
+  ],
+  "zona_horaria": "Marcas de tiempo en milisegundos Unix (UTC)",
+  "sha256": "8fcc4d9309b4de2144cf07efd42bb1dbbf9888748b239a0bc3ae747102ca2f42"
+}

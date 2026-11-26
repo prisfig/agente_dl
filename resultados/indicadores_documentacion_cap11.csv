@@ -1,0 +1,7 @@
+indicador,ventana,primera_fecha_valida,dias_sin_valor_inicial,vacios_en_fechas_de_emision,uso
+dist_sma20,20 cierres,2018-09-11,19,0,modelo B y filtro D
+vol20,20 rendimientos,2018-09-12,20,0,modelo B
+rsi14,14,2018-09-06,14,0,solo redundancia
+bb_pctb,20 cierres,2018-09-11,19,0,solo redundancia
+atr14_pct,14,2018-09-06,14,0,solo redundancia
+macd_hist_pct,12/26/9,2018-09-25,33,13,solo redundancia

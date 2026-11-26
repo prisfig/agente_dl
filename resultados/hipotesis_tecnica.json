@@ -1,0 +1,10 @@
+{
+  "H1": "dist_sma20_t aporta información sobre y_t; añadirla a los 20 rezagos reduce MAE/RMSE en VA",
+  "H0": "dist_sma20_t no aporta información; el error en VA no mejora",
+  "evidencia_descriptiva_TR": {
+    "n": 2067,
+    "pearson": 0.012797252961412384,
+    "spearman": 0.003544798453128654
+  },
+  "prueba_formal": "Capítulo 11: modelo con rezagos vs. mismo modelo + indicadores, mismas fechas de VA"
+}

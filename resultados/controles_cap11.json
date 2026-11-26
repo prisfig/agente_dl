@@ -1,0 +1,11 @@
+{
+  "T4 verificada y entrenamientos en GPU": true,
+  "Indicadores solo con historia hasta t (prueba de alteración futura)": true,
+  "A y B evaluados en las mismas fechas de VA": true,
+  "Escaladores ajustados solo con TR": true,
+  "Configuración congelada antes de TE (SHA-256)": true,
+  "TE evaluado una sola vez (registro)": true,
+  "Pronóstico futuro con valor real vacío": true,
+  "Capítulos registrados en experimentos.csv": "7, 8, 9, 11",
+  "Conjuntos sobre los que se predijo": "FUTURO, TE, TR, VA"
+}

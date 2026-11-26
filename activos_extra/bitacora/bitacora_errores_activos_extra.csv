@@ -1,0 +1,6 @@
+fecha,etapa,error,causa,accion_correctiva,resultado_verificacion
+2026-11-18T01:37:00+00:00,prueba controlada,Conjunto vacío,Fallo provocado en una copia de 150 velas de ETHUSDT,Respuesta esperada: DatosVaciosError,correcto; obtenido DatosVaciosError
+2026-11-18T01:37:00+00:00,prueba controlada,Fecha duplicada con precios distintos,Fallo provocado en una copia de 150 velas de ETHUSDT,Respuesta esperada: FechaDuplicadaError,correcto; obtenido FechaDuplicadaError
+2026-11-18T01:37:00+00:00,prueba controlada,Precio negativo e infinito (2 filas retiradas sin imputar),Fallo provocado en una copia de 150 velas de ETHUSDT,Respuesta esperada: recuperación,correcto; obtenido sin excepción
+2026-11-18T01:37:00+00:00,prueba controlada,LSTM con 19 rezagos,Fallo provocado en una copia de 150 velas de ETHUSDT,Respuesta esperada: DimensionError,correcto; obtenido DimensionError
+2026-11-18T01:37:00+00:00,prueba controlada,LSTM sin eje de variables,Fallo provocado en una copia de 150 velas de ETHUSDT,Respuesta esperada: DimensionError,correcto; obtenido DimensionError

@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+DOTUSDT,cierre (precio),-1.8785,0.34224,no estacionaria
+DOTUSDT,rendimiento diario,-13.2565,0.0,estacionaria

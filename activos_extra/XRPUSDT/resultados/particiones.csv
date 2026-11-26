@@ -1,0 +1,4 @@
+conjunto,n_ejemplos,proporcion,primera_emision,ultima_emision,primer_objetivo,ultimo_objetivo,primer_cierre_usado_como_contexto
+TR,1910,0.6996,2019-05-28,2024-08-18,2019-05-29,2024-08-19,2019-05-08
+VA,409,0.1498,2024-08-19,2025-10-01,2024-08-20,2025-10-02,2024-07-30
+TE,411,0.1505,2025-10-02,2026-11-16,2025-10-03,2026-11-17,2025-09-12

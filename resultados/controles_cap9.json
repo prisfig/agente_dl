@@ -1,0 +1,11 @@
+{
+  "T4 verificada": true,
+  "Ventanas: entrenamiento termina antes del bloque evaluado": true,
+  "Ventanas: bloques evaluados dentro de TR": true,
+  "Tres ventanas expansivas con error reportado": true,
+  "Entrenamientos de ventanas con pesos en GPU": true,
+  "Hasta cinco umbrales por modelo, positivos": true,
+  "Umbrales registrados antes de simular VA": true,
+  "Conjuntos sobre los que se predijo": "CV1, CV2, CV3, TR, VA",
+  "TE nunca se predijo ni se simuló": true
+}

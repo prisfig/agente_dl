@@ -1,0 +1,41 @@
+{
+  "modelo": "lstm_ensamble3",
+  "neuronas": 20,
+  "semillas": [
+    42,
+    123,
+    2024
+  ],
+  "delta": 0.001374,
+  "regla": "Si el rendimiento estimado al cierre de t supera δ = 0.1374%, mantener 100 % comprado desde la apertura de t+1; en otro caso, efectivo (o vender en la apertura de t+1).",
+  "criterio": "Mayor rendimiento neto en VA con costo de 0.10 % por compra y por venta; en empate, menor drawdown.",
+  "candidatos": [
+    0.001374,
+    0.001613,
+    0.001929,
+    0.002267,
+    0.002964
+  ],
+  "origen_candidatos": "cuantiles de las predicciones del modelo en TR",
+  "resultado_VA": {
+    "rendimiento_neto": 0.7973423766525174,
+    "max_drawdown": -0.27990379380574515,
+    "operaciones_cerradas": 28.0,
+    "win_rate": 0.39285714285714285,
+    "costos_totales": 7665.556243933247,
+    "dias_en_mercado_%": 87.55656108597285,
+    "patrimonio_final": 179734.23766525174,
+    "rendimiento_neto_sin_costos": 0.9008651699121879
+  },
+  "comprar_y_mantener_VA": {
+    "rendimiento_neto": 0.7290640820938239,
+    "max_drawdown": -0.2809528618811721
+  },
+  "regresion_lineal_mejor_delta_VA": {
+    "delta": 0.006494,
+    "rendimiento_neto": 0.1424948338582548,
+    "max_drawdown": -0.03316182049730865
+  },
+  "nota": "Un umbral no equivale a una probabilidad de acierto. TE no intervino en la elección.",
+  "fecha_utc": "2026-11-06T14:02:08+00:00"
+}

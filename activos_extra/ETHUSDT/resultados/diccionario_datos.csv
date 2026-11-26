@@ -1,0 +1,12 @@
+variable,descripcion,tipo,unidad,origen
+fecha,Fecha UTC de apertura de la vela diaria,fecha,-,derivada de open_time
+open,Precio de apertura,float,USDT,MEXC
+high,Precio máximo del día,float,USDT,MEXC
+low,Precio mínimo del día,float,USDT,MEXC
+close,Precio de cierre (Pₜ),float,USDT,MEXC
+volume,Volumen negociado,float,ETH,MEXC
+quote_volume,Volumen negociado en moneda cotizada,float,USDT,MEXC
+open_time / close_time,Inicio y fin de la vela,int (ms Unix),UTC,MEXC
+ret_lag_k,"Rendimiento simple r_{t-k} = P_{t-k}/P_{t-k-1} − 1, k = 0..19",float,proporción,calculada
+y,Objetivo yₜ = Pₜ₊₁/Pₜ − 1,float,proporción,calculada
+sma20 / dist_sma20,Media de los 20 cierres hasta t (incluye t) y Cₜ/SMA20ₜ − 1; solo como filtro,float,USDT / proporción,calculada

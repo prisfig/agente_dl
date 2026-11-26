@@ -1,0 +1,7 @@
+{
+  "fecha_utc": "2026-11-20T02:19:38+00:00",
+  "sha256_configuracion": "392b0061d6fcfee0f07119ea66d4f68dddbc8cb1b63186238cbb307fccf4547c",
+  "estrategia_final": "D (δ = 0.7621%, cierre > SMA20)",
+  "rendimiento_neto_TE": 0.06730007219850553,
+  "RMSE_TE_modelo_final": 0.0549192834655275
+}

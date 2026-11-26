@@ -1,0 +1,195 @@
+{
+  "generado_utc": "2026-11-20T02:20:29+00:00",
+  "raiz": "carpeta DL_Finanzas (rutas relativas)",
+  "nota": "Cada activo tiene su propio modelo, escaladores, δ y estrategia, elegidos con su VA y evaluados una vez en su TE. No se usan pesos ni escalas de BTC.",
+  "activos": {
+    "BNBUSDT": {
+      "config_congelada": "activos_extra_lote2/BNBUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "a7a0d8feb9b07d9c523177bf8c86a54653de1c6ba351a6b996dd42bb159404b1",
+      "checkpoints": [
+        "activos_extra_lote2/BNBUSDT/modelos/lstm/BNBUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/BNBUSDT/modelos/lstm/BNBUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/BNBUSDT/modelos/lstm/BNBUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/BNBUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/BNBUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "C",
+      "delta": 0.001572,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.292926792139238
+    },
+    "ADAUSDT": {
+      "config_congelada": "activos_extra_lote2/ADAUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "234c09a62c675518a824730ad4e7b938db506a98a0546381ac15e9700762567d",
+      "checkpoints": [
+        "activos_extra_lote2/ADAUSDT/modelos/lstm/ADAUSDT_lstm_n20_s42.keras",
+        "activos_extra_lote2/ADAUSDT/modelos/lstm/ADAUSDT_lstm_n20_s123.keras",
+        "activos_extra_lote2/ADAUSDT/modelos/lstm/ADAUSDT_lstm_n20_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/ADAUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/ADAUSDT/modelos/escalador_y.joblib",
+      "neuronas": 20,
+      "estrategia": "C",
+      "delta": 0.003606,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.17234094403983125
+    },
+    "LTCUSDT": {
+      "config_congelada": "activos_extra_lote2/LTCUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "4f6849481bcb175df231be856b6308971c7500269626b1d60ddc3ddfbc6eef5a",
+      "checkpoints": [
+        "activos_extra_lote2/LTCUSDT/modelos/lstm/LTCUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/LTCUSDT/modelos/lstm/LTCUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/LTCUSDT/modelos/lstm/LTCUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/LTCUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/LTCUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "C",
+      "delta": 0.00086,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.47152774341383963
+    },
+    "TRXUSDT": {
+      "config_congelada": "activos_extra_lote2/TRXUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "fef1dcaf2159d93000798744c26af56b443299bdbe2ed2ed4ecc4eb7cee594a0",
+      "checkpoints": [
+        "activos_extra_lote2/TRXUSDT/modelos/lstm/TRXUSDT_lstm_n40_s42.keras",
+        "activos_extra_lote2/TRXUSDT/modelos/lstm/TRXUSDT_lstm_n40_s123.keras",
+        "activos_extra_lote2/TRXUSDT/modelos/lstm/TRXUSDT_lstm_n40_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/TRXUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/TRXUSDT/modelos/escalador_y.joblib",
+      "neuronas": 40,
+      "estrategia": "C",
+      "delta": 0.0028,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.10050679658859296
+    },
+    "GOLD(PAXG)USDT": {
+      "config_congelada": "activos_extra_lote2/GOLD(PAXG)USDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "10c46050fc505edb2b0ff47673e7c08e3dd8a6e42472372063e3162b6889ae9a",
+      "checkpoints": [
+        "activos_extra_lote2/GOLD(PAXG)USDT/modelos/lstm/GOLD(PAXG)USDT_lstm_n40_s42.keras",
+        "activos_extra_lote2/GOLD(PAXG)USDT/modelos/lstm/GOLD(PAXG)USDT_lstm_n40_s123.keras",
+        "activos_extra_lote2/GOLD(PAXG)USDT/modelos/lstm/GOLD(PAXG)USDT_lstm_n40_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/GOLD(PAXG)USDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/GOLD(PAXG)USDT/modelos/escalador_y.joblib",
+      "neuronas": 40,
+      "estrategia": "C",
+      "delta": 0.000273,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.27763558743955485
+    },
+    "DOGEUSDT": {
+      "config_congelada": "activos_extra_lote2/DOGEUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "f50de646b92a2375d1b1cd40e8b3b48abae5cbb1673fa713ebac32a3c3b79a05",
+      "checkpoints": [
+        "activos_extra_lote2/DOGEUSDT/modelos/lstm/DOGEUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/DOGEUSDT/modelos/lstm/DOGEUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/DOGEUSDT/modelos/lstm/DOGEUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/DOGEUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/DOGEUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "D",
+      "delta": 0.002779,
+      "filtro": "cierre > SMA20",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.5088828474184082
+    },
+    "MXUSDT": {
+      "config_congelada": "activos_extra_lote2/MXUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "be0e95ca969fb6841471d266e925dee1f82277c653a463e2d4c5f76eec477628",
+      "checkpoints": [
+        "activos_extra_lote2/MXUSDT/modelos/lstm/MXUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/MXUSDT/modelos/lstm/MXUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/MXUSDT/modelos/lstm/MXUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/MXUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/MXUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "C",
+      "delta": 0.001516,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.2839131914396844
+    },
+    "FILUSDT": {
+      "config_congelada": "activos_extra_lote2/FILUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "55f77b1176a669ffce3194d2ec2c577b421ae4c8396f0ab019eaf266b6039063",
+      "checkpoints": [
+        "activos_extra_lote2/FILUSDT/modelos/lstm/FILUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/FILUSDT/modelos/lstm/FILUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/FILUSDT/modelos/lstm/FILUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/FILUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/FILUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "D",
+      "delta": 0.001777,
+      "filtro": "cierre > SMA20",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.23279484811298035
+    },
+    "BCHUSDT": {
+      "config_congelada": "activos_extra_lote2/BCHUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "57d7ac453e90585e5f676542a397e4414959f7f7b428df4a056d21bcd041927d",
+      "checkpoints": [
+        "activos_extra_lote2/BCHUSDT/modelos/lstm/BCHUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/BCHUSDT/modelos/lstm/BCHUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/BCHUSDT/modelos/lstm/BCHUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/BCHUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/BCHUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "C",
+      "delta": 0.00164,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.6769647445238594
+    },
+    "ZECUSDT": {
+      "config_congelada": "activos_extra_lote2/ZECUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "128107648f8e861aa24f0d1311772bb357fac99ed19bb3f72a3acc31b657ba92",
+      "checkpoints": [
+        "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s42.keras",
+        "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s123.keras",
+        "activos_extra_lote2/ZECUSDT/modelos/lstm/ZECUSDT_lstm_n20_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/ZECUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/ZECUSDT/modelos/escalador_y.joblib",
+      "neuronas": 20,
+      "estrategia": "C",
+      "delta": 0.001862,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": 0.12700443651842486
+    },
+    "NEARUSDT": {
+      "config_congelada": "activos_extra_lote2/NEARUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "392b0061d6fcfee0f07119ea66d4f68dddbc8cb1b63186238cbb307fccf4547c",
+      "checkpoints": [
+        "activos_extra_lote2/NEARUSDT/modelos/lstm/NEARUSDT_lstm_n10_s42.keras",
+        "activos_extra_lote2/NEARUSDT/modelos/lstm/NEARUSDT_lstm_n10_s123.keras",
+        "activos_extra_lote2/NEARUSDT/modelos/lstm/NEARUSDT_lstm_n10_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote2/NEARUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote2/NEARUSDT/modelos/escalador_y.joblib",
+      "neuronas": 10,
+      "estrategia": "D",
+      "delta": 0.007621,
+      "filtro": "cierre > SMA20",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": 0.06730007219850553
+    }
+  },
+  "excluidos": {}
+}

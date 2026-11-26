@@ -1,0 +1,2 @@
+activo,fecha_corte,proximo_periodo,rendimiento_estimado,senal,valor_real,modelo,estrategia,delta,cierre_sobre_SMA20,cierre_en_corte,fuente_datos,generado_utc
+DOTUSDT,2026-11-19,2026-11-20,-0.0011326256208121777,efectivo,,lstm_A_n40_ensamble3,C,0.002394,False,0.713,"descarga reciente de MEXC (DOTUSDT_1d_mexc_recientes_20261120T031309Z.csv, SHA-256 9a465b2df527…); coincide con el crudo congelado en 150 fechas comunes",2026-11-20T03:13:10+00:00

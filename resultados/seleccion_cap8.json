@@ -1,0 +1,63 @@
+{
+  "modelo_seleccionado": "regresion_lineal",
+  "motivo": "Ninguna red mejora a la mejor referencia sencilla por más de una desviación estándar entre semillas; por la regla definida antes de comparar, se mantiene el modelo sencillo.",
+  "red_profunda_que_continua_al_cap9": "lstm",
+  "neuronas_red_continua": 20,
+  "semillas": [
+    42,
+    123,
+    2024
+  ],
+  "evaluacion_redes_VA": {
+    "mlp": {
+      "RMSE_VA_ensamble": 0.024321810571540786,
+      "MAE_VA_ensamble": 0.017314297950953232,
+      "RMSE_VA_media_semillas": 0.024513167186459933,
+      "RMSE_VA_std_semillas": 0.00013588380965010854,
+      "supera_LR_RMSE": false,
+      "supera_LR_MAE": false,
+      "margen_vs_mejor_simple": -6.361772889768025e-05,
+      "mejora_mayor_que_ruido": false
+    },
+    "lstm": {
+      "RMSE_VA_ensamble": 0.02428567175946997,
+      "MAE_VA_ensamble": 0.017242060388739065,
+      "RMSE_VA_media_semillas": 0.024290623365969443,
+      "RMSE_VA_std_semillas": 2.833238812072676e-05,
+      "supera_LR_RMSE": false,
+      "supera_LR_MAE": true,
+      "margen_vs_mejor_simple": -2.7478916826865346e-05,
+      "mejora_mayor_que_ruido": false
+    }
+  },
+  "referencias_VA": {
+    "cero": {
+      "RMSE": 0.02434178241589208,
+      "MAE": 0.017218888575836082
+    },
+    "regresion_lineal": {
+      "RMSE": 0.024258192842643106,
+      "MAE": 0.017276075410155578
+    }
+  },
+  "configuracion_comun": {
+    "PERDIDA": "mean_squared_error",
+    "OPTIMIZADOR": "Adam",
+    "TASA_APRENDIZAJE": 0.001,
+    "LOTE": 32,
+    "MAX_EPOCAS": 300,
+    "PACIENCIA": 25,
+    "N_REZAGOS": 20
+  },
+  "checkpoints": [
+    "modelos/cap8/cap8_lstm_n20_s42.keras",
+    "modelos/cap8/cap8_lstm_n20_s123.keras",
+    "modelos/cap8/cap8_lstm_n20_s2024.keras"
+  ],
+  "escaladores": [
+    "modelos/escalador_cap7_rezagos20.joblib",
+    "modelos/escalador_y_cap8.joblib"
+  ],
+  "TE_utilizado": false,
+  "fecha_utc": "2026-11-05T23:48:28+00:00"
+}

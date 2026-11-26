@@ -1,0 +1,25 @@
+{
+  "generado_utc": "2026-11-20T03:13:11+00:00",
+  "raiz": "carpeta DL_Finanzas (rutas relativas)",
+  "nota": "Cada activo tiene su propio modelo, escaladores, δ y estrategia, elegidos con su VA y evaluados una vez en su TE. No se usan pesos ni escalas de BTC.",
+  "activos": {
+    "DOTUSDT": {
+      "config_congelada": "activos_extra_lote3/DOTUSDT/resultados/configuracion_final_congelada.json",
+      "sha256_config": "f1bba0a173ee105f63b60191b094c9baefb2ce012b11622361b673970e6c2198",
+      "checkpoints": [
+        "activos_extra_lote3/DOTUSDT/modelos/lstm/DOTUSDT_lstm_n40_s42.keras",
+        "activos_extra_lote3/DOTUSDT/modelos/lstm/DOTUSDT_lstm_n40_s123.keras",
+        "activos_extra_lote3/DOTUSDT/modelos/lstm/DOTUSDT_lstm_n40_s2024.keras"
+      ],
+      "escalador_x": "activos_extra_lote3/DOTUSDT/modelos/escalador_x_rezagos20.joblib",
+      "escalador_y": "activos_extra_lote3/DOTUSDT/modelos/escalador_y.joblib",
+      "neuronas": 40,
+      "estrategia": "C",
+      "delta": 0.002394,
+      "filtro": "ninguno",
+      "ultima_fecha_datos": "2026-11-19",
+      "rendimiento_neto_TE": -0.051788299860354936
+    }
+  },
+  "excluidos": {}
+}

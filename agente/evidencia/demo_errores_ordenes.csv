@@ -1,0 +1,7 @@
+base_datos,id,ciclo_id,modo,fecha_vela,cartera,lado,estado,cantidad,precio,monto,costo,motivo,ts_utc
+demo_errores.sqlite3,1,1,vivo,2026-11-16,con_llm,COMPRAR,ejecutada,0.770705,64875.64,49999.9801262,0.0,ejecutada,2026-11-17T00:19:57+00:00
+demo_errores.sqlite3,2,1,vivo,2026-11-16,comprar_y_mantener,COMPRAR,ejecutada,0.770705,64875.64,49999.9801262,0.0,ejecutada,2026-11-17T00:19:57+00:00
+demo_errores.sqlite3,3,,vivo,2026-11-16,comprar_y_mantener,VENDER,ejecutada,0.770705,64875.64,49999.9801262,0.0,liquidacion_manual,2026-11-17T00:25:35+00:00
+demo_errores.sqlite3,4,,vivo,2026-11-16,con_llm,VENDER,ejecutada,0.770705,64875.64,49999.9801262,0.0,liquidacion_manual,2026-11-17T00:25:35+00:00
+demo_saldo.sqlite3,1,1,vivo,2026-11-16,con_llm,COMPRAR,rechazada,7e-06,64875.64,0.45412948,0.0,saldo_insuficiente: el monto 0.45 es menor al mínimo del par (1.0),2026-11-17T00:32:33+00:00
+demo_saldo.sqlite3,2,1,vivo,2026-11-16,comprar_y_mantener,COMPRAR,rechazada,7e-06,64875.64,0.45412948,0.0,saldo_insuficiente: el monto 0.45 es menor al mínimo del par (1.0),2026-11-17T00:32:33+00:00

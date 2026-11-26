@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+DOGEUSDT,cierre (precio),-2.5799,0.097219,no estacionaria
+DOGEUSDT,rendimiento diario,-7.1094,0.0,estacionaria

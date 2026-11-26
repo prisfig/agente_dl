@@ -1,0 +1,2 @@
+fecha_corte,proximo_periodo,rendimiento_estimado,senal,valor_real,modelo,estrategia,delta,cierre_sobre_SMA20,cierre_en_corte,fuente_datos,generado_utc
+2026-11-17,2026-11-18,0.010944589041173458,comprar,,lstm_A_n20_ensamble3,C,0.00122,False,75.19,"descarga reciente de MEXC (SOLUSDT_1d_mexc_recientes_20261118T014416Z.csv, SHA-256 0dd48a800484…); coincide con el crudo congelado en 150 fechas comunes",2026-11-18T01:44:16+00:00

@@ -1,0 +1,2 @@
+fecha_corte,proximo_periodo,rendimiento_estimado,senal,valor_real,modelo,estrategia,delta,cierre_sobre_SMA20,cierre_en_corte,fuente_datos,generado_utc
+2026-11-11,2026-11-12,0.0006389539339579642,efectivo,,lstm_A_ensamble3,D,0.000866,False,74007.14,"descarga reciente de MEXC (BTCUSDT_1d_mexc_recientes_20261112T142547Z.csv, SHA-256 ff16b9886eec…); coincide con el archivo congelado en 143 fechas comunes",2026-11-12T14:25:47+00:00

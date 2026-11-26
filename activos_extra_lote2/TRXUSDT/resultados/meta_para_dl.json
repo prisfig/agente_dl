@@ -1,0 +1,8 @@
+{
+  "RMSE_VA_a_superar": 0.054250710546841614,
+  "MAE_VA_a_superar": 0.01990711780110811,
+  "mejor_referencia_RMSE": "cero",
+  "mejor_referencia_MAE": "cero",
+  "RMSE_VA_regresion_lineal": 0.05431236949041949,
+  "MAE_VA_regresion_lineal": 0.020346971366689615
+}

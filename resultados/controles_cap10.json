@@ -1,0 +1,10 @@
+{
+  "Evidencia T4 registrada": true,
+  "Entorno = simulador del Avance 3 (regla, comprar y mantener, efectivo)": true,
+  "Transición manual = entorno (compra y venta)": true,
+  "Intentos de abuso bloqueados": "11 de 11",
+  "Estado sin información futura": true,
+  "Costos contabilizados en cada cambio de posición y al final": true,
+  "Conjuntos sobre los que se predijo": "TR, VA",
+  "TE no se usó": true
+}

@@ -1,0 +1,20 @@
+{
+  "epocas": 37,
+  "mejor_epoca": 12,
+  "perdida_TR_mejor_epoca": 0.9768677353858948,
+  "perdida_VA_mejor_epoca": 0.6745858192443848,
+  "perdida_TR_ultima_epoca": 0.8792884945869446,
+  "perdida_VA_ultima_epoca": 0.7057125568389893,
+  "tiempo_s": 17.14,
+  "dispositivo_pesos": "/job:localhost/replica:0/task:0/device:GPU:0",
+  "gpu": "Tesla T4",
+  "memoria_pico_GPU_MB": 8.9,
+  "lote": 32,
+  "params_entrenables": 2201,
+  "capas": "LSTM(20, tanh) \u2192 Dense(20, relu) \u2192 Dense(1)",
+  "tasa_aprendizaje": 0.001,
+  "max_epocas": 300,
+  "paciencia": 25,
+  "tf_version": "2.21.0",
+  "entrenado_utc": "2026-11-20T03:12:10+00:00"
+}

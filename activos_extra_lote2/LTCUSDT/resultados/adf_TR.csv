@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+LTCUSDT,cierre (precio),-2.23,0.195525,no estacionaria
+LTCUSDT,rendimiento diario,-20.8639,0.0,estacionaria

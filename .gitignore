@@ -1,0 +1,18 @@
+# Entorno de Python y dependencias de Node (se reinstalan con README)
+.venv/
+node_modules/
+dist/
+__pycache__/
+.pytest_cache/
+
+# Secretos: nunca se suben (sí se sube agente/.env.example, sin valores)
+.env
+*.env
+!.env.example
+
+# Bases SQLite del agente (su exportación completa está en agente/registros/)
+*.sqlite3
+*.sqlite3-*
+
+# Archivos del sistema
+.DS_Store

@@ -1,0 +1,6 @@
+prueba,respuesta,mensaje,correcto
+1. Conjunto vacío,detención,DatosVaciosError: El archivo crudo está vacío: no hay nada que auditar.,True
+2. Fecha duplicada,detención,FechaDuplicadaError: 1 fechas repetidas con precios distintos (ej. ['2026-07-29']). Revise la fuente; no se elige una al azar.,True
+3. Valor no válido,recuperación,2 filas retiradas; datos resultantes finitos y positivos: True,True
+4a. Dimensiones incorrectas (MLP con 19 rezagos),detención,"DimensionError: MLP: forma esperada (ejemplos, 20), recibida (50, 19). Revise el número de rezagos y el reshape (ejemplos × pasos × variables para LSTM).",True
+4b. Dimensiones incorrectas (LSTM sin eje de variables),detención,"DimensionError: LSTM: forma esperada (ejemplos, 20, 1), recibida (50, 20). Revise el número de rezagos y el reshape (ejemplos × pasos × variables para LSTM).",True

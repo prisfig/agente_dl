@@ -1,0 +1,17 @@
+{
+  "Mercado": "Criptomonedas",
+  "Activo (par)": "ADA/USDT (ADAUSDT)",
+  "Moneda base": "ADA",
+  "Moneda cotizada (precios)": "USDT",
+  "Plataforma de origen": "MEXC (mercado spot)",
+  "Fuente": "MEXC Spot API v3, endpoint público GET /api/v3/klines",
+  "Fecha de descarga (UTC)": "2026-11-20T02:00:22+00:00",
+  "Periodo procesado": "2019-06-28 a 2026-11-19",
+  "Observaciones válidas": 2702,
+  "Frecuencia": "Diaria",
+  "Zona horaria": "UTC; cada vela se identifica por la fecha UTC de su apertura",
+  "Calendario": "Continuo 24/7 (sin días inhábiles); los huecos se reportan y no se rellenan",
+  "Ajustes de precio": "No aplica: las criptomonedas no pagan dividendos ni tienen particiones; precios sin ajustar",
+  "Volumen": "Reportado por MEXC: volume en ADA y quote_volume en USDT; no se inventa ni se rellena",
+  "SHA-256 del crudo": "2d3cc80d460825a7964025973195e0d1c7037b652f2369e6a87ed5448393a7b7"
+}

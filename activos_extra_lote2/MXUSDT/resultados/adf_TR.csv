@@ -1,0 +1,3 @@
+activo,serie,estadistico_ADF,p_valor,conclusion (5%)
+MXUSDT,cierre (precio),-0.3161,0.923195,no estacionaria
+MXUSDT,rendimiento diario,-9.4515,0.0,estacionaria

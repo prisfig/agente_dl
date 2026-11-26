@@ -1,0 +1,2 @@
+fecha_corte,proximo_periodo,rendimiento_estimado,senal,valor_real,modelo,estrategia,delta,cierre_sobre_SMA20,cierre_en_corte,fuente_datos,generado_utc
+2026-11-19,2026-11-20,-0.00012344165588729084,efectivo,,lstm_A_n40_ensamble3,C,0.000273,False,3594.88,"descarga reciente de MEXC (GOLD(PAXG)USDT_1d_mexc_recientes_20261120T022023Z.csv, SHA-256 6d0ffcc1f1be…); coincide con el crudo congelado en 150 fechas comunes",2026-11-20T02:20:23+00:00

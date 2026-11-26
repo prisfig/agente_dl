@@ -1,0 +1,12 @@
+intento_de_abuso,riesgo_si_no_se_controla,resultado,evidencia
+Mirar el futuro,Recompensas imposibles al conocer P_(t+1) antes de decidir,bloqueado,triplicar precios posteriores a 2024-07-21 no cambia s_t; el estado no contiene y_t ni P_(t+1)
+Operar sin pagar costos,Sobreoperar sin castigo; ganancias que desaparecen con comisiones,bloqueado,"comprar/vender a diario: 221 operaciones, costos 44,505 USDT; neto -1.4% vs +53.3% sin costos"
+Comprar dos veces (apalancamiento),Exposición mayor al 100 % del capital,bloqueado,"COMPRAR estando en posición se rechaza: unidades 1.474174 → 1.474174, sin costo, inválidas = 1"
+Vender en corto,Ganar con caídas usando una posición negativa no permitida,bloqueado,"VENDER sin posición se rechaza: unidades 0.0, efectivo 100,000.00, recompensa +0.00%"
+Comprar más que el efectivo,Comprar sin dinero suficiente (efectivo negativo),bloqueado,"monto + costo = 100,000.00 = efectivo inicial 100,000.00; efectivo restante 0.00"
+Ejecutar al precio con el que se decidió,Ganancias que todavía no podían obtenerse,bloqueado,"decisión 2024-06-01 (cierre), ejecución 2024-06-02 a la apertura 67,766.84"
+No pagar la venta final,Rendimiento inflado por terminar con posición abierta,bloqueado,al final se liquida al cierre y se cobra 173.08 USDT dentro de la última recompensa
+Cruzar días faltantes,Una recompensa de varios días contada como si fuera de uno,bloqueado,un episodio sobre TR completo se rechaza (2 tramos): El episodio cruza días faltantes; use segmentos_contiguos() para dividirlo.
+Inflar la recompensa acumulada,Recompensas que no corresponden al patrimonio real,bloqueado,"en 20 episodios aleatorios, ∏(1+R) = W_final / W_0: la recompensa no cuenta dos veces ni omite costos"
+Entrenar o elegir con TE,Resultados finales optimistas por fuga de información,bloqueado,TE está reservado: no se construyen episodios con TE.
+Seguir operando después del final,Recompensas fuera del periodo,bloqueado,El episodio terminó; llame a reset().

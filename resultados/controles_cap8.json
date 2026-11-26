@@ -1,0 +1,14 @@
+{
+  "T4 verificada": true,
+  "Todas las corridas con pesos en GPU": true,
+  "Predicciones finitas": true,
+  "Escaladores de X y de y ajustados solo con TR": true,
+  "Particiones idénticas al Avance 1": true,
+  "LSTM con forma ejemplos × pasos × variables": true,
+  "Tres configuraciones por red": true,
+  "Tres semillas de la mejor configuración": true,
+  "Parada temprana con pesos restaurados": true,
+  "Checkpoints guardados en Drive": true,
+  "Pruebas controladas de errores correctas": true,
+  "TE sin predicciones": true
+}

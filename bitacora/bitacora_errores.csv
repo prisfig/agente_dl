@@ -1,0 +1,24 @@
+fecha,etapa,error,causa,accion_correctiva,resultado_verificacion
+2026-11-05T14:17:08+00:00,auditoría,DatosVaciosError,Solo hay 500 observaciones válidas; el protocolo exige ≥ 1500. Elija un activo con más historia o revise la descarga.,Flujo detenido antes de construir ventanas,pendiente
+2026-11-05T14:17:21+00:00,auditoría,DatosVaciosError,Solo hay 500 observaciones válidas; el protocolo exige ≥ 1500. Elija un activo con más historia o revise la descarga.,Flujo detenido antes de construir ventanas,pendiente
+2026-11-05T14:21:43+00:00,descarga,Crudo truncado por límite de velas de MEXC,La API devuelve ~500 velas por solicitud; bloques de 1000 días dejaron huecos de 500 días,Descarga v2: bloques de 200 días con continuación; crudo v1 respaldado,ver auditoría de la nueva descarga
+2026-11-05T23:44:49+00:00,prueba controlada,1. Conjunto vacío,fallo provocado en copia pequeña,el flujo se detuvo con mensaje,OK
+2026-11-05T23:44:49+00:00,prueba controlada,2. Fecha duplicada,fallo provocado en copia pequeña,el flujo se detuvo con mensaje,OK
+2026-11-05T23:44:49+00:00,prueba controlada,3. Valor no válido,fallo provocado en copia pequeña,2 filas retiradas; datos resultantes finitos y positivos: True,OK
+2026-11-05T23:44:49+00:00,prueba controlada,4a. Dimensiones incorrectas (MLP con 19 rezagos),fallo provocado en copia pequeña,el flujo se detuvo con mensaje,OK
+2026-11-05T23:44:49+00:00,prueba controlada,4b. Dimensiones incorrectas (LSTM sin eje de variables),fallo provocado en copia pequeña,el flujo se detuvo con mensaje,OK
+2026-11-07T00:52:31+00:00,seguimiento cap10,Mirar el futuro,Recompensas imposibles al conocer P_(t+1) antes de decidir,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,Operar sin pagar costos,Sobreoperar sin castigo; ganancias que desaparecen con comisiones,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,Comprar dos veces (apalancamiento),Exposición mayor al 100 % del capital,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,Vender en corto,Ganar con caídas usando una posición negativa no permitida,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,Comprar más que el efectivo,Comprar sin dinero suficiente (efectivo negativo),prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,Ejecutar al precio con el que se decidió,Ganancias que todavía no podían obtenerse,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,No pagar la venta final,Rendimiento inflado por terminar con posición abierta,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:32+00:00,seguimiento cap10,Cruzar días faltantes,Una recompensa de varios días contada como si fuera de uno,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:33+00:00,seguimiento cap10,Inflar la recompensa acumulada,Recompensas que no corresponden al patrimonio real,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:33+00:00,seguimiento cap10,Entrenar o elegir con TE,Resultados finales optimistas por fuga de información,prueba de abuso del entorno,bloqueado
+2026-11-07T00:52:33+00:00,seguimiento cap10,Seguir operando después del final,Recompensas fuera del periodo,prueba de abuso del entorno,bloqueado
+2026-11-05,descarga,Cierre del registro: crudo truncado por límite de velas de MEXC,Verificación de la descarga v2 (bloques de 200 días con continuación),Revisión de la auditoría de la nueva descarga (agregado manualmente),"3,298 velas recibidas; un solo día faltante (2019-03-20) en toda la serie"
+2026-11-05,auditoría,Cierre de los dos DatosVaciosError pendientes (solo 500 observaciones),Eran consecuencia del crudo truncado por la API de MEXC,Se corrigió la descarga y se reejecutó la auditoría (agregado manualmente),"2,995 observaciones válidas; cumple el mínimo de 1,500"
+2026-11-05,auditoría,Velas con dos horas de corte (00:00 y 16:00 UTC),Historia antigua de MEXC con otro cierre diario; mezclarlas da rendimientos de 16 o 32 horas,Regla nueva: conservar solo la hora de corte vigente (agregado manualmente),302 velas retiradas; una sola hora de corte en los datos
+2026-11-12,entrenamiento cap. 11,Colab desconectó la sesión y no asignó GPU (sin backend T4),Límite de uso de GPU de la cuenta gratuita de Colab,No se usó CPU; se esperó una sesión con T4 y se reejecutó; corridas completas cargadas de Drive (agregado manualmente),12 entrenamientos con pesos en GPU:0; TE evaluado una sola vez

@@ -1,0 +1,40 @@
+{
+  "fecha_utc": "2026-11-15T18:35:55+00:00",
+  "equipo": {
+    "plataforma": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "procesador": "arm64",
+    "python": "3.13.18"
+  },
+  "versiones": {
+    "tensorflow": "2.21.0",
+    "keras": "3.13.2",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3"
+  },
+  "config_sha256": "97f125d0515485024de0eb149a2f7cc76f7ad50a1a15309e18eba133c5e037c0",
+  "orden_secuencia": "antiguo_a_reciente",
+  "TE": {
+    "n": 444,
+    "antiguo_a_reciente": {
+      "max_dif_abs": 7.195040258034524e-10,
+      "media_dif_abs": 1.8860405785904783e-10,
+      "segundos": 0.422
+    },
+    "reciente_a_antiguo": {
+      "max_dif_abs": 0.006315643913149135,
+      "media_dif_abs": 0.0005819070443379565,
+      "segundos": 0.097
+    },
+    "coincide": true
+  },
+  "futuro": {
+    "fecha_corte": "2026-11-11",
+    "cierre_en_corte": 74007.14,
+    "colab": 0.0006389539339579,
+    "local": 0.0006389543996192515,
+    "dif_abs": 4.656613514925079e-10,
+    "latencia_s": 0.064,
+    "coincide": true
+  },
+  "tolerancia": 1e-06
+}

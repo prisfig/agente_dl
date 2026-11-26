@@ -1,0 +1,2 @@
+activo,neuronas,RMSE_VA_media_semillas,RMSE_VA_std_semillas,RMSE_VA_ensamble,MAE_VA_ensamble,prec_dir_VA_ensamble,RMSE_VA_cero,RMSE_VA_regresion_lineal,mejor_referencia,supera_mejor_referencia_mas_que_ruido,seleccion_general,mejor_epoca_media,desv_pred_VA / desv_real_VA,fraccion_pred_VA_positivas,casi_constante
+GOLD(PAXG)USDT,40,0.015897806895603106,6.999598506457624e-06,0.015895535059674303,0.009509114224452964,0.5666666666666667,0.015944779460192265,0.016184726197548953,cero,True,LSTM,2.0,0.018746344792778327,0.9458333333333333,True

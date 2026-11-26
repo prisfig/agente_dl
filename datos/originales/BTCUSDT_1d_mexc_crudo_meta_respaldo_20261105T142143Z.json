@@ -1,0 +1,27 @@
+{
+  "fuente": "MEXC Spot API v3, endpoint p\u00fablico GET /api/v3/klines",
+  "url": "https://api.mexc.com/api/v3/klines",
+  "simbolo": "BTCUSDT",
+  "intervalo": "1d",
+  "parametros": {
+    "startTime_inicial": "2017-01-01",
+    "limit": 1000,
+    "dias_por_bloque": 1000
+  },
+  "fecha_descarga_utc": "2026-11-05T14:03:03+00:00",
+  "descarga_ms": 1793887383674,
+  "bloques": 4,
+  "filas_recibidas": 1703,
+  "columnas": [
+    "open_time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "close_time",
+    "quote_volume"
+  ],
+  "zona_horaria": "Marcas de tiempo en milisegundos Unix (UTC)",
+  "sha256": "e04df47c302b55503727a866a529c8a26d95b401af00a2e9f40ceadd20bebed4"
+}

@@ -1,0 +1,4 @@
+ventana,entrenamiento_desde,entrenamiento_hasta,n_entrenamiento,de_ellos_validacion_interna,evaluado_desde,evaluado_hasta,n_evaluado
+CV1,2018-09-13,2021-08-02,1033,154,2021-08-03,2022-07-12,344
+CV2,2018-09-13,2022-07-12,1377,206,2022-07-13,2023-06-21,344
+CV3,2018-09-13,2023-06-21,1721,258,2023-06-22,2024-06-01,346

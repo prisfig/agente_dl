@@ -1,0 +1,2 @@
+activo,neuronas,RMSE_VA_media_semillas,RMSE_VA_std_semillas,RMSE_VA_ensamble,MAE_VA_ensamble,prec_dir_VA_ensamble,RMSE_VA_cero,RMSE_VA_regresion_lineal,mejor_referencia,supera_mejor_referencia_mas_que_ruido,seleccion_general,mejor_epoca_media,desv_pred_VA / desv_real_VA,fraccion_pred_VA_positivas,casi_constante
+XRPUSDT,10,0.04853814372954385,0.0004978234379658786,0.04829177663080754,0.030890368608584812,0.5061124694376528,0.04932311586478733,0.04904785883679194,regresion_lineal,True,LSTM,23.0,0.10204255160034512,0.7457212713936431,False

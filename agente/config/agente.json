@@ -1,0 +1,248 @@
+{
+  "version": "1.9",
+  "descripcion": "Configuración del agente. El LLM no puede modificarla; solo se cambia editando este archivo con el backend apagado. Su SHA-256 se guarda en cada ciclo.",
+  "mercado": {
+    "url_base": "https://api.mexc.com",
+    "activo_cotizado": "USDT",
+    "intervalo": "1d",
+    "velas_contexto": 60,
+    "timeout_s": 10,
+    "reintentos": 3,
+    "espera_inicial_s": 2.0,
+    "reglas_par_respaldo": {
+      "paso_cantidad": "0.000001",
+      "monto_minimo": "1",
+      "nota": "Se usan solo si /api/v3/exchangeInfo no responde; en operación normal se leen de MEXC."
+    }
+  },
+  "paper": {
+    "capital_inicial": 50000,
+    "costo_compra": 0.0,
+    "costo_venta": 0.0,
+    "deslizamiento": 0.0,
+    "supuesto_ejecucion": "Señal al cierre de la vela t; ejecución al precio de apertura de t+1. En MEXC la apertura de t+1 es igual al cierre de t, por lo que se ejecuta a ese precio. Deslizamiento supuesto: 0 % (parámetro configurable)."
+  },
+  "riesgo": {
+    "exposicion_maxima": 1.0,
+    "perdida_diaria_maxima": 0.03,
+    "stop_movil_k_vol": 2.0,
+    "antiguedad_maxima_horas": 26,
+    "nota": "exposicion_maxima: fracción máxima del patrimonio de cada cartera en el activo (sin apalancamiento, ≤ 1). perdida_diaria_maxima: si el patrimonio cae esta fracción entre dos cierres, se bloquean nuevas compras hasta que el usuario rearme el control. Las ventas que reducen riesgo siguen permitidas. stop_movil: nivel = cierre × (1 − k·vol20); solo sube; se revisa al cierre y se ejecuta en la apertura siguiente."
+  },
+  "llm": {
+    "url_gateway": "http://127.0.0.1:8001",
+    "modelo": "llama3.2:3b",
+    "timeout_s": 90,
+    "keep_alive": "30m",
+    "temperatura": 0,
+    "semilla": 42,
+    "reintentos": 3,
+    "espera_inicial_s": 2.0,
+    "max_llamadas_herramientas": 3,
+    "max_tokens_respuesta": 400,
+    "nota_max_tokens": "Límite de tokens por respuesta (num_predict). Con temperatura 0 no cambia las respuestas que terminan antes; corta las generaciones desbocadas (XRP, 17 nov). Respuestas normales: 37–168 tokens."
+  },
+  "escaner": {
+    "simbolos": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XRPUSDT",
+      "BNBUSDT",
+      "ADAUSDT",
+      "LTCUSDT",
+      "TRXUSDT",
+      "DOGEUSDT",
+      "MXUSDT",
+      "FILUSDT",
+      "BCHUSDT",
+      "ZECUSDT",
+      "NEARUSDT",
+      "DOTUSDT"
+    ],
+    "nota": "Informativo: los 15 pares que opera el agente (cada uno con su propio modelo validado)."
+  },
+  "ciclo": {
+    "minutos_tras_cierre": 5,
+    "revision_cada_s": 60
+  },
+  "activos": [
+    {
+      "simbolo": "BTCUSDT",
+      "activo_base": "BTC",
+      "base_datos": "agente/datos/agente.sqlite3",
+      "modelo": {
+        "config_congelada": "resultados/configuracion_final_congelada.json",
+        "escalador_x": "modelos/cap11/escalador_A_cap11.joblib",
+        "escalador_y": "modelos/cap11/escalador_y_cap11.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_modelo_local.json"
+      }
+    },
+    {
+      "simbolo": "ETHUSDT",
+      "activo_base": "ETH",
+      "base_datos": "agente/datos/agente_ETHUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra/ETHUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra/ETHUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra/ETHUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_local.json"
+      }
+    },
+    {
+      "simbolo": "SOLUSDT",
+      "activo_base": "SOL",
+      "base_datos": "agente/datos/agente_SOLUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra/SOLUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra/SOLUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra/SOLUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_local.json"
+      }
+    },
+    {
+      "simbolo": "XRPUSDT",
+      "activo_base": "XRP",
+      "base_datos": "agente/datos/agente_XRPUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra/XRPUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra/XRPUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra/XRPUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_local.json"
+      }
+    },
+    {
+      "simbolo": "BNBUSDT",
+      "activo_base": "BNB",
+      "decimales_precio": 2,
+      "base_datos": "agente/datos/agente_BNBUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/BNBUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/BNBUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/BNBUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "ADAUSDT",
+      "activo_base": "ADA",
+      "decimales_precio": 4,
+      "base_datos": "agente/datos/agente_ADAUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/ADAUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/ADAUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/ADAUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "LTCUSDT",
+      "activo_base": "LTC",
+      "decimales_precio": 2,
+      "base_datos": "agente/datos/agente_LTCUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/LTCUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/LTCUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/LTCUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "TRXUSDT",
+      "activo_base": "TRX",
+      "decimales_precio": 4,
+      "base_datos": "agente/datos/agente_TRXUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/TRXUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/TRXUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/TRXUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "DOGEUSDT",
+      "activo_base": "DOGE",
+      "decimales_precio": 5,
+      "base_datos": "agente/datos/agente_DOGEUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/DOGEUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/DOGEUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/DOGEUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "MXUSDT",
+      "activo_base": "MX",
+      "decimales_precio": 3,
+      "base_datos": "agente/datos/agente_MXUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/MXUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/MXUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/MXUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "FILUSDT",
+      "activo_base": "FIL",
+      "decimales_precio": 4,
+      "base_datos": "agente/datos/agente_FILUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/FILUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/FILUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/FILUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "BCHUSDT",
+      "activo_base": "BCH",
+      "decimales_precio": 2,
+      "base_datos": "agente/datos/agente_BCHUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/BCHUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/BCHUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/BCHUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "ZECUSDT",
+      "activo_base": "ZEC",
+      "decimales_precio": 2,
+      "base_datos": "agente/datos/agente_ZECUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/ZECUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/ZECUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/ZECUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "NEARUSDT",
+      "activo_base": "NEAR",
+      "decimales_precio": 3,
+      "base_datos": "agente/datos/agente_NEARUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote2/NEARUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote2/NEARUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote2/NEARUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote2_local.json"
+      }
+    },
+    {
+      "simbolo": "DOTUSDT",
+      "activo_base": "DOT",
+      "decimales_precio": 4,
+      "base_datos": "agente/datos/agente_DOTUSDT.sqlite3",
+      "modelo": {
+        "config_congelada": "activos_extra_lote3/DOTUSDT/resultados/configuracion_final_congelada.json",
+        "escalador_x": "activos_extra_lote3/DOTUSDT/modelos/escalador_x_rezagos20.joblib",
+        "escalador_y": "activos_extra_lote3/DOTUSDT/modelos/escalador_y.joblib",
+        "verificacion_local": "agente/evidencia/verificacion_activos_extra_lote3_local.json"
+      }
+    }
+  ],
+  "nota_activos": "Cada activo es un agente independiente: su propio modelo congelado (neuronas, δ y estrategia C o D elegidos con su VA), su propia base SQLite y tres carteras de capital_inicial cada una. Riesgo, Paper, LLM y ciclo son comunes. Los ciclos de todos los activos corren uno tras otro (BTC primero). La base de BTC es la misma de la v1.0–v1.2. XRPUSDT se retiró en la v1.4 (el LLM no terminaba su respuesta) y regresó en la v1.5 con el límite de tokens; conserva su base y su bitácora. v1.6: diez activos más (lote 2, elegidos por una regla de volumen fijada antes de entrenar; ver activos_extra_lote2/resultados/seleccion_activos.json). GOLD(PAXG)USDT se eligió por un error de nombre en la regla y se excluyó antes de ver sus resultados. decimales_precio: decimales de los precios en el texto del LLM (2 por defecto). v1.7: DOTUSDT (lote 3) reemplaza a GOLD(PAXG)USDT, elegido con la regla del lote 2 corregida (ver activos_extra_lote3/resultados/seleccion_activos.json)."
+}
