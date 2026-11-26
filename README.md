@@ -6,17 +6,33 @@ Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico
 
 **Informe del proyecto final:** [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) (o en PDF: [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf)).
 
+**Presentación ejecutiva:** [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf).
+
+---
+
+## Cumplimiento de la entrega
+
+| Indicación de la entrega | Dónde se cumple |
+|---|---|
+| 1. Presentación ejecutiva del sistema | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) (12 diapositivas) |
+| 2. Git con el código del sistema | Este repositorio: [`agente/backend/`](agente/backend/) (FastAPI), [`agente/frontend/`](agente/frontend/) (React + TypeScript), modelos, notebooks y datos |
+| 3. README completo con versiones y avances | Este archivo: [Versiones de la app](#versiones-de-la-app) y [Avances del proyecto](#avances-del-proyecto); detalle en [`agente/CHANGELOG.md`](agente/CHANGELOG.md) |
+| 4. Datos reales de MEXC | [Datos reales de MEXC](#datos-reales-de-mexc): velas diarias, reglas del par y precio actual leídos de la API pública de MEXC |
+| 5. Operaciones y PnL | [Operaciones y PnL](#operaciones-y-pnl) y pestaña **Operaciones** de la interfaz ([captura](agente/evidencia/capturas/02_operaciones_paper.png)) |
+
 ---
 
 ## Resultados en vivo (15 activos, datos al 25 nov 2026)
 
 Cada activo tiene tres carteras de 50,000 USDT con el mismo periodo y costos:
 
-| Cartera | Rendimiento neto | Drawdown máx. | Órdenes | Win Rate |
-|---|---|---|---|---|
-| Sin LLM (estrategia del modelo + riesgo) | **+0.26 %** | −0.93 % | 13 | 80 % (4 de 5) |
-| Con LLM (propuesta del LLM + el mismo riesgo) | **−5.70 %** | −7.47 % | 32 | 0 % (0 de 9) |
-| Comprar y mantener | **−4.41 %** | −7.04 % | 15 | — |
+| Cartera | Saldo final (USDT) | PnL neto (USDT) | Rendimiento neto | Drawdown máx. | Órdenes | Win Rate |
+|---|---|---|---|---|---|---|
+| Sin LLM (estrategia del modelo + riesgo) | 751,975.51 | **+1,975.51** | **+0.26 %** | −0.93 % | 13 | 80 % (4 de 5) |
+| Con LLM (propuesta del LLM + el mismo riesgo) | 707,218.32 | **−42,781.68** | **−5.70 %** | −7.47 % | 32 | 0 % (0 de 9) |
+| Comprar y mantener | 716,919.76 | **−33,080.24** | **−4.41 %** | −7.04 % | 15 | — |
+
+Capital inicial: 750,000 USDT por cartera (15 activos × 50,000). Costo 0 %, como pide el protocolo.
 
 En este periodo el LLM no aportó valor:
 - Nunca propuso vender.
@@ -41,6 +57,101 @@ Ver la sección 10 del [informe](Informe_Proyecto_Final_Agente_IA.md).
 | ![Resumen](agente/evidencia/capturas/01_resumen_control_y_propuesta.png) | ![Red neuronal](agente/evidencia/capturas/06_red_neuronal.png) |
 
 Más capturas (decisiones y órdenes, salud del sistema, auditoría y bitácora) en [`agente/evidencia/capturas/`](agente/evidencia/capturas/).
+
+---
+
+## Datos reales de MEXC
+
+El backend consume la API pública de MEXC (`https://api.mexc.com`), sin clave de trading:
+
+| Endpoint | Uso | Dónde se ve |
+|---|---|---|
+| `GET /api/v3/klines` | Velas diarias cerradas (00:00 UTC) de los 15 pares: entrada del modelo, SMA20, volatilidad y precio de ejecución Paper | Pestañas Resumen, Mercado, Escáner y Estrategia; columna `fecha_vela` de [`ciclos.csv`](agente/registros/ciclos.csv) |
+| `GET /api/v3/exchangeInfo` | Paso de cantidad, precisión y monto mínimo de cada par, que respeta el simulador | Validación de cada orden Paper |
+| `GET /api/v3/ticker/price` | Precio actual de los 15 pares (en caché 30 s), solo informativo | Pestaña Operaciones (precio actual y PnL a precio actual) |
+| `GET /api/v3/ping`, `GET /api/v3/time` | Salud de la conexión y hora del servidor | Sistema → Salud |
+
+Cada ciclo guarda la fecha de la vela usada y la antigüedad del dato; si el dato tiene más de 26 h, el agente no opera.
+
+**Cuenta demo de MEXC:** pendiente de revisión con el profesor. La API de MEXC no ofrece cuenta de prueba (sandbox): se conecta directo a la cuenta real, y la demo de MEXC solo existe en la web de futuros. Por eso, y porque el protocolo pide no enviar órdenes reales, las compras y ventas se ejecutan en el simulador Paper propio con precios reales de MEXC.
+
+---
+
+## Operaciones y PnL
+
+La pestaña **Operaciones** de la interfaz suma los 15 activos de la cartera elegida y muestra:
+- saldo total, PnL neto, PnL realizado y no realizado, efectivo e invertido;
+- posiciones abiertas, con fecha y precio de compra, precio actual de MEXC, stop móvil y PnL;
+- historial de operaciones cerradas, con motivo de salida y PnL.
+
+PnL al cierre de la vela del 25 nov 2026 (datos en vivo):
+
+| Cartera | PnL realizado (USDT) | PnL no realizado (USDT) | PnL neto (USDT) |
+|---|---|---|---|
+| Sin LLM | +1,997.13 | −21.62 | **+1,975.51** |
+| Con LLM | −40,402.16 | −2,379.52 | **−42,781.68** |
+| Comprar y mantener | 0.00 | −33,080.24 | **−33,080.24** |
+
+Operaciones cerradas en vivo:
+
+| Activo | Cartera | Compra | Precio compra | Venta | Precio venta | PnL (USDT) | Salida |
+|---|---|---|---|---|---|---|---|
+| SOLUSDT | Sin LLM | 17 nov | 75.19 | 20 nov | 68.88 | −4,196.02 | Stop móvil |
+| BNBUSDT | Sin LLM | 20 nov | 540.91 | 21 nov | 548.62 | +712.68 | Señal del modelo |
+| ETHUSDT | Sin LLM | 20 nov | 1,623.12 | 21 nov | 1,685.70 | +1,927.76 | Señal del modelo |
+| ZECUSDT | Sin LLM | 20 nov | 759.52 | 21 nov | 780.22 | +1,362.70 | Señal del modelo |
+| ZECUSDT | Sin LLM | 24 nov | 739.71 | 25 nov | 771.25 | +2,190.01 | Señal del modelo |
+| BTCUSDT | Con LLM | 14 nov | 64,142.08 | 20 nov | 58,954.52 | −4,043.80 | Stop móvil |
+| ETHUSDT | Con LLM | 17 nov | 1,824.97 | 20 nov | 1,623.12 | −5,530.23 | Stop móvil |
+| SOLUSDT | Con LLM | 17 nov | 75.19 | 20 nov | 68.88 | −4,196.02 | Stop móvil |
+| BNBUSDT | Con LLM | 19 nov | 580.15 | 20 nov | 540.91 | −3,381.86 | Stop móvil |
+| NEARUSDT | Con LLM | 19 nov | 3.2077 | 20 nov | 2.8508 | −5,563.18 | Stop móvil |
+| ZECUSDT | Con LLM | 19 nov | 894.37 | 20 nov | 759.52 | −7,538.79 | Stop móvil |
+| DOTUSDT | Con LLM | 19 nov | 0.7130 | 21 nov | 0.6526 | −4,235.62 | Stop móvil |
+| FILUSDT | Con LLM | 19 nov | 0.5766 | 21 nov | 0.5203 | −4,882.07 | Stop móvil |
+| TRXUSDT | Con LLM | 19 nov | 0.3105 | 25 nov | 0.3041 | −1,030.59 | Stop móvil |
+
+Todas las órdenes (ejecutadas y rechazadas), con fecha, precio, monto y motivo, están en [`ordenes.csv`](agente/registros/ordenes.csv); las operaciones cerradas, incluida la del replay, en [`operaciones_cerradas.csv`](agente/registros/operaciones_cerradas.csv); el saldo diario de cada cartera, en [`serie_patrimonio_total.csv`](agente/registros/serie_patrimonio_total.csv).
+
+---
+
+## Versiones de la app
+
+Cada modificación al programa sube la versión. El número está en [`agente/config/agente.json`](agente/config/agente.json), aparece en la barra superior de la interfaz y se guarda en cada ciclo. Detalle completo en [`agente/CHANGELOG.md`](agente/CHANGELOG.md).
+
+| Versión | Fecha | Cambios principales | Pruebas |
+|---|---|---|---|
+| v1.0 | 15 nov 2026 | Versión base: backend FastAPI con API key, ensamble LSTM de BTC, LLM local en Ollama detrás de un gateway, motor de riesgo, simulador Paper, SQLite, tres carteras y la interfaz con sus 7 pestañas. Primer ciclo en vivo: vela del 14 nov | 43 |
+| v1.1 | 16 nov 2026 | Instancia de demostración separada (`AGENTE_CONFIG`) para probar los nueve errores sin tocar los ciclos en vivo | 44 |
+| v1.2 | 16 nov 2026 | Base propia para la demostración de JSON inválido | 44 |
+| v1.3 | 17 nov 2026 | Multi-activo: ETH, SOL y XRP con modelo, base, carteras y control propios; huellas SHA-256 de modelos; selector de activo | 62 |
+| v1.4 | 17 nov 2026 | XRP retirado tras fallar su primer ciclo (Ollama no respondió); el agente se pausó sin operar | 60 |
+| v1.5 | 19 nov 2026 | Límite de 400 tokens en las respuestas del LLM (causa del fallo de XRP); XRP regresa | 68 |
+| v1.6 | 19 nov 2026 | Diez activos más elegidos por regla de volumen (14 pares); decimales de precio por activo | 90 |
+| v1.7 | 19 nov 2026 | DOT reemplaza al token respaldado por oro elegido por error: 15 pares | 92 |
+| v1.8 | 20 nov 2026 | Pestaña Operaciones rediseñada: saldo total, PnL, posiciones abiertas, historial y precio actual de MEXC | 96 |
+| v1.9 | 20 nov 2026 | Botón «Rearmar todos los bloqueados» y regla diaria de rearme del límite de pérdida | 97 |
+
+---
+
+## Avances del proyecto
+
+| Fecha | Avance |
+|---|---|
+| 5 nov 2026 | Avance 1 (capítulo 7): descarga de BTC/USDT de MEXC, auditoría, partición TR/VA/TE y referencias. Avance 2 (capítulo 8): MLP y LSTM entrenados en GPU T4 |
+| 6 nov 2026 | Avance 3 (capítulo 9): ventanas expansivas y umbrales |
+| 7 nov 2026 | Avance 4 (capítulo 10): especificación del entorno del agente y pruebas de abuso |
+| 12 nov 2026 | Avance 5 (capítulo 11): indicadores, estrategia D, configuración congelada y evaluación única en TE; informe de la práctica |
+| 15 nov 2026 | Agente v1.0; replay histórico de BTC (5–14 nov) y primer ciclo en vivo |
+| 16 nov 2026 | Demostración de los nueve escenarios de error (v1.1–v1.2) |
+| 17 nov 2026 | Agente multi-activo con ETH, SOL y XRP (v1.3–v1.4) |
+| 19 nov 2026 | 15 activos (v1.5–v1.7) |
+| 20 nov 2026 | Pestaña Operaciones y rearme de bloqueos (v1.8–v1.9) |
+| 14–25 nov 2026 | Ciclos diarios en vivo: 114 ciclos válidos en los 15 activos, más 10 de replay en BTC |
+| 25 nov 2026 | Exportación de registros, evidencia de Ollama local y pruebas, capturas, informe final y repositorio público |
+| 26 nov 2026 | Presentación ejecutiva; README con versiones, avances, datos de MEXC, operaciones y PnL |
+
+Las fechas de los avances de la práctica son las de su ejecución en Colab T4 (UTC), registradas en [`evidencia_t4/`](evidencia_t4/).
 
 ---
 
@@ -108,6 +219,7 @@ python agente/exportar_registros.py      # exporta las bases a CSV y calcula las
 | Carpeta o archivo | Contenido |
 |---|---|
 | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
+| [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) | Presentación ejecutiva del sistema |
 | [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM y activos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v1.9) |
 | [`agente/registros/`](agente/registros/) | Registros del agente en CSV (ciclos, decisiones, órdenes, patrimonio y eventos) y métricas calculadas |
 | [`agente/evidencia/`](agente/evidencia/) | Verificación de los modelos en la computadora local, replay histórico de BTC y demostración de los nueve errores |
