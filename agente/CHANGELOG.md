@@ -3,6 +3,42 @@
 Cada modificación al programa sube la versión (1.1, 1.2, …). El número está en `config/agente.json` (`"version"`),
 aparece en la barra superior de la interfaz y se guarda en cada ciclo (campo `version` de la observación) y en el evento de arranque.
 
+## v2.0 — 26 de noviembre de 2026
+
+**Laboratorio de señales con avisos por correo.** Por indicación del profesor, el sistema deja de presentarse como un agente
+con saldos: en realidad no compra nada, así que la interfaz ya no muestra saldos ni carteras. Ahora es un laboratorio que
+analiza los 15 pares cada día y **avisa por correo** cuando el modelo da señal de compra (o de venta) en algún activo, para
+que el usuario decida si compra a mano en MEXC.
+
+- **Disparador:** la estrategia del modelo de cada activo (la cartera *sin LLM*), después del motor de riesgo. Si compra, llega un
+  aviso de compra con el cierre, el pronóstico frente a δ y el stop móvil sugerido; si vende (por señal del modelo o por stop),
+  llega un aviso de venta con el motivo. El LLM no dispara avisos (en vivo no aportó valor; ver informe).
+- **Canal principal: correo** (`backend/app/notificaciones.py`, `NotificadorCorreo`), por SMTP con TLS a Gmail (`smtp.gmail.com:465`)
+  y una contraseña de aplicación. Solo se permiten servidores SMTP conocidos (Gmail y Office 365). Asunto:
+  «Laboratorio DL · señal de COMPRA en LTCUSDT (vela 2026-11-25)». Usuario, contraseña de aplicación y destino van solo en `.env`
+  (`CORREO_USUARIO`, `CORREO_CONTRASENA_APP`, `CORREO_DESTINO`); nunca en el repositorio, la interfaz ni la bitácora (las
+  direcciones se muestran enmascaradas y la contraseña se borra de cualquier respuesta guardada).
+- **WhatsApp como alternativa (deshabilitada):** primero se intentó WhatsApp. CallMeBot tenía el cupo lleno y la WhatsApp Cloud API
+  de Meta necesita una plantilla aprobada (hasta 24 h) para escribir fuera de la ventana de 24 h, así que se cambió a correo. El
+  código de WhatsApp (proveedores `meta` y `callmebot`, con envío como texto si la plantilla aún no está aprobada) se conserva y se
+  activa con `notificaciones.whatsapp.habilitado` si el correo está deshabilitado.
+- **Sin duplicados:** cada aviso queda en la nueva tabla `notificaciones` de la base del activo, con (modo, vela, tipo) único. Un
+  reinicio o un ciclo repetido no manda dos veces el mismo aviso. El replay nunca avisa.
+- **Un fallo del aviso no cambia nada del ciclo:** hasta dos intentos con espera creciente (una contraseña o un destinatario
+  rechazados no se reintentan); si fallan, se registra el evento `notificacion_fallo`, el aviso queda como *fallido* y el agente
+  sigue corriendo con las mismas decisiones.
+- **API:** `GET /api/senales` (señal del modelo de cada activo en su último ciclo, señal activa con precio de entrada y stop, y aviso
+  de esa vela; sin saldos), `GET /api/notificaciones` (historial de avisos) y `POST /api/notificaciones/prueba` (aviso de prueba).
+  Sección `notificaciones` en `config/agente.json`; las configuraciones de demostración no la tienen (avisos deshabilitados).
+- **Interfaz:** nueva pestaña **Señales** (la primera): señales de compra y venta del día, señales activas, estado de los avisos,
+  botón de aviso de prueba, tabla por activo e historial de avisos. Se quitaron los saldos de la barra superior, las columnas de
+  saldo de la tabla de activos, las tarjetas de carteras del Resumen, la curva de patrimonio y la fila de patrimonio final de
+  Estrategia, y la pestaña Operaciones deja de mostrarse. La barra dice «LABORATORIO» y «sin órdenes · avisos por correo».
+- **Lo que no cambia:** modelos, estrategia, motor de riesgo, LLM y ciclo diario. La simulación Paper sigue por dentro, solo como
+  evaluación de la señal (bloque 16 del protocolo: comparación sin LLM, con LLM y comprar y mantener); sus métricas siguen en
+  `agente/registros/` y en el informe. Las órdenes reales siguen bloqueadas.
+- 119 pruebas automatizadas (22 nuevas en `tests/test_notificaciones.py`: correo, WhatsApp de Meta y CallMeBot, sin red real).
+
 ## v1.9 — 20 de noviembre de 2026
 
 Botón **«Rearmar todos los bloqueados»** y regla de operación para el control de pérdida diaria.

@@ -42,7 +42,7 @@ def test_config_quince_activos_btc_sin_cambios(cfg_completa):
     assert len({a["base_datos"] for a in activos}) == 15
     assert [a["mercado"]["decimales_precio"] for a in activos[:4]] == [2, 2, 2, 2]     # los cuatro anteriores no cambian
     assert all(a["riesgo"] == cfg_completa["riesgo"] and a["paper"] == cfg_completa["paper"] for a in activos)
-    assert cfg_completa["version"] == "1.9"
+    assert cfg_completa["version"] == "2.0"
 
 
 def test_config_sin_activos_se_usa_tal_cual(cfg):

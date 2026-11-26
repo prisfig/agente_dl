@@ -155,3 +155,7 @@ pre.json { margin: 0; font: 12px/1.5 var(--mono); color: #b9c4d6; white-space: p
 .barra-riesgo .pista span { display: block; height: 100%; border-radius: 99px; min-width: 2px; }
 .tabla.reglas td:first-child { width: 120px; white-space: nowrap; vertical-align: top; }
 .tabla.ops td { white-space: nowrap; }
+
+/* v2.0 · laboratorio de señales: fila con señal de compra del día */
+.senal-compra td { background: var(--panel-2); }
+.senal-compra td:first-child { box-shadow: inset 3px 0 0 var(--verde); }

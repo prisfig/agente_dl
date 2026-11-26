@@ -48,7 +48,7 @@ export default function Mercado({ modo, estado }: { modo: Modo; estado: Estado |
       </div>
 
       <div className="seccion">Precio y decisiones</div>
-      <Tarjeta titulo={`${datos.simbolo} diario · cierre, SMA20 y operaciones Paper`} extra={
+      <Tarjeta titulo={`${datos.simbolo} diario · cierre, SMA20 y señales (simulación interna)`} extra={
         <span style={{ display: "flex", gap: 8 }}>
           <span className="selector">{[60, 90, 180].map((n) => <button key={n} className={limite === n ? "activo" : ""} onClick={() => setLimite(n)}>{n} d</button>)}</span>
           <span className="selector">{Object.keys(NOMBRES_CARTERA).map((n) => <button key={n} className={cartera === n ? "activo" : ""} onClick={() => setCartera(n)}>{NOMBRES_CARTERA[n].split(" · ")[0]}</button>)}</span>

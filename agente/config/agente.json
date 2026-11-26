@@ -1,5 +1,5 @@
 {
-  "version": "1.9",
+  "version": "2.0",
   "descripcion": "Configuración del agente. El LLM no puede modificarla; solo se cambia editando este archivo con el backend apagado. Su SHA-256 se guarda en cada ciclo.",
   "mercado": {
     "url_base": "https://api.mexc.com",
@@ -65,6 +65,33 @@
   "ciclo": {
     "minutos_tras_cierre": 5,
     "revision_cada_s": 60
+  },
+  "notificaciones": {
+    "correo": {
+      "habilitado": true,
+      "smtp_host": "smtp.gmail.com",
+      "puerto": 465,
+      "avisar_ventas": true,
+      "reintentos": 2,
+      "espera_inicial_s": 3.0,
+      "timeout_s": 20,
+      "nota": "v2.0: laboratorio de señales. Tras cada ciclo en vivo, si la estrategia del modelo (cartera sin LLM, después del motor de riesgo) compra o vende, se envía un correo para decidir si operar a mano en MEXC. Usuario, contraseña de aplicación y destino solo en .env (CORREO_USUARIO, CORREO_CONTRASENA_APP, CORREO_DESTINO). El laboratorio no envía órdenes."
+    },
+    "whatsapp": {
+      "habilitado": false,
+      "proveedor": "meta",
+      "url": "https://graph.facebook.com",
+      "version_api": "v25.0",
+      "plantilla": {
+        "nombre": "senal_laboratorio",
+        "idioma": "es_MX"
+      },
+      "avisar_ventas": true,
+      "reintentos": 2,
+      "espera_inicial_s": 3.0,
+      "timeout_s": 20,
+      "nota": "Alternativa al correo (deshabilitada): avisos por WhatsApp. Solo se usa si el correo está deshabilitado. Proveedor 'meta' (WhatsApp Cloud API oficial, número de prueba) o 'callmebot'. Los secretos van solo en .env. Sin 'plantilla', Meta solo entrega texto dentro de las 24 h posteriores al último mensaje del usuario. El laboratorio no envía órdenes."
+    }
   },
   "activos": [
     {

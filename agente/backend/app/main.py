@@ -31,6 +31,7 @@ from .metricas import metricas
 from .operaciones import CARTERAS as CARTERAS_OPERACIONES, comparacion_carteras, rearmar_bloqueados, resumen_operaciones
 from .mexc import ClienteMEXC, ErrorMercado
 from .modelo import ErrorDatos, ModeloPronostico, calcular_variables
+from .notificaciones import construir_notificador as _construir_notificador, contenido_alerta
 
 Modo = Literal["vivo", "replay"]
 
@@ -43,7 +44,7 @@ class SolicitudReplay(BaseModel):
 
 def construir_agente(cfg: dict, secretos: Secretos, db: Base | None = None, modelo: ModeloPronostico | None = None,
                      mercado: ClienteMEXC | None = None, llm: ClienteLLM | None = None,
-                     lock: threading.Lock | None = None) -> Agente:
+                     lock: threading.Lock | None = None, notificador=None) -> Agente:
     m, l = cfg["mercado"], cfg["llm"]
     db = db or Base(RAIZ / cfg["base_datos"])
     mercado = mercado or ClienteMEXC(m["url_base"], m["simbolo"], m["intervalo"], m["reintentos"], m["espera_inicial_s"], m["timeout_s"])
@@ -54,16 +55,24 @@ def construir_agente(cfg: dict, secretos: Secretos, db: Base | None = None, mode
                             max_llamadas_herramientas=l["max_llamadas_herramientas"],
                             max_tokens_respuesta=l.get("max_tokens_respuesta"),
                             opciones_extra=l.get("opciones_extra"))
-    return Agente(cfg, db, mercado, modelo, llm, lock=lock)
+    return Agente(cfg, db, mercado, modelo, llm, lock=lock, notificador=notificador)
+
+
+def construir_notificador(cfg: dict):
+    """v2.0: un solo notificador para todos los activos: correo (principal) o WhatsApp (alternativa).
+    Sin la sección `notificaciones` (p. ej., las instancias de demostración) los avisos quedan deshabilitados."""
+    return _construir_notificador(cfg.get("notificaciones"))
 
 
 def construir_agentes(cfg: dict, secretos: Secretos) -> dict[str, Agente]:
-    """Un agente por activo, en el orden de la configuración. Comparten el cliente del LLM y un candado de ciclo."""
+    """Un agente por activo, en el orden de la configuración. Comparten el cliente del LLM, el notificador
+    de avisos (v2.0) y un candado de ciclo."""
     lock = threading.Lock()
     agentes: dict[str, Agente] = {}
     llm = None
+    notificador = construir_notificador(cfg)
     for c in activos_de(cfg):
-        a = construir_agente(c, secretos, llm=llm, lock=lock)
+        a = construir_agente(c, secretos, llm=llm, lock=lock, notificador=notificador)
         llm = a.llm
         agentes[a.simbolo] = a
     return agentes
@@ -80,6 +89,11 @@ def crear_app(cfg: dict | None = None, secretos: Secretos | None = None, agente:
     async def ciclo_de_vida(app: FastAPI):
         app.state.agentes = agentes or construir_agentes(cfg, secretos)
         app.state.agente = next(iter(app.state.agentes.values()))          # activo principal
+        app.state.notificador = app.state.agente.notificador
+        if app.state.notificador is not None:
+            app.state.agente.db.evento("info", "notificacion", "Avisos por " + app.state.notificador.nombre_canal + ": "
+                                       + app.state.notificador.estado()["estado"] + ".",
+                                       detalle=app.state.notificador.estado())
         app.state.programador = Programador(list(app.state.agentes.values()), cfg["ciclo"]["revision_cada_s"],
                                             cfg["ciclo"]["minutos_tras_cierre"])
         if programar:
@@ -408,6 +422,68 @@ def crear_app(cfg: dict | None = None, secretos: Secretos | None = None, agente:
             comun = {k: v for k, v in verif.items() if k != "activos"}
             verif = {**comun, **verif["activos"][a.simbolo]} if a.simbolo in verif["activos"] else None
         return {"simbolo": a.simbolo, "verificacion_modelo": verif, "archivos": archivos}
+
+    # ------------------------------------------------------------------ v2.0: laboratorio de señales y alertas
+    @app.get("/api/senales", dependencies=protegido)
+    def senales(request: Request):
+        """Señal del modelo de cada activo en su último ciclo en vivo y el aviso (correo) de esa vela.
+        Sin saldos: el laboratorio no compra; la simulación Paper sigue por dentro solo como evaluación."""
+        filas = []
+        for a in request.app.state.agentes.values():
+            ultimo = a.db.ultimo_ciclo("vivo")
+            fila = {"simbolo": a.simbolo, "estado": a.db.estado()["estado"], "estrategia": a.modelo.estrategia,
+                    "delta": a.modelo.delta, "decimales": a.dec}
+            if ultimo:
+                o = ultimo["observacion"]
+                dec = a.db.consultar("SELECT propuesta, accion_final, motivos FROM decisiones WHERE ciclo_id=? AND cartera='sin_llm'",
+                                     (ultimo["id"],))
+                c = a.db.carteras("vivo").get("sin_llm")
+                alerta = a.db.consultar("SELECT tipo, estado, ts_utc FROM notificaciones WHERE modo='vivo' AND fecha_vela=? "
+                                        "ORDER BY id DESC LIMIT 1", (ultimo["fecha_vela"],))
+                fila.update({
+                    "fecha_vela": ultimo["fecha_vela"], "cierre": o.get("cierre"), "pronostico": o.get("pronostico"),
+                    "senal": o.get("senal") or o.get("senal_d"), "cierre_sobre_sma20": o.get("cierre_sobre_sma20"),
+                    "dist_sma20": o.get("dist_sma20"),
+                    "accion": dec[0]["accion_final"] if dec else None,
+                    "motivos": json.loads(dec[0]["motivos"] or "[]") if dec else [],
+                    "senal_activa": bool(c and c.en_posicion),
+                    "precio_entrada": c.precio_entrada if c and c.en_posicion else None,
+                    "stop": c.stop if c and c.en_posicion else None,
+                    "alerta": alerta[0] if alerta else None,
+                })
+            filas.append(fila)
+        notif = getattr(request.app.state, "notificador", None)
+        return {"senales": filas, "avisos": notif.estado() if notif else {"estado": "deshabilitado"},
+                "proximo_ciclo_utc": request.app.state.programador.proximo_ciclo()}
+
+    @app.get("/api/notificaciones", dependencies=protegido)
+    def notificaciones(request: Request, limite: int = Query(100, le=1000)):
+        filas = []
+        for a in request.app.state.agentes.values():
+            for f in a.db.consultar("SELECT * FROM notificaciones ORDER BY id DESC LIMIT ?", (limite,)):
+                filas.append({"simbolo": a.simbolo, **f})
+        filas.sort(key=lambda f: (f["ts_utc"], f["simbolo"]), reverse=True)
+        notif = getattr(request.app.state, "notificador", None)
+        return {"avisos": notif.estado() if notif else {"estado": "deshabilitado"}, "alertas": filas[:limite]}
+
+    @app.post("/api/notificaciones/prueba", dependencies=protegido)
+    def notificacion_prueba(request: Request):
+        """Envía un aviso de prueba por el canal configurado (no corresponde a ninguna señal real)."""
+        notif = getattr(request.app.state, "notificador", None)
+        if notif is None or not notif.activo:
+            estado = notif.estado()["estado"] if notif else "deshabilitado"
+            faltan = ", ".join(notif.estado()["secretos_requeridos"]) if notif else "los datos del canal de avisos"
+            raise HTTPException(409, f"Avisos {estado}: revisa {faltan} en .env "
+                                     "y la sección notificaciones de la configuración.")
+        hoy = datetime.now(timezone.utc).date().isoformat()
+        texto, params = contenido_alerta("LABORATORIO", "prueba", hoy, {}, 2, None, "")
+        texto = texto.replace("señal de PRUEBA", "mensaje de prueba")
+        params[-1] = "Mensaje de prueba: los avisos funcionan."
+        ok, detalle, intentos = notif.enviar(texto, params)
+        request.app.state.agente.db.evento("info" if ok else "aviso", "notificacion_prueba",
+                                           f"Aviso de prueba por {notif.nombre_canal}: {'enviado' if ok else 'falló'} ({detalle}).",
+                                           detalle={"intentos": intentos})
+        return {"enviado": ok, "detalle": detalle, "intentos": intentos}
 
     @app.get("/api/config", dependencies=protegido)
     def config():

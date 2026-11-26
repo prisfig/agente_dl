@@ -6,12 +6,13 @@ import Auditoria from "./pestanas/Auditoria";
 import Escaner from "./pestanas/Escaner";
 import Estrategia from "./pestanas/Estrategia";
 import Mercado from "./pestanas/Mercado";
-import Operaciones from "./pestanas/Operaciones";
+import Senales from "./pestanas/Senales";
 import Resumen from "./pestanas/Resumen";
 import Sistema from "./pestanas/Sistema";
 import { fijarEstrategia, senalDe, type Estado, type Evento, type ListaActivos, type Modo } from "./tipos";
 
-const PESTANAS = ["Resumen", "Mercado", "Escáner", "Operaciones", "Estrategia", "Auditoría", "Sistema"] as const;
+// v2.0: laboratorio de señales. La pestaña Operaciones (saldos y PnL de la simulación) ya no se muestra.
+const PESTANAS = ["Señales", "Resumen", "Mercado", "Escáner", "Estrategia", "Auditoría", "Sistema"] as const;
 type Pestana = (typeof PESTANAS)[number];
 
 function Acceso({ alEntrar }: { alEntrar: () => void }) {
@@ -30,8 +31,8 @@ function Acceso({ alEntrar }: { alEntrar: () => void }) {
   return (
     <div className="acceso">
       <form className="tarjeta" onSubmit={entrar}>
-        <div className="marca" style={{ fontSize: 18 }}>Agente <span>DL</span> · multi-activo</div>
-        <p className="tenue chico">Simulación Paper, sin dinero real. Escribe la clave del backend (BACKEND_API_KEY de agente/.env).
+        <div className="marca" style={{ fontSize: 18 }}>Laboratorio <span>DL</span> · señales</div>
+        <p className="tenue chico">Laboratorio de señales: no compra ni maneja saldos; avisa por correo. Escribe la clave del backend (BACKEND_API_KEY de agente/.env).
           No se guarda en el código: solo en esta pestaña del navegador mientras esté abierta.</p>
         <input type="password" autoFocus value={clave} onChange={(e) => setClave(e.target.value)} placeholder="Clave de API" />
         {error && <div className="aviso rojo">{error}</div>}
@@ -43,7 +44,7 @@ function Acceso({ alEntrar }: { alEntrar: () => void }) {
 
 export default function App() {
   const [dentro, setDentro] = useState(!!sesion.clave());
-  const [pestana, setPestana] = useState<Pestana>("Resumen");
+  const [pestana, setPestana] = useState<Pestana>("Señales");
   const [modo, setModo] = useState<Modo>("vivo");
   const [activo, setActivo] = useState(activoSel.obtener());
 
@@ -64,7 +65,6 @@ export default function App() {
   const e = estado.datos && (!activo || estado.datos.activo === activo) ? estado.datos : null;
   if (e) fijarEstrategia(e.estrategia);
   const ciclo = e?.ultimo_ciclo;
-  const conLlm = e?.carteras?.con_llm;
   const errores24h = (errores.datos ?? []).filter((x) => Date.now() - new Date(x.ts_utc).getTime() < 86_400_000).length;
   const insignias: Partial<Record<Pestana, React.ReactNode>> = {
     Resumen: ciclo ? <span className="insignia azul">{ciclo.fecha_vela.slice(5)}</span> : null,
@@ -75,8 +75,8 @@ export default function App() {
   return (
     <>
       <header className="barra">
-        <span className="marca">Agente <span>DL</span></span>
-        <span className="selector" title="Activo: cada uno es un agente independiente con su propio modelo, carteras y control">
+        <span className="marca">Laboratorio <span>DL</span></span>
+        <span className="selector" title="Activo: cada uno tiene su propio modelo y control">
           {(lista.datos?.activos ?? []).map((a) => (
             <button key={a.simbolo} className={activo === a.simbolo ? "activo" : ""} onClick={() => elegir(a.simbolo)}>
               <span className={`punto-estado ${a.estado.estado}`} />{a.activo_base}
@@ -84,10 +84,9 @@ export default function App() {
           ))}
         </span>
         {e?.version && <span className="chip azul">v{e.version}</span>}
-        <span className="chip violeta">PAPER</span>
-        <span className="chip rojo">órdenes reales bloqueadas</span>
+        <span className="chip violeta">LABORATORIO</span>
+        <span className="chip rojo">sin órdenes · avisos por correo</span>
         <EstadoChip estado={e?.agente.estado} />
-        {conLlm && <span className="chip">con LLM: <b className="mono">{conLlm.patrimonio.toLocaleString("es-MX", { maximumFractionDigits: 0 })}</b> USDT</span>}
         {ciclo && <span className="chip">última vela <b className="mono">{ciclo.fecha_vela}</b> · {hace(ciclo.fin_utc)}</span>}
         <span className="separa" />
         <span className="selector">
@@ -111,7 +110,7 @@ export default function App() {
           activos={lista.datos} alElegir={elegir} />}
         {pestana === "Mercado" && <Mercado modo={modo} estado={e} />}
         {pestana === "Escáner" && <Escaner />}
-        {pestana === "Operaciones" && <Operaciones modo={modo} estado={e} />}
+        {pestana === "Señales" && <Senales />}
         {pestana === "Estrategia" && <Estrategia modo={modo} estado={e} />}
         {pestana === "Auditoría" && <Auditoria modo={modo} estado={e} />}
         {pestana === "Sistema" && <Sistema modo={modo} estado={e} alSalir={() => { sesion.cerrar(); setDentro(false); }} />}

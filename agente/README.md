@@ -1,4 +1,9 @@
-# Agente de IA financiero — DL para Finanzas
+# Laboratorio de señales con IA — DL para Finanzas
+
+> **v2.0 (26 nov 2026): laboratorio de señales con avisos por correo.** El sistema no compra ni maneja saldos. Cada día analiza
+> los 15 pares y, cuando el modelo de un activo da señal de compra (o de venta) y pasa el motor de riesgo, envía un correo para
+> que el usuario decida si compra a mano en MEXC. La simulación Paper sigue por dentro solo para evaluar la señal.
+> Ver [Avisos por correo](#avisos-por-correo-v20) y [`CHANGELOG.md`](CHANGELOG.md).
 
 Sistema Paper (sin dinero real) con velas diarias de MEXC para 15 pares contra USDT (BTC desde la v1.0; ETH, SOL y XRP desde la v1.3; diez más en la v1.6; DOT en la v1.7):
 datos MEXC → ensamble LSTM congelado del activo → propuesta de Ollama local → controles de riesgo deterministas → simulador Paper → SQLite → API privada → interfaz React.
@@ -42,7 +47,8 @@ React + TS (5173) ──X-API-Key──▶ Backend FastAPI (127.0.0.1:8000)
                                    ├─ Gateway Ollama (127.0.0.1:8001) ──X-API-Key──▶ Ollama local (11434)
                                    ├─ Motor de riesgo determinista (el LLM no puede saltarlo)
                                    ├─ Simulador Paper (saldo, paso de cantidad y monto mínimo del par)
-                                   └─ SQLite: ciclos, decisiones, órdenes, patrimonio, eventos y estado
+                                   ├─ SQLite: ciclos, decisiones, órdenes, patrimonio, eventos, estado y avisos
+                                   └─ Avisos (v2.0): correo por SMTP con TLS (smtp.gmail.com); WhatsApp como alternativa
 ```
 
 ## Instalación (Mac, una sola vez)
@@ -79,10 +85,15 @@ npm run dev        # abre http://127.0.0.1:5173
 ```
 
 Al abrirla se escribe la clave `BACKEND_API_KEY` de `agente/.env`; vive solo en la sesión del navegador (no está en el código ni en variables VITE).
-Pestañas: Resumen, Mercado, Escáner, Operaciones, Estrategia, Auditoría y Sistema (Salud, Cerebro, Red neuronal en vivo, Ajustes).
+Pestañas (v2.0): **Señales**, Resumen, Mercado, Escáner, Estrategia, Auditoría y Sistema (Salud, Cerebro, Red neuronal en vivo, Ajustes).
 El selector de activo (los 15 pares) cambia todas las pestañas al activo elegido; Resumen muestra además una tabla con todos.
 
-**Operaciones** (desde la v1.8) suma los 15 activos de la cartera elegida (Sin LLM, Con LLM o Comprar y mantener):
+**Señales** (desde la v2.0) es la pestaña principal: señales de compra y venta del día, señales activas (precio de entrada y
+stop sugerido), estado de los avisos con un botón de aviso de prueba, la señal del modelo de cada activo y el
+historial de avisos. La alimentan `GET /api/senales` y `GET /api/notificaciones`. Desde la v2.0 la interfaz no muestra saldos:
+se quitaron de la barra superior, de la tabla de activos, del Resumen y de Estrategia (que conserva la comparación en porcentajes).
+
+**Operaciones** (v1.8 a v1.9; desde la v2.0 ya no se muestra, pero `GET /api/operaciones` sigue disponible para el informe) sumaba los 15 activos de la cartera elegida (Sin LLM, Con LLM o Comprar y mantener):
 modo de trading (Paper, precios reales de MEXC, órdenes simuladas), saldo total y PnL realizado y no realizado,
 drawdown, acierto, profit factor, panel de riesgo con los límites del motor, posiciones abiertas (cuándo y a qué precio
 compró, stop móvil y distancia, PnL al cierre y a precio actual), historial de operaciones cerradas con su motivo de
@@ -92,7 +103,7 @@ actual de MEXC (`/api/v3/ticker/price`, en caché 30 s) es solo informativo.
 
 **Control de pérdida diaria.** Si el patrimonio de un activo cae 3 % o más entre dos cierres, se bloquean sus compras hasta que
 el usuario lo rearme. Regla de operación (fijada el 20 nov): después de cada ciclo se rearman todos los bloqueados con el botón
-«Rearmar todos los bloqueados» (Resumen u Operaciones; `POST /api/riesgo/rearmar_todos`, desde la v1.9). Cada rearme queda
+«Rearmar todos los bloqueados» (Resumen; `POST /api/riesgo/rearmar_todos`, desde la v1.9). Cada rearme queda
 como evento de control en la base del activo.
 
 ## Pruebas automatizadas
@@ -101,12 +112,37 @@ como evento de control en la base del activo.
 cd agente/backend && python -m pytest
 ```
 
-97 pruebas. Cubren los controles de riesgo, el simulador, la autenticación y los nueve escenarios de error del protocolo:
+119 pruebas. Cubren los controles de riesgo, el simulador, la autenticación y los nueve escenarios de error del protocolo:
 MEXC sin respuesta o con límite de solicitudes, dato atrasado, Ollama detenido, JSON inválido, clave incorrecta,
 saldo insuficiente, evento duplicado, reinicio del backend y botón de detención. Desde la v1.3 también el funcionamiento
 multi-activo (estrategias C y D, control independiente, ciclos uno tras otro, huellas de los modelos) y que los modelos
 reales de los 14 activos extra repiten sus predicciones de TE y el pronóstico del 18 nov del notebook. Desde la v1.8,
 que el resumen de operaciones cuadra (saldo = capital + realizado + no realizado = efectivo + invertido) e identifica las salidas por stop.
+Desde la v2.0, los avisos: llegan una sola vez por compra o venta del modelo, no los dispara el LLM, el replay no avisa, un
+fallo del correo (o de WhatsApp) no pausa ni cambia el ciclo, solo se habla con servidores permitidos y la contraseña, el token y
+las direcciones no aparecen en la bitácora ni en la API (`tests/test_notificaciones.py`, sin red real).
+
+## Avisos por correo (v2.0)
+
+Los avisos se envían por correo con Gmail (SMTP con TLS). Configuración, una sola vez (unos 5 minutos):
+
+1. En tu cuenta de Google activa la **verificación en dos pasos** (si no la tienes).
+2. Entra a [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords), crea una contraseña de aplicación
+   llamada, por ejemplo, «Laboratorio DL» y copia las 16 letras. No es tu contraseña normal y la puedes revocar cuando quieras.
+3. En `agente/.env` escribe `CORREO_USUARIO` (tu Gmail), `CORREO_CONTRASENA_APP` (las 16 letras; los espacios se ignoran) y,
+   si quieres recibirlos en otra dirección, `CORREO_DESTINO`.
+4. Reinicia el backend y, en la pestaña **Señales**, pulsa «Enviar aviso de prueba». Revisa también la carpeta de spam la primera vez.
+
+Cuándo llega un aviso: después del ciclo diario de cada activo, si la estrategia del modelo (cartera *sin LLM*, tras el motor de
+riesgo) compra o vende. El asunto dice, por ejemplo, «Laboratorio DL · señal de COMPRA en LTCUSDT (vela 2026-11-25)» y el cuerpo
+trae el cierre, el pronóstico frente a δ y el stop móvil sugerido (compra) o el motivo (venta). Sin los datos del correo, el
+laboratorio funciona igual y los avisos quedan como *sin configurar*. Para apagarlos: `notificaciones.correo.habilitado = false`
+en `config/agente.json`.
+
+**Alternativa por WhatsApp (deshabilitada).** El código también puede avisar por WhatsApp con la WhatsApp Cloud API de Meta
+(`notificaciones.whatsapp`, con `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` y `WHATSAPP_DESTINO`) o con CallMeBot. Se usa solo si
+el correo está deshabilitado. Fuera de las 24 h posteriores al último mensaje del usuario, Meta solo entrega plantillas aprobadas
+(`senal_laboratorio`, es_MX, 7 parámetros); mientras no esté aprobada, el aviso se manda como texto.
 
 ## Verificación de los modelos en esta computadora
 

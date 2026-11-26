@@ -54,6 +54,13 @@ CREATE TABLE IF NOT EXISTS patrimonio (
   efectivo REAL NOT NULL, btc REAL NOT NULL, precio REAL NOT NULL, patrimonio REAL NOT NULL,
   PRIMARY KEY (modo, cartera, fecha_vela)
 );
+CREATE TABLE IF NOT EXISTS notificaciones (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  modo TEXT NOT NULL, fecha_vela TEXT NOT NULL, tipo TEXT NOT NULL,
+  canal TEXT NOT NULL, estado TEXT NOT NULL, texto TEXT NOT NULL,
+  intentos INTEGER NOT NULL DEFAULT 0, detalle TEXT, ts_utc TEXT NOT NULL,
+  UNIQUE (modo, fecha_vela, tipo)
+);
 CREATE TABLE IF NOT EXISTS eventos (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   ts_utc TEXT NOT NULL, modo TEXT, nivel TEXT NOT NULL, tipo TEXT NOT NULL,

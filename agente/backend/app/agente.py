@@ -17,6 +17,7 @@ from .db import Base
 from .llm import ClienteLLM, ErrorLLM, herramientas_para
 from .mexc import DIA_MS, ClienteMEXC, ErrorMercado, Vela, ahora_ms, verificar_antiguedad
 from .modelo import ErrorDatos, ModeloPronostico, calcular_variables
+from .notificaciones import notificar_ciclo
 from .paper import COMPRAR, MANTENER, VENDER, Cartera, MotorPaper, ResultadoOrden
 from .riesgo import DecisionRiesgo, LimitesRiesgo, accion_estrategia, evaluar, nuevo_stop
 
@@ -30,7 +31,7 @@ def acciones_validas(en_posicion: bool) -> list[str]:
 
 class Agente:
     def __init__(self, cfg: dict, db: Base, mercado: ClienteMEXC, modelo: ModeloPronostico, llm: ClienteLLM,
-                 reloj=ahora_ms, lock: threading.Lock | None = None):
+                 reloj=ahora_ms, lock: threading.Lock | None = None, notificador=None):
         self.cfg = cfg
         self.simbolo = cfg["mercado"]["simbolo"]
         self.activo_base = cfg["mercado"].get("activo_base", "BTC")
@@ -42,6 +43,7 @@ class Agente:
         self.modelo = modelo
         self.llm = llm
         self.reloj = reloj
+        self.notificador = notificador   # v2.0: avisos por correo o WhatsApp (None = sin avisos)
         self.limites = LimitesRiesgo.desde_config(cfg["riesgo"])
         self.reglas_par = mercado.reglas_par(cfg["mercado"]["reglas_par_respaldo"])
         p = cfg["paper"]
@@ -121,6 +123,11 @@ class Agente:
             r = self._procesar("vivo", velas, registrar_duplicado, {"antiguedad_horas": round(horas, 2)})
             if r["resultado"] == "completo":
                 self.db.cambiar_estado("corriendo", "ciclo completado", errores=0)
+                # v2.0: aviso (correo) si la estrategia del modelo compra o vende. Un fallo no cambia nada del ciclo.
+                try:
+                    r["alerta"] = notificar_ciclo(self.notificador, self.db, self.simbolo, self.dec, r)
+                except Exception as e:
+                    self.db.evento("aviso", "notificacion_fallo", f"Error inesperado al preparar el aviso: {e!r}", "vivo")
             return r
         except ERRORES_ESPERADOS as e:
             return self._fallo("vivo", e)
@@ -232,6 +239,9 @@ class Agente:
                 "propuesta_llm": res.propuesta.accion, "justificacion": res.propuesta.justificacion,
                 "decisiones": {c.nombre: {"propuesta": p, "final": d.accion, "aprobada": d.aprobada, "motivos": d.motivos}
                                for c, p, d, _ in registros},
+                "observacion": {"cierre": obs.cierre, "pronostico": obs.pronostico, "delta": obs.delta, "sma20": obs.sma20,
+                                "senal": obs.senal, "estrategia": obs.estrategia},
+                "stops": {c.nombre: c.stop for c, _, _, _ in registros},
                 "latencia_llm_s": round(res.latencia_s, 2)}
 
     def _guardar_orden(self, con, ciclo_id, modo, fecha, cartera, orden: ResultadoOrden, motivo_extra):

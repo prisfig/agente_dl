@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { enviar } from "../api";
 import { Acc, BotonConfirmar, BotonRearmarTodos, EstadoChip, Kpi, Tarjeta } from "../componentes/Ui";
-import { hace, horaLocal, num, pct, precio, usdt } from "../formato";
-import { NOMBRES_CARTERA, REGLAS, senalDe, type Estado, type ListaActivos, type Modo } from "../tipos";
+import { hace, horaLocal, num, pct, precio } from "../formato";
+import { REGLAS, senalDe, type Estado, type ListaActivos, type Modo } from "../tipos";
 
 function TablaActivos({ lista, actual, alElegir }: { lista: ListaActivos; actual: string; alElegir: (s: string) => void }) {
-  const cap = lista.capital_inicial;
-  const celda = (v: number | undefined) => v == null ? <span className="tenue">—</span>
-    : <span className={v >= cap ? "positivo" : "negativo"}>{usdt(v, 0)} <span className="chico">({pct(v / cap - 1)})</span></span>;
   return (
-    <Tarjeta titulo="Activos · cada uno es un agente independiente (modelo, carteras de 50,000 USDT y control propios)">
+    <Tarjeta titulo="Activos · cada uno tiene su propio modelo validado y control (v2.0: sin saldos a la vista)">
       <table className="tabla">
         <thead><tr><th>Activo</th><th>Estado</th><th>Modelo</th><th>Estrategia (VA)</th><th className="der">δ</th><th>Última vela</th>
-          <th className="der">Pronóstico</th><th>Señal</th><th className="der">Sin LLM</th><th className="der">Con LLM</th><th className="der">Comprar y mantener</th><th className="der">Ciclos</th></tr></thead>
+          <th className="der">Pronóstico</th><th>Señal</th><th className="der">Ciclos</th></tr></thead>
         <tbody>
           {lista.activos.map((a) => (
             <tr key={a.simbolo} className={`fila-activo ${a.simbolo === actual ? "elegida" : ""}`} onClick={() => alElegir(a.simbolo)}>
@@ -24,9 +21,6 @@ function TablaActivos({ lista, actual, alElegir }: { lista: ListaActivos; actual
               <td className="mono">{a.ultima_vela ?? <span className="tenue">sin ciclos</span>}</td>
               <td className="der mono">{pct(a.pronostico, 3)}</td>
               <td>{a.senal ? <span className={`accion ${a.senal === "comprar" ? "COMPRAR" : "MANTENER"}`}>{a.senal}</span> : <span className="tenue">—</span>}</td>
-              <td className="der mono">{celda(a.carteras.sin_llm)}</td>
-              <td className="der mono">{celda(a.carteras.con_llm)}</td>
-              <td className="der mono">{celda(a.carteras.comprar_y_mantener)}</td>
               <td className="der mono">{a.ciclos}</td>
             </tr>
           ))}
@@ -47,7 +41,6 @@ export default function Resumen({ estado, modo, recargar, activos, alElegir }: {
   const ag = estado.agente.estado;
   const c = estado.ultimo_ciclo;
   const o = c?.observacion;
-  const capital = estado.paper.capital_inicial;
   const decLlm = estado.decisiones.find((d) => d.cartera === "con_llm");
 
   const ejecutar = async (ruta: string, etiqueta: string) => {
@@ -130,29 +123,6 @@ export default function Resumen({ estado, modo, recargar, activos, alElegir }: {
           )}
         </>
       )}
-
-      <div className="seccion">Carteras Paper · mismo periodo y costos</div>
-      <div className="rejilla r3">
-        {["sin_llm", "con_llm", "comprar_y_mantener"].map((n) => {
-          const k = estado.carteras[n];
-          const d = estado.decisiones.find((x) => x.cartera === n);
-          if (!k) return <Tarjeta key={n} titulo={NOMBRES_CARTERA[n]}><span className="tenue">Sin ciclos todavía. Capital inicial {usdt(capital)} USDT.</span></Tarjeta>;
-          const rend = k.patrimonio / capital - 1;
-          return (
-            <Tarjeta key={n} titulo={NOMBRES_CARTERA[n]} extra={k.bloqueo_perdida ? <span className="chip ambar">compras bloqueadas</span> : null}>
-              <div className="kpi"><div className="valor">{usdt(k.patrimonio)}</div>
-                <div className={`etiqueta ${rend >= 0 ? "positivo" : "negativo"}`}>{pct(rend)} desde {usdt(capital, 0)} USDT</div></div>
-              <table className="tabla" style={{ marginTop: 10 }}><tbody>
-                <tr><td className="tenue">Posición</td><td className="der mono">{k.en_posicion ? `${k.btc.toFixed(6)} ${estado.activo_base}` : "efectivo"}</td></tr>
-                <tr><td className="tenue">Efectivo</td><td className="der mono">{usdt(k.efectivo)}</td></tr>
-                <tr><td className="tenue">Precio de entrada</td><td className="der mono">{precio(k.precio_entrada)}</td></tr>
-                <tr><td className="tenue">Stop móvil</td><td className="der mono">{precio(k.stop)}</td></tr>
-                {d && <tr><td className="tenue">Última decisión</td><td className="der"><Acc a={d.propuesta} />{d.propuesta !== d.accion_final && <><span className="flecha">→</span><Acc a={d.accion_final} /></>}</td></tr>}
-              </tbody></table>
-            </Tarjeta>
-          );
-        })}
-      </div>
 
       <div className="seccion">Límites de riesgo (configuración; el LLM no puede cambiarlos)</div>
       <div className="rejilla r4">

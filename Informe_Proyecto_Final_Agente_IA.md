@@ -1,6 +1,6 @@
 # Informe del agente de IA financiero — DL para Finanzas
 
-**Proyecto final (bloques 14–16 del protocolo).** Datos al cierre de la vela del **25 de noviembre de 2026**; versión del agente **v1.9**.
+**Proyecto final (bloques 14–16 del protocolo).** Datos al cierre de la vela del **25 de noviembre de 2026**; versión actual **v2.0** (laboratorio de señales con avisos por correo, sección 4.1); las velas hasta el 25 nov se procesaron con la v1.9.
 Todas las cifras salen de las bases SQLite del agente y se regeneran con `python agente/exportar_registros.py` (carpeta `agente/registros/`).
 
 ## 1. Resumen
@@ -39,7 +39,7 @@ React + TypeScript (5173) ──X-API-Key──▶ Backend FastAPI (127.0.0.1:80
 | Backend | FastAPI: carga modelo y escaladores, valida entradas, coordina el ciclo, API documentada en `/docs` | `agente/backend/` |
 | MEXC y modo Paper | Datos públicos de MEXC; compras y ventas solo en el simulador propio | `agente/backend/app/paper.py`; sección 4 |
 | Modelo de la práctica | Ensamble y transformaciones congelados, con versión, contrato de variables y huellas | `agente/verificar_modelo.py`, `agente/evidencia/verificacion_*.json` |
-| Pruebas automatizadas | 97 pruebas: riesgo, simulador, autenticación, nueve errores y multi-activo | `cd agente/backend && python -m pytest`; salida en `agente/evidencia/pytest_resultado.txt` |
+| Pruebas automatizadas | 119 pruebas: riesgo, simulador, autenticación, nueve errores, multi-activo y avisos | `cd agente/backend && python -m pytest`; salida en `agente/evidencia/pytest_resultado.txt` |
 
 ### Ciclo de cada activo (una vez al día, 5 minutos después del cierre de 00:00 UTC)
 
@@ -79,6 +79,20 @@ Los otros 14 activos no tienen replay. Su periodo posterior al TE (desde el 17 o
   - MEXC solo ofrece demo para futuros perpetuos, desde su web.
   - Su API se conecta directamente al entorno real y no tiene sandbox, según la FAQ de API de MEXC citada en el protocolo.
   - El protocolo pide ejecutar solo en un simulador propio, con las condiciones de capital y costo indicadas.
+
+  El 26 nov el profesor pidió revisar la conexión con la cuenta demo de MEXC; queda pendiente, en revisión con él. La única vía automática hoy sería un token de sesión del navegador con endpoints no oficiales, y no se usó por seguridad.
+
+### 4.1 Laboratorio de señales con avisos por correo (v2.0, 26 nov)
+
+Por indicación del profesor, la interfaz dejó de mostrar saldos, porque el sistema en realidad no compra nada. Desde la v2.0 funciona como laboratorio:
+
+- Después de cada ciclo en vivo, si la estrategia del modelo de un activo (la cartera sin LLM, tras el motor de riesgo) compra o vende, el backend envía un aviso por correo. El aviso incluye el activo, la vela, el cierre, el pronóstico frente a δ y el stop sugerido (compra) o el motivo (venta). El usuario decide si opera a mano en MEXC.
+- El correo sale por Gmail (SMTP con TLS) con una contraseña de aplicación. Solo se permiten servidores SMTP conocidos, y el usuario, la contraseña y el destino viven en `.env`.
+- Primero se intentó WhatsApp: CallMeBot tenía el cupo lleno y la API oficial de Meta exige una plantilla aprobada (hasta 24 h) para escribir fuera de la ventana de 24 h. Ese código se conserva como alternativa deshabilitada.
+- Cada aviso queda en la tabla `notificaciones` de la base del activo, con un único aviso por vela y tipo. Un fallo del correo no pausa el agente ni cambia sus decisiones.
+- El LLM no dispara avisos, porque en vivo no aportó valor (sección 8).
+- La simulación Paper se conserva por dentro solo para la comparación que pide el bloque 16; las cifras de las secciones 7 a 10 salen de ella.
+- Hay 22 pruebas nuevas (119 en total).
 
 ## 5. Riesgo y control humano
 
@@ -224,7 +238,7 @@ La sección 2 del protocolo pide «rentabilidad positiva +20 %» y verificar que
   - Rechazó las 18 compras no permitidas del LLM y forzó las ventas por stop.
   - Bloqueó compras tras pérdidas de 3 % o más.
   - Ningún error produjo operaciones indebidas.
-- **La ingeniería del agente cumple todos los componentes del protocolo:** datos de MEXC, modelo versionado, LLM local con API privada, UI, persistencia, nueve errores demostrados y 97 pruebas automatizadas.
+- **La ingeniería del agente cumple todos los componentes del protocolo:** datos de MEXC, modelo versionado, LLM local con API privada, UI, persistencia, nueve errores demostrados y 119 pruebas automatizadas.
 
 ## 11. Limitaciones
 
@@ -240,7 +254,7 @@ Instalación, ejecución, pruebas y verificación de los modelos: ver `agente/RE
 
 ```bash
 source .venv/bin/activate
-cd agente/backend && python -m pytest                      # 97 pruebas
+cd agente/backend && python -m pytest                      # 119 pruebas
 python agente/verificar_modelo.py                          # BTC contra Colab (desde agente_dl)
 python agente/exportar_registros.py                        # regenera agente/registros/ y las cifras de este informe
 ```
@@ -252,4 +266,4 @@ Archivos de `agente/registros/`:
 - `serie_patrimonio_total.csv`: patrimonio diario de cada cartera.
 - `ciclos.csv`, `decisiones.csv`, `ordenes.csv`, `eventos.csv` y `patrimonio.csv`: los registros completos.
 
-El historial de cambios del agente (v1.0 a v1.9) está en `agente/CHANGELOG.md`. La versión con la que se procesó cada vela queda guardada en su ciclo.
+El historial de cambios del agente (v1.0 a v2.0) está en `agente/CHANGELOG.md`. La versión con la que se procesó cada vela queda guardada en su ciclo.

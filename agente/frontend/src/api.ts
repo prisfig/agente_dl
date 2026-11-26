@@ -20,7 +20,8 @@ export const activoSel = {
 };
 export const activoBase = () => (activoSel.obtener() || "BTCUSDT").replace(/USDT$/, "");
 
-const SIN_ACTIVO = ["/api/salud", "/api/activos", "/api/escaner", "/api/config", "/api/operaciones", "/api/riesgo/rearmar_todos"];
+const SIN_ACTIVO = ["/api/salud", "/api/activos", "/api/escaner", "/api/config", "/api/operaciones", "/api/riesgo/rearmar_todos",
+  "/api/senales", "/api/notificaciones"];
 export function conActivo(ruta: string) {
   const s = activoSel.obtener();
   if (!s || !ruta.startsWith("/api/") || SIN_ACTIVO.some((r) => ruta.startsWith(r)) || /[?&]simbolo=/.test(ruta)) return ruta;
