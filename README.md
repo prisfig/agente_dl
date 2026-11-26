@@ -4,7 +4,7 @@ Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico
 
 > El agente **no envía órdenes reales**. Solo lee datos públicos de MEXC y ejecuta las compras y ventas en un simulador propio. Las claves no están en el repositorio.
 
-**Informe del proyecto final:** [`INFORME.md`](INFORME.md) (o en PDF: [`INFORME.pdf`](INFORME.pdf)).
+**Informe del proyecto final:** [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) (o en PDF: [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf)).
 
 ---
 
@@ -23,14 +23,14 @@ En este periodo el LLM no aportó valor:
 - Propuso comprar sin señal del modelo en 20 de 114 ciclos.
 - Todas sus salidas fueron por stop.
 
-El motor de riesgo lo contuvo: rechazó 18 acciones no permitidas y forzó 9 ventas por stop. El detalle por activo y el análisis de las justificaciones del LLM están en el [informe](INFORME.md).
+El motor de riesgo lo contuvo: rechazó 18 acciones no permitidas y forzó 9 ventas por stop. El detalle por activo y el análisis de las justificaciones del LLM están en el [informe](Informe_Proyecto_Final_Agente_IA.md).
 
 **Meta de +20 %:** no se alcanzó; los periodos evaluados fueron bajistas y el protocolo solo permite comprar o estar en efectivo. Lo que sí se logró:
 - El modelo profundo superó a la regresión lineal: en TE, −3.25 % frente a −27.98 %, con un RMSE menor.
 - Protegió el capital frente a comprar y mantener: −3.25 % frente a −31.57 % en TE de BTC, mejor en 12 de 15 activos.
 - En vivo, la cartera del modelo fue la única positiva (+0.26 %).
 
-Ver la sección 10 del [informe](INFORME.md).
+Ver la sección 10 del [informe](Informe_Proyecto_Final_Agente_IA.md).
 
 ### Capturas de la interfaz
 
@@ -107,7 +107,7 @@ python agente/exportar_registros.py      # exporta las bases a CSV y calcula las
 
 | Carpeta o archivo | Contenido |
 |---|---|
-| [`INFORME.md`](INFORME.md) · [`INFORME.pdf`](INFORME.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
+| [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
 | [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM y activos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v1.9) |
 | [`agente/registros/`](agente/registros/) | Registros del agente en CSV (ciclos, decisiones, órdenes, patrimonio y eventos) y métricas calculadas |
 | [`agente/evidencia/`](agente/evidencia/) | Verificación de los modelos en la computadora local, replay histórico de BTC y demostración de los nueve errores |
@@ -160,8 +160,8 @@ Los notebooks conservan sus salidas y se pueden abrir en Colab (solo lectura) de
 | Pruebas automatizadas de controles | [`agente/backend/tests/`](agente/backend/tests/); salida en [`agente/evidencia/pytest_resultado.txt`](agente/evidencia/pytest_resultado.txt) |
 | Al menos 20 ciclos válidos (replay separado) | [`agente/registros/ciclos.csv`](agente/registros/ciclos.csv) (columna `modo`) y [`agente/evidencia/replay_v2_2026-11-05_a_14.csv`](agente/evidencia/replay_v2_2026-11-05_a_14.csv) |
 | Nueve errores demostrados | [`agente/evidencia/demostracion_errores.md`](agente/evidencia/demostracion_errores.md) |
-| Comparación sin LLM / con LLM / comprar y mantener | [`INFORME.md`](INFORME.md) y [`agente/registros/metricas_por_activo.csv`](agente/registros/metricas_por_activo.csv) |
-| Informe breve | [`INFORME.md`](INFORME.md) · [`INFORME.pdf`](INFORME.pdf) |
+| Comparación sin LLM / con LLM / comprar y mantener | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) y [`agente/registros/metricas_por_activo.csv`](agente/registros/metricas_por_activo.csv) |
+| Informe breve | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) |
 
 ---
 
