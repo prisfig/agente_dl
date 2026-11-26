@@ -17,6 +17,8 @@ Capital inicial: 750,000 (15 × 50,000). Cada activo cuenta como 50,000 en efect
 
 **Conclusión:** en este periodo el LLM **no aporta valor**. La cartera con LLM quedó por debajo de la estrategia del modelo y también de comprar y mantener. El motor de riesgo sí cumplió su función: rechazó 18 compras no permitidas y forzó 9 ventas por stop. El protocolo no exige que el LLM mejore el resultado; aquí se documenta por qué no lo hizo.
 
+**Meta de +20 %:** no se alcanzó en ningún periodo. Lo que sí se demostró es que el modelo profundo supera a la regresión lineal y protege el capital frente a comprar y mantener en un mercado bajista. El detalle está en la sección 10.
+
 ## 2. Arquitectura y componentes obligatorios
 
 ```
@@ -31,13 +33,13 @@ React + TypeScript (5173) ──X-API-Key──▶ Backend FastAPI (127.0.0.1:80
 
 | Componente del protocolo | Cómo se cumple | Evidencia |
 |---|---|---|
-| LLM local con Ollama | `llama3.2:3b` en Ollama 0.40.16, MacBook Air M1 (8 GB). Sin inferencia en la nube | Sistema → Salud; latencia guardada en cada ciclo |
+| LLM local con Ollama | `llama3.2:3b` en Ollama 0.40.16, MacBook Air M1 (8 GB). Sin inferencia en la nube: con el Wi‑Fi apagado, el modelo respondió una consulta en 11.9 s (11.3 s fueron la carga del modelo) | `agente/evidencia/ollama_local.txt`; latencia guardada en cada ciclo |
 | API privada del LLM | Gateway propio con `X-API-Key`; rechaza claves ausentes o incorrectas (HTTP 401) | Escenarios de clave incorrecta en `agente/evidencia/demostracion_errores.md` |
-| UI React y TypeScript | Activo, fecha de la vela, pronóstico, indicadores, propuesta, motivo, riesgo, posición y patrimonio; iniciar, pausar y detener | `agente/frontend/` |
+| UI React y TypeScript | Activo, fecha de la vela, pronóstico, indicadores, propuesta, motivo, riesgo, posición y patrimonio; iniciar, pausar y detener | `agente/frontend/`; capturas en `agente/evidencia/capturas/` |
 | Backend | FastAPI: carga modelo y escaladores, valida entradas, coordina el ciclo, API documentada en `/docs` | `agente/backend/` |
 | MEXC y modo Paper | Datos públicos de MEXC; compras y ventas solo en el simulador propio | `agente/backend/app/paper.py`; sección 4 |
 | Modelo de la práctica | Ensamble y transformaciones congelados, con versión, contrato de variables y huellas | `agente/verificar_modelo.py`, `agente/evidencia/verificacion_*.json` |
-| Pruebas automatizadas | 97 pruebas: riesgo, simulador, autenticación, nueve errores y multi-activo | `cd agente/backend && python -m pytest` |
+| Pruebas automatizadas | 97 pruebas: riesgo, simulador, autenticación, nueve errores y multi-activo | `cd agente/backend && python -m pytest`; salida en `agente/evidencia/pytest_resultado.txt` |
 
 ### Ciclo de cada activo (una vez al día, 5 minutos después del cierre de 00:00 UTC)
 
@@ -196,7 +198,35 @@ Cada activo se entrenó y validó con sus propios datos (TR/VA/TE 70/15/15), con
 - En VA, la LSTM no superó al pronóstico cero por más que el ruido en BNB, LTC, MX, FIL, BCH y NEAR (`resumen_lstm_VA.csv` del lote 2). Se mantuvieron porque la regla de selección se fijó antes de entrenar; es una limitación del modelo, no del agente.
 - **Selección de activos.** Los lotes 2 y 3 se eligieron con una regla de volumen de 24 h fijada antes de entrenar. GOLD(PAXG)USDT salió elegido por un error en el filtro de tokens respaldados por oro (MEXC lo nombra `GOLD(PAXG)`) y se excluyó antes de ver sus resultados. DOTUSDT lo reemplazó con la regla corregida. Hay una nota en `activos_extra_lote2/resultados/correccion_seleccion.md`.
 
-## 10. Limitaciones
+## 10. Meta de rentabilidad (+20 %) y lo que sí se logró
+
+La sección 2 del protocolo pide «rentabilidad positiva +20 %» y verificar que el modelo profundo supere a la regresión lineal. Los bloques 14 y 16 indican que no se exige rentabilidad positiva y que no se exige que el LLM mejore el resultado. Aun así, se reporta sin ambigüedad: **la meta de +20 % no se alcanzó en ningún periodo**.
+
+| Periodo | Mejor resultado del sistema | Comprar y mantener |
+|---|---|---|
+| TE de BTC (ago 2025 – nov 2026, costo 0.10 %) | −3.25 % (estrategia D) | −31.57 % |
+| Replay de BTC (5–14 nov) | 0.00 % (sin LLM) | −15.70 % |
+| En vivo, 15 activos (14–25 nov, costo 0 %) | +0.26 % (sin LLM) | −4.41 % |
+
+**Por qué no se llegó.** Los tres periodos coincidieron con un mercado bajista. En TE, BTC cayó 31.6 %, y en los 114 ciclos en vivo el cierre estuvo por debajo de su SMA20. El protocolo solo permite posiciones compradas o efectivo (sin ventas en corto ni apalancamiento). Con esa restricción, en un mercado que cae lo mejor que puede hacer una estrategia es quedarse en efectivo, no ganar 20 %.
+
+**Lo que sí funcionó:**
+- **El modelo profundo superó a la regresión lineal**, que es la otra mitad del requisito de la sección 2:
+  - Error en TE: RMSE de la LSTM 0.022319 frente a 0.022362 de la regresión lineal.
+  - Trading en TE con los mismos costos: −3.25 % frente a −27.98 %, con drawdown de −25.4 % frente a −39.1 % (`resultados/resultados_trading_TE.csv`).
+  - Sin costos, la misma estrategia D habría ganado +1.91 % en TE.
+- **El sistema protegió el capital frente a comprar y mantener:**
+  - En TE de BTC perdió 28.3 puntos menos (−3.25 % frente a −31.57 %).
+  - En TE superó a comprar y mantener en 12 de 15 activos, y fue positivo en SOL (+6.74 %), ZEC (+12.70 %) y NEAR (+6.73 %).
+  - En el replay evitó la caída de −15.70 %.
+- **En vivo, la cartera del modelo sin LLM fue la única positiva:** +0.26 % frente a −4.41 % de comprar y mantener, con drawdown de −0.93 % frente a −7.04 %. Ganó 4 de sus 5 operaciones cerradas (80 %) y evitó la caída de 4 % a 15 % del 20 nov al estar en efectivo.
+- **El motor de riesgo funcionó como se diseñó:**
+  - Rechazó las 18 compras no permitidas del LLM y forzó las ventas por stop.
+  - Bloqueó compras tras pérdidas de 3 % o más.
+  - Ningún error produjo operaciones indebidas.
+- **La ingeniería del agente cumple todos los componentes del protocolo:** datos de MEXC, modelo versionado, LLM local con API privada, UI, persistencia, nueve errores demostrados y 97 pruebas automatizadas.
+
+## 11. Limitaciones
 
 - El periodo en vivo es corto (7 a 12 ciclos por activo) y estuvo dominado por un mercado bajista, así que los resultados no se pueden generalizar.
 - Los activos empezaron en fechas distintas (14, 17 o 19 nov). La comparación entre carteras es justa dentro de cada activo; el total suma periodos distintos.
@@ -204,7 +234,7 @@ Cada activo se entrenó y validó con sus propios datos (TR/VA/TE 70/15/15), con
 - Se usó un LLM pequeño (3 mil millones de parámetros) por el hardware de 8 GB. Un modelo mayor podría razonar mejor, pero se mantuvo el mismo durante toda la prueba.
 - La cartera con LLM usa el mismo control de riesgo que la del modelo. Por eso la diferencia entre ambas mide la decisión de entrada del LLM, no un riesgo distinto.
 
-## 11. Reproducción
+## 12. Reproducción
 
 Instalación, ejecución, pruebas y verificación de los modelos: ver `agente/README.md`. Resumen:
 

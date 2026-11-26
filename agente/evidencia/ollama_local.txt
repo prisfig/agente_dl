@@ -1,0 +1,21 @@
+Fecha: Wed Nov 25 21:18:09 CST 2026
+Equipo: MacBookAir10,1 · Apple M1 · 8 GB · macOS 26.6.2
+
+== Wi-Fi
+Wi-Fi Power (en0): Off
+
+== ollama --version
+ollama version is 0.40.16
+
+== ollama list
+NAME           ID              SIZE      MODIFIED    
+llama3.2:3b    a80c4f17acd5    2.0 GB    12 days ago    
+
+== Consulta local a llama3.2:3b
+{"model":"llama3.2:3b","created_at":"2026-11-26T03:18:22.108956Z","response":"¿En qué puedo ayudarte?","done":true,"done_reason":"stop","context":[128006,9125,128007,271,38766,1303,33025,2696,25,6790,220,2366,18,271,128009,128006,882,128007,271,1079,76149,13839,25,10619,128009,128006,78191,128007,271,31282,1737,43388,81915,59237,20430,30],"total_duration":11834868625,"load_duration":11258251917,"prompt_eval_count":30,"prompt_eval_cached_count":0,"prompt_eval_duration":222495000,"eval_count":8,"eval_duration":329047000}real 11.87
+user 0.00
+sys 0.04
+
+== ollama ps
+NAME           ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              
+llama3.2:3b    a80c4f17acd5    2.6 GB    100% GPU     4096       llamacpp    4 minutes from now    
