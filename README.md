@@ -2,7 +2,7 @@
 
 Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico de BTC/USDT, y el **proyecto final**: un sistema de IA que analiza cada día 15 pares de MEXC con el modelo LSTM de cada activo, un LLM local (Ollama), controles de riesgo deterministas y una interfaz web.
 
-> **Versión actual: v2.1, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales.
+> **Versión actual: v2.2, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales. Desde la v2.2, **Señales** muestra un activo a la vez con sus gráficos e indicadores financieros, y **Mercado** permite comparar los 15 pares.
 >
 > El sistema **no envía órdenes reales**. Solo lee datos públicos de MEXC; la simulación Paper sigue por dentro para evaluar la señal. Las claves y las direcciones de correo no están en el repositorio.
 
@@ -55,7 +55,7 @@ Operación manual opcional en MEXC. El laboratorio no envía órdenes.
 - **Servicio:** correo por Gmail (SMTP con TLS) con una contraseña de aplicación. Configuración en [`agente/README.md`](agente/README.md#avisos-por-correo-v20). Primero se intentó WhatsApp; se cambió a correo porque el bot gratuito (CallMeBot) tenía el cupo lleno y la API de Meta necesita una plantilla aprobada. El código de WhatsApp se conserva como alternativa deshabilitada.
 - **Seguridad:** el usuario, la contraseña de aplicación y el destino solo viven en `agente/.env`; el backend solo se conecta a servidores SMTP permitidos con TLS y nunca guarda la contraseña ni las direcciones completas en la bitácora.
 - **Sin duplicados ni efectos en el ciclo:** cada aviso se guarda en la base del activo y no se repite para la misma vela; si el correo falla, el agente sigue igual y lo registra.
-Pestaña **Señales** (v2.1) después del ciclo del 26 nov: ZEC con señal de compra y aviso enviado; LTC y BCH con señales activas (precio de entrada y stop sugerido); abajo, el historial de avisos.
+Pestaña **Señales** de la v2.1 (antes de mostrar un activo a la vez), después del ciclo del 26 nov: ZEC con señal de compra y aviso enviado; LTC y BCH con señales activas (precio de entrada y stop sugerido); abajo, el historial de avisos.
 
 ![Pestaña Señales de la v2.1, vela 2026-11-26](agente/evidencia/capturas/09_pestana_senales_v21.png)
 
@@ -180,7 +180,8 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | v1.8 | 20 nov 2026 | Pestaña Operaciones rediseñada: saldo total, PnL, posiciones abiertas, historial y precio actual de MEXC | 96 |
 | v1.9 | 20 nov 2026 | Botón «Rearmar todos los bloqueados» y regla diaria de rearme del límite de pérdida | 97 |
 | v2.0 | 26 nov 2026 | **Laboratorio de señales:** avisos por correo cuando el modelo compra o vende (WhatsApp queda como alternativa); pestaña Señales; la interfaz ya no muestra saldos (indicación del profesor). La simulación sigue por dentro solo para evaluar | 119 |
-| **v2.1** | 26 nov 2026 | Pestaña **PnL simulado** (la antigua Operaciones) para presentar operaciones y PnL, marcada como simulación con capital virtual: no son compras reales ni saldos de una cuenta. Solo cambia la interfaz | 119 |
+| v2.1 | 26 nov 2026 | Pestaña **PnL simulado** (la antigua Operaciones) para presentar operaciones y PnL, marcada como simulación con capital virtual: no son compras reales ni saldos de una cuenta. Solo cambia la interfaz | 119 |
+| **v2.2** | 27 nov 2026 | Por revisión del profesor: **Señales** muestra solo el activo elegido, con gráfica de precio (SMA20, SMA50, Bollinger), pronóstico frente a δ, RSI, tabla de indicadores financieros e historial de su señal y avisos; **Mercado** agrega la comparación de los 15 pares (rendimiento base 100, tabla ordenable y correlaciones). Ruta nueva de solo lectura `GET /api/historial_senal` | 120 |
 
 ---
 
@@ -200,6 +201,7 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | 14–26 nov 2026 | Ciclos diarios en vivo: 129 ciclos válidos en los 15 activos, más 10 de replay en BTC |
 | 25 nov 2026 | Exportación de registros, evidencia de Ollama local y pruebas, capturas, informe final y repositorio público |
 | 26 nov 2026 | Presentación ejecutiva; README con versiones, avances, datos de MEXC, operaciones y PnL. Por indicación del profesor, v2.0: laboratorio de señales sin saldos y con avisos por correo. La conexión con la cuenta demo de MEXC queda pendiente (en revisión con el profesor). Primer aviso real por correo (compra de ZEC, vela del 26 nov). v2.1: pestaña PnL simulado. Evaluación frente a la rúbrica del profesor |
+| 27 nov 2026 | Revisión del profesor. v2.2: Señales por activo con sus gráficos e indicadores financieros, y Mercado para comparar los 15 pares |
 
 Las fechas de los avances de la práctica son las de su ejecución en Colab T4 (UTC), registradas en [`evidencia_t4/`](evidencia_t4/).
 
@@ -259,7 +261,7 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000
 npm install && npm run dev               # http://127.0.0.1:5173
 
 # Pruebas y registros
-cd agente/backend && python -m pytest    # 119 pruebas automatizadas
+cd agente/backend && python -m pytest    # 120 pruebas automatizadas
 python agente/exportar_registros.py      # exporta las bases a CSV y calcula las métricas del informe
 ```
 
@@ -272,7 +274,7 @@ python agente/exportar_registros.py      # exporta las bases a CSV y calcula las
 | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
 | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) | Presentación ejecutiva del sistema |
 | [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) | Evaluación del sistema frente a la rúbrica del profesor (26 nov) y justificación de lo que no se agregó |
-| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.1) |
+| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.2) |
 | [`agente/registros/`](agente/registros/) | Registros del agente en CSV (ciclos, decisiones, órdenes, patrimonio y eventos) y métricas calculadas |
 | [`agente/evidencia/`](agente/evidencia/) | Verificación de los modelos en la computadora local, replay histórico de BTC y demostración de los nueve errores |
 | [`notebooks/`](notebooks/) | Notebooks de Colab: avances de la práctica (`practica/`) y entrenamiento de los activos extra |

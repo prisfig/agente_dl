@@ -1,5 +1,5 @@
 {
-  "version": "2.1",
+  "version": "2.2",
   "descripcion": "Configuración del agente. El LLM no puede modificarla; solo se cambia editando este archivo con el backend apagado. Su SHA-256 se guarda en cada ciclo.",
   "mercado": {
     "url_base": "https://api.mexc.com",

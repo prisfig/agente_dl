@@ -456,6 +456,27 @@ def crear_app(cfg: dict | None = None, secretos: Secretos | None = None, agente:
         return {"senales": filas, "avisos": notif.estado() if notif else {"estado": "deshabilitado"},
                 "proximo_ciclo_utc": request.app.state.programador.proximo_ciclo()}
 
+    @app.get("/api/historial_senal", dependencies=protegido)
+    def historial_senal(request: Request, simbolo: str | None = None, modo: Modo = "vivo", limite: int = Query(60, ge=1, le=500)):
+        """v2.2: la señal del modelo de UN activo en cada ciclo (pronóstico frente a δ, tendencia, volatilidad, acción y aviso).
+        Solo lectura y sin saldos: es la historia de la señal, no de una cuenta."""
+        a = ag(request, simbolo)
+        ciclos = a.db.consultar("SELECT id, fecha_vela, observacion FROM ciclos WHERE modo=? ORDER BY fecha_vela DESC LIMIT ?",
+                                (modo, limite))
+        filas = []
+        for c in reversed(ciclos):
+            o = json.loads(c["observacion"])
+            dec = a.db.consultar("SELECT accion_final, motivos FROM decisiones WHERE ciclo_id=? AND cartera='sin_llm'", (c["id"],))
+            aviso = a.db.consultar("SELECT tipo, estado FROM notificaciones WHERE modo=? AND fecha_vela=? ORDER BY id DESC LIMIT 1",
+                                   (modo, c["fecha_vela"]))
+            filas.append({"fecha_vela": c["fecha_vela"], "cierre": o.get("cierre"), "pronostico": o.get("pronostico"),
+                          "delta": o.get("delta", a.modelo.delta), "senal": o.get("senal") or o.get("senal_d"),
+                          "sma20": o.get("sma20"), "dist_sma20": o.get("dist_sma20"), "vol20": o.get("vol20"),
+                          "accion": dec[0]["accion_final"] if dec else None,
+                          "motivos": json.loads(dec[0]["motivos"] or "[]") if dec else [],
+                          "aviso": aviso[0] if aviso else None})
+        return {"simbolo": a.simbolo, "estrategia": a.modelo.estrategia, "delta": a.modelo.delta, "decimales": a.dec, "filas": filas}
+
     @app.get("/api/notificaciones", dependencies=protegido)
     def notificaciones(request: Request, limite: int = Query(100, le=1000)):
         filas = []

@@ -159,3 +159,12 @@ pre.json { margin: 0; font: 12px/1.5 var(--mono); color: #b9c4d6; white-space: p
 /* v2.0 · laboratorio de señales: fila con señal de compra del día */
 .senal-compra td { background: var(--panel-2); }
 .senal-compra td:first-child { box-shadow: inset 3px 0 0 var(--verde); }
+
+/* ---------- v2.2: comparar activos (Mercado) ---------- */
+.chips-comparar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
+.chips-comparar .chip { cursor: pointer; background: transparent; }
+.chips-comparar .chip.elegido { font-weight: 700; background: var(--panel-2); }
+.tabla th .orden { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 0; text-align: inherit; }
+.tabla th .orden:hover { color: var(--texto); text-decoration: underline; }
+.tabla.correlacion td, .tabla.correlacion th { padding: 5px 7px; font-size: 12px; }
+.tabla td.der, .tabla td.mono { white-space: nowrap; }

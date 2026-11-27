@@ -112,7 +112,7 @@ export default function App() {
           activos={lista.datos} alElegir={elegir} />}
         {pestana === "Mercado" && <Mercado modo={modo} estado={e} />}
         {pestana === "Escáner" && <Escaner />}
-        {pestana === "Señales" && <Senales />}
+        {pestana === "Señales" && <Senales estado={e} />}
         {pestana === "PnL simulado" && <Operaciones modo={modo} estado={e} />}
         {pestana === "Estrategia" && <Estrategia modo={modo} estado={e} />}
         {pestana === "Auditoría" && <Auditoria modo={modo} estado={e} />}

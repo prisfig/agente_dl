@@ -193,6 +193,22 @@ def test_api_senales_sin_saldos_y_mensaje_de_prueba(cfg_completa, secretos, tmp_
         assert p["enviado"] is True and "prueba" in bot.mensajes[-1]["text"]
 
 
+def test_api_historial_senal_de_un_activo_sin_saldos(cfg_completa, secretos, tmp_path, gateway):
+    """v2.2: la pestaña Señales muestra la historia de la señal del activo elegido."""
+    a, _ = agente(cfg_completa, tmp_path, gateway, [0.01], notificador(CallMeBotFalso()))
+    a.ciclo_vivo()
+    with TestClient(crear_app(cfg_completa, secretos, agentes={"BTCUSDT": a}, programar=False)) as cli:
+        assert cli.get("/api/historial_senal").status_code == 401
+        d = cli.get("/api/historial_senal?simbolo=BTCUSDT", headers=H).json()
+        assert d["simbolo"] == "BTCUSDT" and d["estrategia"] in ("C", "D") and len(d["filas"]) == 1
+        f = d["filas"][0]
+        assert f["accion"] == "COMPRAR" and f["pronostico"] > f["delta"] and f["aviso"]["estado"] == "enviada"
+        assert f["vol20"] is not None and f["sma20"] is not None
+        for clave in ("efectivo", "patrimonio", "saldo", "carteras"):
+            assert clave not in f and clave not in d
+        assert cli.get("/api/historial_senal?simbolo=BTCUSDT&modo=replay", headers=H).json()["filas"] == []
+
+
 def test_api_prueba_sin_configurar_responde_409(cfg_completa, secretos, tmp_path, gateway):
     a, _ = agente(cfg_completa, tmp_path, gateway, [0.01], notificador(CallMeBotFalso(), cred=None))
     with TestClient(crear_app(cfg_completa, secretos, agentes={"BTCUSDT": a}, programar=False)) as cli:

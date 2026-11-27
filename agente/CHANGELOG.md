@@ -3,6 +3,26 @@
 Cada modificación al programa sube la versión (1.1, 1.2, …). El número está en `config/agente.json` (`"version"`),
 aparece en la barra superior de la interfaz y se guarda en cada ciclo (campo `version` de la observación) y en el evento de arranque.
 
+## v2.2 — 27 de noviembre de 2026
+
+**Señales por activo y Mercado para comparar** (revisión del profesor del 27 nov).
+
+- **Señales** ya no muestra una tabla con los 15 activos: muestra solo el activo elegido en la barra superior, con
+  - su acción de hoy, cierre, pronóstico frente a δ, distancia a la SMA20, volatilidad de 20 días y la señal activa (entrada, PnL
+    desde la entrada y stop sugerido);
+  - gráfica de precio con SMA20, SMA50, Bandas de Bollinger (20, 2), entradas y salidas de la señal y el stop;
+  - gráfica del pronóstico del modelo frente a su umbral δ en cada ciclo, y gráfica del RSI (14);
+  - tabla de indicadores financieros (pronóstico, SMA20, volatilidad, variación 1/7/30 d, SMA50, Bollinger, RSI, ATR, rango
+    de 30 d, caída máxima y volumen), marcando cuáles usa el modelo y cuáles son solo de referencia;
+  - historial de la señal del activo y sus avisos (con el botón de aviso de prueba).
+- **Mercado** conserva la vista del activo y agrega **Comparar activos**: rendimiento relativo (base 100) de hasta 6 activos
+  elegidos, tabla comparativa de los 15 pares ordenable por columna (variación 1/7/30 d y del periodo, volatilidad, caída
+  máxima, distancia a la SMA20, RSI, volumen, correlación con BTC y señal de hoy) y matriz de correlación de rendimientos diarios.
+- Los indicadores nuevos se calculan en la interfaz (`frontend/src/indicadores.ts`) con las velas cerradas de MEXC; no cambian
+  el modelo, las señales, el riesgo ni los avisos.
+- **API:** nueva ruta de solo lectura `GET /api/historial_senal?simbolo=…` (señal del modelo del activo en cada ciclo:
+  pronóstico, δ, SMA20, volatilidad, acción y aviso; sin saldos). Una prueba nueva: 120 en total.
+
 ## v2.1 — 26 de noviembre de 2026 (noche)
 
 **Pestaña «PnL simulado».** La entrega pide presentar operaciones y PnL, y la v2.0 había quitado todos los saldos de la

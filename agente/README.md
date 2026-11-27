@@ -85,13 +85,17 @@ npm run dev        # abre http://127.0.0.1:5173
 ```
 
 Al abrirla se escribe la clave `BACKEND_API_KEY` de `agente/.env`; vive solo en la sesión del navegador (no está en el código ni en variables VITE).
-Pestañas (v2.1): **Señales**, **PnL simulado**, Resumen, Mercado, Escáner, Estrategia, Auditoría y Sistema (Salud, Cerebro, Red neuronal en vivo, Ajustes).
+Pestañas (v2.2): **Señales**, **PnL simulado**, Resumen, Mercado, Escáner, Estrategia, Auditoría y Sistema (Salud, Cerebro, Red neuronal en vivo, Ajustes).
 El selector de activo (los 15 pares) cambia todas las pestañas al activo elegido; Resumen muestra además una tabla con todos.
 
-**Señales** (desde la v2.0) es la pestaña principal: señales de compra y venta del día, señales activas (precio de entrada y
-stop sugerido), estado de los avisos con un botón de aviso de prueba, la señal del modelo de cada activo y el
-historial de avisos. La alimentan `GET /api/senales` y `GET /api/notificaciones`. Desde la v2.0 la interfaz no muestra saldos:
-se quitaron de la barra superior, de la tabla de activos, del Resumen y de Estrategia (que conserva la comparación en porcentajes).
+**Señales** (desde la v2.0; por activo desde la v2.2) es la pestaña principal y muestra solo el activo elegido en la barra:
+acción de hoy, pronóstico frente a δ, tendencia, volatilidad y señal activa; gráfica de precio con SMA20, SMA50, Bandas de
+Bollinger y las entradas y salidas de la señal; gráficas del pronóstico frente a δ por ciclo y del RSI (14); tabla de indicadores
+financieros (cuáles usa el modelo y cuáles son referencia); historial de la señal y avisos del activo, con el aviso de prueba.
+La alimentan `GET /api/senales`, `GET /api/historial_senal`, `GET /api/mercado` y `GET /api/notificaciones`.
+
+**Mercado** muestra el precio del activo y, desde la v2.2, **Comparar activos**: rendimiento relativo (base 100) de hasta 6
+activos, tabla comparativa de los 15 pares ordenable por columna y matriz de correlación de rendimientos diarios.
 
 **PnL simulado** (antes **Operaciones**, v1.8 a v1.9; oculta en la v2.0 y de vuelta en la v2.1 con otro nombre) es la evaluación de la señal, no una cuenta: el laboratorio no compra, y estas cifras son lo que habría pasado al seguir cada señal con un capital virtual de 50,000 USDT por activo. Un aviso al inicio de la pestaña lo dice así. Abre en la cartera **Sin LLM**, que es la estrategia que dispara los avisos; Con LLM y Comprar y mantener quedan como referencias. Suma los 15 activos de la cartera elegida:
 modo de trading (Paper, precios reales de MEXC, órdenes simuladas), saldo total y PnL realizado y no realizado,
@@ -112,7 +116,7 @@ como evento de control en la base del activo.
 cd agente/backend && python -m pytest
 ```
 
-119 pruebas. Cubren los controles de riesgo, el simulador, la autenticación y los nueve escenarios de error del protocolo:
+120 pruebas. Cubren los controles de riesgo, el simulador, la autenticación y los nueve escenarios de error del protocolo:
 MEXC sin respuesta o con límite de solicitudes, dato atrasado, Ollama detenido, JSON inválido, clave incorrecta,
 saldo insuficiente, evento duplicado, reinicio del backend y botón de detención. Desde la v1.3 también el funcionamiento
 multi-activo (estrategias C y D, control independiente, ciclos uno tras otro, huellas de los modelos) y que los modelos
