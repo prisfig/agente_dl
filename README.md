@@ -46,6 +46,10 @@ Stop móvil sugerido: 39.98 USDT.
 Operación manual opcional en MEXC. El laboratorio no envía órdenes.
 ```
 
+**Primer aviso real** (vela del 26 nov, ciclo de las 7:04 pm, hora de México): la estrategia del modelo compró ZECUSDT a 682.27 y el correo llegó con el stop móvil sugerido de 602.52 (remitente oculto en la captura).
+
+![Correo de señal de compra de ZECUSDT, vela 2026-11-26](agente/evidencia/capturas/08_correo_senal_ZEC_vela26.png)
+
 - **Servicio:** correo por Gmail (SMTP con TLS) con una contraseña de aplicación. Configuración en [`agente/README.md`](agente/README.md#avisos-por-correo-v20). Primero se intentó WhatsApp; se cambió a correo porque el bot gratuito (CallMeBot) tenía el cupo lleno y la API de Meta necesita una plantilla aprobada. El código de WhatsApp se conserva como alternativa deshabilitada.
 - **Seguridad:** el usuario, la contraseña de aplicación y el destino solo viven en `agente/.env`; el backend solo se conecta a servidores SMTP permitidos con TLS y nunca guarda la contraseña ni las direcciones completas en la bitácora.
 - **Sin duplicados ni efectos en el ciclo:** cada aviso se guarda en la base del activo y no se repite para la misma vela; si el correo falla, el agente sigue igual y lo registra.
