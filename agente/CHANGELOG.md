@@ -3,6 +3,19 @@
 Cada modificación al programa sube la versión (1.1, 1.2, …). El número está en `config/agente.json` (`"version"`),
 aparece en la barra superior de la interfaz y se guarda en cada ciclo (campo `version` de la observación) y en el evento de arranque.
 
+## v2.1 — 26 de noviembre de 2026 (noche)
+
+**Pestaña «PnL simulado».** La entrega pide presentar operaciones y PnL, y la v2.0 había quitado todos los saldos de la
+interfaz porque el sistema no compra. Para cumplir las dos cosas, la antigua pestaña **Operaciones** vuelve como **PnL simulado**,
+segunda pestaña después de Señales, y deja claro que no es una cuenta:
+
+- Encabezado «EVALUACIÓN DE LA SEÑAL · NO SON COMPRAS REALES» y chip «No es una cuenta · nadie compró nada · órdenes reales bloqueadas».
+- Aviso al inicio: son las cifras de la simulación interna (bloque 16 del protocolo) con capital virtual de 50,000 USDT por
+  activo y precios reales de MEXC; no son saldos ni operaciones ejecutadas.
+- Abre en la cartera **Sin LLM** (la estrategia que dispara los avisos); Con LLM y Comprar y mantener quedan como referencias.
+- Sin cambios en el backend, el modelo, el riesgo ni los avisos: la pestaña usa `GET /api/operaciones`, que nunca se quitó.
+  Solo cambian la interfaz (`App.tsx`, `pestanas/Operaciones.tsx`) y el número de versión (configuración, demos y su prueba).
+
 ## v2.0 — 26 de noviembre de 2026
 
 **Laboratorio de señales con avisos por correo.** Por indicación del profesor, el sistema deja de presentarse como un agente

@@ -6,13 +6,15 @@ import Auditoria from "./pestanas/Auditoria";
 import Escaner from "./pestanas/Escaner";
 import Estrategia from "./pestanas/Estrategia";
 import Mercado from "./pestanas/Mercado";
+import Operaciones from "./pestanas/Operaciones";
 import Senales from "./pestanas/Senales";
 import Resumen from "./pestanas/Resumen";
 import Sistema from "./pestanas/Sistema";
 import { fijarEstrategia, senalDe, type Estado, type Evento, type ListaActivos, type Modo } from "./tipos";
 
-// v2.0: laboratorio de señales. La pestaña Operaciones (saldos y PnL de la simulación) ya no se muestra.
-const PESTANAS = ["Señales", "Resumen", "Mercado", "Escáner", "Estrategia", "Auditoría", "Sistema"] as const;
+// v2.0: laboratorio de señales (sin saldos). v2.1: la pestaña «PnL simulado» vuelve a mostrar operaciones y PnL de la
+// simulación interna, marcados como evaluación de la señal (no son compras reales ni saldos de una cuenta).
+const PESTANAS = ["Señales", "PnL simulado", "Resumen", "Mercado", "Escáner", "Estrategia", "Auditoría", "Sistema"] as const;
 type Pestana = (typeof PESTANAS)[number];
 
 function Acceso({ alEntrar }: { alEntrar: () => void }) {
@@ -111,6 +113,7 @@ export default function App() {
         {pestana === "Mercado" && <Mercado modo={modo} estado={e} />}
         {pestana === "Escáner" && <Escaner />}
         {pestana === "Señales" && <Senales />}
+        {pestana === "PnL simulado" && <Operaciones modo={modo} estado={e} />}
         {pestana === "Estrategia" && <Estrategia modo={modo} estado={e} />}
         {pestana === "Auditoría" && <Auditoria modo={modo} estado={e} />}
         {pestana === "Sistema" && <Sistema modo={modo} estado={e} alSalir={() => { sesion.cerrar(); setDentro(false); }} />}

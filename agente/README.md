@@ -85,7 +85,7 @@ npm run dev        # abre http://127.0.0.1:5173
 ```
 
 Al abrirla se escribe la clave `BACKEND_API_KEY` de `agente/.env`; vive solo en la sesión del navegador (no está en el código ni en variables VITE).
-Pestañas (v2.0): **Señales**, Resumen, Mercado, Escáner, Estrategia, Auditoría y Sistema (Salud, Cerebro, Red neuronal en vivo, Ajustes).
+Pestañas (v2.1): **Señales**, **PnL simulado**, Resumen, Mercado, Escáner, Estrategia, Auditoría y Sistema (Salud, Cerebro, Red neuronal en vivo, Ajustes).
 El selector de activo (los 15 pares) cambia todas las pestañas al activo elegido; Resumen muestra además una tabla con todos.
 
 **Señales** (desde la v2.0) es la pestaña principal: señales de compra y venta del día, señales activas (precio de entrada y
@@ -93,12 +93,12 @@ stop sugerido), estado de los avisos con un botón de aviso de prueba, la señal
 historial de avisos. La alimentan `GET /api/senales` y `GET /api/notificaciones`. Desde la v2.0 la interfaz no muestra saldos:
 se quitaron de la barra superior, de la tabla de activos, del Resumen y de Estrategia (que conserva la comparación en porcentajes).
 
-**Operaciones** (v1.8 a v1.9; desde la v2.0 ya no se muestra, pero `GET /api/operaciones` sigue disponible para el informe) sumaba los 15 activos de la cartera elegida (Sin LLM, Con LLM o Comprar y mantener):
+**PnL simulado** (antes **Operaciones**, v1.8 a v1.9; oculta en la v2.0 y de vuelta en la v2.1 con otro nombre) es la evaluación de la señal, no una cuenta: el laboratorio no compra, y estas cifras son lo que habría pasado al seguir cada señal con un capital virtual de 50,000 USDT por activo. Un aviso al inicio de la pestaña lo dice así. Abre en la cartera **Sin LLM**, que es la estrategia que dispara los avisos; Con LLM y Comprar y mantener quedan como referencias. Suma los 15 activos de la cartera elegida:
 modo de trading (Paper, precios reales de MEXC, órdenes simuladas), saldo total y PnL realizado y no realizado,
 drawdown, acierto, profit factor, panel de riesgo con los límites del motor, posiciones abiertas (cuándo y a qué precio
 compró, stop móvil y distancia, PnL al cierre y a precio actual), historial de operaciones cerradas con su motivo de
 salida, saldo por activo y las reglas de entrada y salida. Debajo sigue el detalle por ciclo del activo seleccionado.
-Lo alimenta `GET /api/operaciones?cartera=con_llm`. El patrimonio oficial se valúa al último cierre diario; el precio
+Lo alimenta `GET /api/operaciones?cartera=sin_llm`. El patrimonio oficial se valúa al último cierre diario; el precio
 actual de MEXC (`/api/v3/ticker/price`, en caché 30 s) es solo informativo.
 
 **Control de pérdida diaria.** Si el patrimonio de un activo cae 3 % o más entre dos cierres, se bloquean sus compras hasta que

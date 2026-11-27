@@ -84,7 +84,7 @@ function Reglas({ cartera, r }: { cartera: string; r: ResumenOps }) {
 }
 
 export default function Operaciones({ modo, estado }: { modo: Modo; estado: Estado | null }) {
-  const [cartera, setCartera] = useState<string>("con_llm");
+  const [cartera, setCartera] = useState<string>("sin_llm");
   const [filtro, setFiltro] = useState("todas");
   const op = useConsulta<ResumenOps>(`/api/operaciones?modo=${modo}&cartera=${cartera}`, 30_000);
   const dec = useConsulta<Decision[]>(`/api/decisiones?modo=${modo}&limite=300`, 15_000);
@@ -96,15 +96,21 @@ export default function Operaciones({ modo, estado }: { modo: Modo; estado: Esta
   return (
     <>
       <MensajeError mensaje={op.error ?? dec.error ?? ord.error} />
+      <div className="aviso azul">
+        <b>Simulación interna para evaluar la señal (bloque 16 del protocolo).</b> El laboratorio no compra ni vende: solo avisa por correo.
+        Estas cifras son lo que habría pasado si cada señal se siguiera con un capital virtual de 50,000 USDT por activo, con precios
+        reales de MEXC. No son saldos de una cuenta ni operaciones ejecutadas. «Sin LLM» es la estrategia que dispara los avisos;
+        «Con LLM» y «Comprar y mantener» son las referencias de comparación.
+      </div>
 
       {/* ------------------------------------------------ modo y cartera */}
       <div className="tarjeta modo-trading">
         <div>
-          <div className="tenue chico" style={{ letterSpacing: 1.2, fontWeight: 700 }}>MODO DE TRADING</div>
-          <div className="titulo-modo">PAPER TRADING</div>
-          <div className="chico tenue">Precios reales de MEXC · órdenes simuladas con saldo ficticio · {modo === "vivo" ? "conexión actual" : "replay histórico"}</div>
+          <div className="tenue chico" style={{ letterSpacing: 1.2, fontWeight: 700 }}>EVALUACIÓN DE LA SEÑAL · NO SON COMPRAS REALES</div>
+          <div className="titulo-modo">PnL SIMULADO</div>
+          <div className="chico tenue">Precios reales de MEXC · operaciones simuladas con capital virtual de {r ? usdt(r.capital_por_activo, 0) : "50,000"} USDT por activo · {modo === "vivo" ? "conexión actual" : "replay histórico"}</div>
         </div>
-        <span className="chip rojo">Órdenes reales bloqueadas · simulador Paper propio</span>
+        <span className="chip rojo">No es una cuenta · nadie compró nada · órdenes reales bloqueadas</span>
         <span className="separa" />
         <div className="selector-carteras">
           {CARTERAS.map((c) => {

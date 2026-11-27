@@ -2,13 +2,15 @@
 
 Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico de BTC/USDT, y el **proyecto final**: un sistema de IA que analiza cada día 15 pares de MEXC con el modelo LSTM de cada activo, un LLM local (Ollama), controles de riesgo deterministas y una interfaz web.
 
-> **Versión actual: v2.0, laboratorio de señales.** Por indicación del profesor, el sistema ya no muestra saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20).
+> **Versión actual: v2.1, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales.
 >
-> El sistema **no envía órdenes reales**. Solo lee datos públicos de MEXC; la simulación Paper sigue por dentro para evaluar la señal. Las claves y el teléfono no están en el repositorio.
+> El sistema **no envía órdenes reales**. Solo lee datos públicos de MEXC; la simulación Paper sigue por dentro para evaluar la señal. Las claves y las direcciones de correo no están en el repositorio.
 
 **Informe del proyecto final:** [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) (o en PDF: [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf)).
 
 **Presentación ejecutiva:** [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf).
+
+**Evaluación frente a la rúbrica del 26 nov:** [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) (qué cumple el sistema y por qué no se agregaron los puntos que faltan).
 
 ---
 
@@ -16,11 +18,11 @@ Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico
 
 | Indicación de la entrega | Dónde se cumple |
 |---|---|
-| 1. Presentación ejecutiva del sistema | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) (12 diapositivas) |
+| 1. Presentación ejecutiva del sistema | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) |
 | 2. Git con el código del sistema | Este repositorio: [`agente/backend/`](agente/backend/) (FastAPI), [`agente/frontend/`](agente/frontend/) (React + TypeScript), modelos, notebooks y datos |
 | 3. README completo con versiones y avances | Este archivo: [Versiones de la app](#versiones-de-la-app) y [Avances del proyecto](#avances-del-proyecto); detalle en [`agente/CHANGELOG.md`](agente/CHANGELOG.md) |
 | 4. Datos reales de MEXC | [Datos reales de MEXC](#datos-reales-de-mexc): velas diarias, reglas del par y precio actual leídos de la API pública de MEXC |
-| 5. Operaciones y PnL | [Operaciones y PnL](#operaciones-y-pnl): operaciones y PnL de la simulación interna con la que se evalúa la señal. Desde la v2.0 la interfaz no muestra saldos (indicación del profesor); hasta la v1.9 se veían en la pestaña Operaciones ([captura](agente/evidencia/capturas/02_operaciones_paper.png)) |
+| 5. Operaciones y PnL | [Operaciones y PnL](#operaciones-y-pnl): operaciones y PnL de la simulación interna con la que se evalúa la señal. En la interfaz, pestaña **PnL simulado** (v2.1), marcada como simulación con capital virtual (no son compras reales); diseño de la pestaña en la [captura de la v1.9](agente/evidencia/capturas/02_operaciones_paper.png) |
 | Indicación del 26 nov: quitar saldos y avisar cuándo se puede comprar a mano | [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20) (v2.0) |
 
 ---
@@ -53,39 +55,39 @@ Operación manual opcional en MEXC. El laboratorio no envía órdenes.
 - **Servicio:** correo por Gmail (SMTP con TLS) con una contraseña de aplicación. Configuración en [`agente/README.md`](agente/README.md#avisos-por-correo-v20). Primero se intentó WhatsApp; se cambió a correo porque el bot gratuito (CallMeBot) tenía el cupo lleno y la API de Meta necesita una plantilla aprobada. El código de WhatsApp se conserva como alternativa deshabilitada.
 - **Seguridad:** el usuario, la contraseña de aplicación y el destino solo viven en `agente/.env`; el backend solo se conecta a servidores SMTP permitidos con TLS y nunca guarda la contraseña ni las direcciones completas en la bitácora.
 - **Sin duplicados ni efectos en el ciclo:** cada aviso se guarda en la base del activo y no se repite para la misma vela; si el correo falla, el agente sigue igual y lo registra.
-- **Interfaz:** nueva pestaña **Señales** con las señales del día, las señales activas, el estado de los avisos (con aviso de prueba) y el historial de avisos. Se quitaron todos los saldos de la interfaz.
+- **Interfaz:** nueva pestaña **Señales** con las señales del día, las señales activas, el estado de los avisos (con aviso de prueba) y el historial de avisos. Se quitaron los saldos de la barra, del Resumen y de Estrategia; desde la v2.1 la pestaña **PnL simulado** muestra la evaluación de la señal, con un aviso de que no son compras reales ni saldos de una cuenta.
 
 ---
 
-## Evaluación de la señal en vivo (simulación interna, 15 activos, datos al 25 nov 2026)
+## Evaluación de la señal en vivo (simulación interna, 15 activos, datos al 26 nov 2026)
 
-La interfaz ya no muestra saldos, pero el protocolo (bloque 16) pide comparar la estrategia sin LLM, con LLM y comprar y mantener. Para eso se conserva la simulación Paper por dentro. Cada activo tiene tres carteras simuladas de 50,000 USDT con el mismo periodo y costos:
+El laboratorio no compra, pero el protocolo (bloque 16) pide comparar la estrategia sin LLM, con LLM y comprar y mantener. Para eso se conserva la simulación Paper por dentro. Cada activo tiene tres carteras simuladas de 50,000 USDT con el mismo periodo y costos:
 
 | Cartera | Saldo final (USDT) | PnL neto (USDT) | Rendimiento neto | Drawdown máx. | Órdenes | Win Rate |
 |---|---|---|---|---|---|---|
-| Sin LLM (estrategia del modelo + riesgo) | 751,975.51 | **+1,975.51** | **+0.26 %** | −0.93 % | 13 | 80 % (4 de 5) |
-| Con LLM (propuesta del LLM + el mismo riesgo) | 707,218.32 | **−42,781.68** | **−5.70 %** | −7.47 % | 32 | 0 % (0 de 9) |
-| Comprar y mantener | 716,919.76 | **−33,080.24** | **−4.41 %** | −7.04 % | 15 | — |
+| Sin LLM (estrategia del modelo + riesgo) | 754,536.87 | **+4,536.87** | **+0.60 %** | −0.93 % | 14 | 80 % (4 de 5) |
+| Con LLM (propuesta del LLM + el mismo riesgo) | 706,813.40 | **−43,186.60** | **−5.76 %** | −7.47 % | 34 | 0 % (0 de 10) |
+| Comprar y mantener | 716,353.46 | **−33,646.54** | **−4.49 %** | −7.04 % | 15 | — |
 
-Capital inicial: 750,000 USDT por cartera (15 activos × 50,000). Costo 0 %, como pide el protocolo.
+Capital virtual inicial: 750,000 USDT por cartera (15 activos × 50,000). Costo 0 %, como pide el protocolo. Son cifras simuladas: nadie compró nada.
 
 En este periodo el LLM no aportó valor:
 - Nunca propuso vender.
-- Propuso comprar sin señal del modelo en 20 de 114 ciclos.
+- Propuso comprar sin señal del modelo en 21 de 129 ciclos.
 - Todas sus salidas fueron por stop.
 
-El motor de riesgo lo contuvo: rechazó 18 acciones no permitidas y forzó 9 ventas por stop. El detalle por activo y el análisis de las justificaciones del LLM están en el [informe](Informe_Proyecto_Final_Agente_IA.md).
+El motor de riesgo lo contuvo: rechazó 22 compras no permitidas y forzó 10 ventas por stop. El detalle por activo y el análisis de las justificaciones del LLM están en el [informe](Informe_Proyecto_Final_Agente_IA.md).
 
 **Meta de +20 %:** no se alcanzó; los periodos evaluados fueron bajistas y el protocolo solo permite comprar o estar en efectivo. Lo que sí se logró:
 - El modelo profundo superó a la regresión lineal: en TE, −3.25 % frente a −27.98 %, con un RMSE menor.
 - Protegió el capital frente a comprar y mantener: −3.25 % frente a −31.57 % en TE de BTC, mejor en 12 de 15 activos.
-- En vivo, la cartera del modelo fue la única positiva (+0.26 %).
+- En vivo, la cartera del modelo fue la única positiva (+0.60 %).
 
 Ver la sección 10 del [informe](Informe_Proyecto_Final_Agente_IA.md).
 
 ### Capturas de la interfaz
 
-Capturas de la v1.9 (25 nov), antes de quitar los saldos de la interfaz. La captura de la pestaña **Señales** de la v2.0 se agrega después del ciclo del 26 nov.
+Capturas de la v1.9 (25 nov). La pestaña Operaciones de la captura es la que en la v2.1 se llama **PnL simulado**, ahora con el aviso de que son cifras simuladas. El aviso por correo de la v2.0 está en la sección [Laboratorio de señales](#laboratorio-de-señales-y-avisos-por-correo-v20).
 
 | Operaciones (v1.9, 15 activos, modo Paper) | Cerebro (flujo de módulos) |
 |---|---|
@@ -105,7 +107,7 @@ El backend consume la API pública de MEXC (`https://api.mexc.com`), sin clave d
 |---|---|---|
 | `GET /api/v3/klines` | Velas diarias cerradas (00:00 UTC) de los 15 pares: entrada del modelo, SMA20, volatilidad y precio de ejecución Paper | Pestañas Resumen, Mercado, Escáner y Estrategia; columna `fecha_vela` de [`ciclos.csv`](agente/registros/ciclos.csv) |
 | `GET /api/v3/exchangeInfo` | Paso de cantidad, precisión y monto mínimo de cada par, que respeta el simulador | Validación de cada orden Paper |
-| `GET /api/v3/ticker/price` | Precio actual de los 15 pares (en caché 30 s), solo informativo | Pestaña Operaciones (precio actual y PnL a precio actual) |
+| `GET /api/v3/ticker/price` | Precio actual de los 15 pares (en caché 30 s), solo informativo | Pestaña PnL simulado (precio actual y PnL a precio actual) |
 | `GET /api/v3/ping`, `GET /api/v3/time` | Salud de la conexión y hora del servidor | Sistema → Salud |
 
 Cada ciclo guarda la fecha de la vela usada y la antigüedad del dato; si el dato tiene más de 26 h, el agente no opera.
@@ -116,18 +118,20 @@ Cada ciclo guarda la fecha de la vela usada y la antigüedad del dato; si el dat
 
 ## Operaciones y PnL
 
-Son las operaciones de la **simulación interna** con la que se evalúa la señal. Desde la v2.0 la interfaz ya no las muestra (el laboratorio no compra); los datos siguen en [`agente/registros/`](agente/registros/) y en la API (`GET /api/operaciones`). Hasta la v1.9, la pestaña **Operaciones** sumaba los 15 activos de la cartera elegida y mostraba:
+> **No son compras reales.** Son las operaciones de la **simulación interna** con la que se evalúa la señal: lo que habría pasado al seguir cada señal con un capital virtual de 50,000 USDT por activo y precios reales de MEXC. El laboratorio no compra ni vende; solo avisa por correo.
+
+En la interfaz se ven en la pestaña **PnL simulado** (v2.1; antes Operaciones), que lo indica con un aviso al inicio. Abre en la cartera Sin LLM, que es la que dispara los avisos. Los datos también están en [`agente/registros/`](agente/registros/) y en la API (`GET /api/operaciones`). La pestaña suma los 15 activos de la cartera elegida y muestra:
 - saldo total, PnL neto, PnL realizado y no realizado, efectivo e invertido;
 - posiciones abiertas, con fecha y precio de compra, precio actual de MEXC, stop móvil y PnL;
 - historial de operaciones cerradas, con motivo de salida y PnL.
 
-PnL al cierre de la vela del 25 nov 2026 (datos en vivo):
+PnL simulado al cierre de la vela del 26 nov 2026 (datos en vivo):
 
 | Cartera | PnL realizado (USDT) | PnL no realizado (USDT) | PnL neto (USDT) |
 |---|---|---|---|
-| Sin LLM | +1,997.13 | −21.62 | **+1,975.51** |
-| Con LLM | −40,402.16 | −2,379.52 | **−42,781.68** |
-| Comprar y mantener | 0.00 | −33,080.24 | **−33,080.24** |
+| Sin LLM | +1,997.13 | +2,539.74 | **+4,536.87** |
+| Con LLM | −45,732.79 | +2,546.19 | **−43,186.60** |
+| Comprar y mantener | 0.00 | −33,646.54 | **−33,646.54** |
 
 Operaciones cerradas en vivo:
 
@@ -147,6 +151,9 @@ Operaciones cerradas en vivo:
 | DOTUSDT | Con LLM | 19 nov | 0.7130 | 21 nov | 0.6526 | −4,235.62 | Stop móvil |
 | FILUSDT | Con LLM | 19 nov | 0.5766 | 21 nov | 0.5203 | −4,882.07 | Stop móvil |
 | TRXUSDT | Con LLM | 19 nov | 0.3105 | 25 nov | 0.3041 | −1,030.59 | Stop móvil |
+| ZECUSDT | Con LLM | 21 nov | 780.22 | 26 nov | 682.27 | −5,330.63 | Stop móvil |
+
+Posiciones simuladas abiertas de la cartera Sin LLM al 26 nov: BCH (compra 206.30), LTC (42.80), SOL (70.30) y ZEC (682.27, la señal del primer aviso por correo).
 
 Todas las órdenes (ejecutadas y rechazadas), con fecha, precio, monto y motivo, están en [`ordenes.csv`](agente/registros/ordenes.csv); las operaciones cerradas, incluida la del replay, en [`operaciones_cerradas.csv`](agente/registros/operaciones_cerradas.csv); el saldo diario de cada cartera, en [`serie_patrimonio_total.csv`](agente/registros/serie_patrimonio_total.csv).
 
@@ -168,7 +175,8 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | v1.7 | 19 nov 2026 | DOT reemplaza al token respaldado por oro elegido por error: 15 pares | 92 |
 | v1.8 | 20 nov 2026 | Pestaña Operaciones rediseñada: saldo total, PnL, posiciones abiertas, historial y precio actual de MEXC | 96 |
 | v1.9 | 20 nov 2026 | Botón «Rearmar todos los bloqueados» y regla diaria de rearme del límite de pérdida | 97 |
-| **v2.0** | 26 nov 2026 | **Laboratorio de señales:** avisos por correo cuando el modelo compra o vende (WhatsApp queda como alternativa); pestaña Señales; la interfaz ya no muestra saldos (indicación del profesor). La simulación sigue por dentro solo para evaluar | 119 |
+| v2.0 | 26 nov 2026 | **Laboratorio de señales:** avisos por correo cuando el modelo compra o vende (WhatsApp queda como alternativa); pestaña Señales; la interfaz ya no muestra saldos (indicación del profesor). La simulación sigue por dentro solo para evaluar | 119 |
+| **v2.1** | 26 nov 2026 | Pestaña **PnL simulado** (la antigua Operaciones) para presentar operaciones y PnL, marcada como simulación con capital virtual: no son compras reales ni saldos de una cuenta. Solo cambia la interfaz | 119 |
 
 ---
 
@@ -185,9 +193,9 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | 17 nov 2026 | Agente multi-activo con ETH, SOL y XRP (v1.3–v1.4) |
 | 19 nov 2026 | 15 activos (v1.5–v1.7) |
 | 20 nov 2026 | Pestaña Operaciones y rearme de bloqueos (v1.8–v1.9) |
-| 14–25 nov 2026 | Ciclos diarios en vivo: 114 ciclos válidos en los 15 activos, más 10 de replay en BTC |
+| 14–26 nov 2026 | Ciclos diarios en vivo: 129 ciclos válidos en los 15 activos, más 10 de replay en BTC |
 | 25 nov 2026 | Exportación de registros, evidencia de Ollama local y pruebas, capturas, informe final y repositorio público |
-| 26 nov 2026 | Presentación ejecutiva; README con versiones, avances, datos de MEXC, operaciones y PnL. Por indicación del profesor, v2.0: laboratorio de señales sin saldos y con avisos por correo. La conexión con la cuenta demo de MEXC queda pendiente (en revisión con el profesor) |
+| 26 nov 2026 | Presentación ejecutiva; README con versiones, avances, datos de MEXC, operaciones y PnL. Por indicación del profesor, v2.0: laboratorio de señales sin saldos y con avisos por correo. La conexión con la cuenta demo de MEXC queda pendiente (en revisión con el profesor). Primer aviso real por correo (compra de ZEC, vela del 26 nov). v2.1: pestaña PnL simulado. Evaluación frente a la rúbrica del profesor |
 
 Las fechas de los avances de la práctica son las de su ejecución en Colab T4 (UTC), registradas en [`evidencia_t4/`](evidencia_t4/).
 
@@ -259,7 +267,8 @@ python agente/exportar_registros.py      # exporta las bases a CSV y calcula las
 |---|---|
 | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
 | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) | Presentación ejecutiva del sistema |
-| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.0) |
+| [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) | Evaluación del sistema frente a la rúbrica del profesor (26 nov) y justificación de lo que no se agregó |
+| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.1) |
 | [`agente/registros/`](agente/registros/) | Registros del agente en CSV (ciclos, decisiones, órdenes, patrimonio y eventos) y métricas calculadas |
 | [`agente/evidencia/`](agente/evidencia/) | Verificación de los modelos en la computadora local, replay histórico de BTC y demostración de los nueve errores |
 | [`notebooks/`](notebooks/) | Notebooks de Colab: avances de la práctica (`practica/`) y entrenamiento de los activos extra |

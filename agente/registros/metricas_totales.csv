@@ -1,4 +1,4 @@
 cartera,activos,capital_inicial,patrimonio_final,rendimiento_neto,drawdown_max,ordenes,operaciones_cerradas,ganadas,win_rate,acciones_rechazadas
-sin_llm,15,750000.0,751975.51,0.002634,-0.009311,13,5,4,0.8,1
-con_llm,15,750000.0,707218.32,-0.057042,-0.074716,32,9,0,0.0,23
-comprar_y_mantener,15,750000.0,716919.76,-0.044107,-0.070434,15,0,0,,0
+sin_llm,15,750000.0,754536.87,0.006049,-0.009311,14,5,4,0.8,1
+con_llm,15,750000.0,706813.4,-0.057582,-0.074716,34,10,0,0.0,27
+comprar_y_mantener,15,750000.0,716353.46,-0.044862,-0.070434,15,0,0,,0

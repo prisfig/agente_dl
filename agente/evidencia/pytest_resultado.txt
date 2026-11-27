@@ -133,4 +133,4 @@ tests/test_riesgo_paper.py::test_paper_exposicion_maxima_y_costos PASSED [100%]
     from starlette.testclient import TestClient as TestClient  # noqa
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 119 passed, 1 warning in 15.74s ========================
+======================= 119 passed, 1 warning in 14.92s ========================

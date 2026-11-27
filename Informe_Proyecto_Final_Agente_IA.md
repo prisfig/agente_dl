@@ -1,6 +1,6 @@
 # Informe del agente de IA financiero — DL para Finanzas
 
-**Proyecto final (bloques 14–16 del protocolo).** Datos al cierre de la vela del **25 de noviembre de 2026**; versión actual **v2.0** (laboratorio de señales con avisos por correo, sección 4.1); las velas hasta el 25 nov se procesaron con la v1.9.
+**Proyecto final (bloques 14–16 del protocolo).** Datos al cierre de la vela del **26 de noviembre de 2026**; versión actual **v2.1** (laboratorio de señales con avisos por correo y pestaña de PnL simulado, sección 4.1). Las velas hasta el 25 nov se procesaron con la v1.9 y la del 26 nov con la v2.0 (la v2.1 solo cambia la interfaz).
 Todas las cifras salen de las bases SQLite del agente y se regeneran con `python agente/exportar_registros.py` (carpeta `agente/registros/`).
 
 ## 1. Resumen
@@ -9,13 +9,13 @@ El agente observa velas diarias de MEXC para 15 pares contra USDT, consulta el e
 
 | Cartera (15 activos, en vivo) | Patrimonio | Rendimiento neto | Drawdown máx. | Órdenes | Cerradas (ganadas) | Win Rate | Acciones rechazadas |
 |---|---|---|---|---|---|---|---|
-| Sin LLM | 751,975.51 | **+0.26 %** | −0.93 % | 13 | 5 (4) | 80 % | 1 |
-| Con LLM | 707,218.32 | **−5.70 %** | −7.47 % | 32 | 9 (0) | 0 % | 23 |
-| Comprar y mantener | 716,919.76 | **−4.41 %** | −7.04 % | 15 | 0 | — | 0 |
+| Sin LLM | 754,536.87 | **+0.60 %** | −0.93 % | 14 | 5 (4) | 80 % | 1 |
+| Con LLM | 706,813.40 | **−5.76 %** | −7.47 % | 34 | 10 (0) | 0 % | 27 |
+| Comprar y mantener | 716,353.46 | **−4.49 %** | −7.04 % | 15 | 0 | — | 0 |
 
 Capital inicial: 750,000 (15 × 50,000). Cada activo cuenta como 50,000 en efectivo antes de su primer ciclo.
 
-**Conclusión:** en este periodo el LLM **no aporta valor**. La cartera con LLM quedó por debajo de la estrategia del modelo y también de comprar y mantener. El motor de riesgo sí cumplió su función: rechazó 18 compras no permitidas y forzó 9 ventas por stop. El protocolo no exige que el LLM mejore el resultado; aquí se documenta por qué no lo hizo.
+**Conclusión:** en este periodo el LLM **no aporta valor**. La cartera con LLM quedó por debajo de la estrategia del modelo y también de comprar y mantener. El motor de riesgo sí cumplió su función: rechazó 22 compras no permitidas y forzó 10 ventas por stop. El protocolo no exige que el LLM mejore el resultado; aquí se documenta por qué no lo hizo.
 
 **Meta de +20 %:** no se alcanzó en ningún periodo. Lo que sí se demostró es que el modelo profundo supera a la regresión lineal y protege el capital frente a comprar y mantener en un mercado bajista. El detalle está en la sección 10.
 
@@ -55,13 +55,13 @@ React + TypeScript (5173) ──X-API-Key──▶ Backend FastAPI (127.0.0.1:80
 
 | Activos | Ciclos en vivo | Periodo |
 |---|---|---|
-| BTCUSDT | 12 | 14 al 25 nov |
-| ETHUSDT, SOLUSDT | 9 cada uno | 17 al 25 nov |
-| Los otros 12 | 7 cada uno | 19 al 25 nov |
+| BTCUSDT | 13 | 14 al 26 nov |
+| ETHUSDT, SOLUSDT | 10 cada uno | 17 al 26 nov |
+| Los otros 12 | 8 cada uno | 19 al 26 nov |
 
-Hay **114 ciclos de decisión en vivo**: 12 + 2 × 9 + 12 × 7. Todos terminaron sin errores y sin velas duplicadas. La única falla en vivo fue el primer ciclo de XRP (17 nov): el LLM generó 2,328 tokens sin cerrar el JSON y el gateway agotó el tiempo de espera. El agente se pausó sin operar, XRP se retiró en la v1.4 y regresó en la v1.5 con un límite de 400 tokens por respuesta. Desde entonces ningún ciclo necesitó reintento.
+Hay **129 ciclos de decisión en vivo**: 13 + 2 × 10 + 12 × 8. Todos terminaron sin errores y sin velas duplicadas. La única falla en vivo fue el primer ciclo de XRP (17 nov): el LLM generó 2,328 tokens sin cerrar el JSON y el gateway agotó el tiempo de espera. El agente se pausó sin operar, XRP se retiró en la v1.4 y regresó en la v1.5 con un límite de 400 tokens por respuesta. Desde entonces ningún ciclo necesitó reintento.
 
-**Replay (separado de la conexión en vivo).** BTC tiene además 10 ciclos de replay (velas del 5 al 14 nov), guardados con `modo = 'replay'` en su propia sección de la base. El replay no puede empezar dentro del conjunto de prueba (TE) de un activo. En BTC, el TE termina el 4 nov. La vela del 14 nov está tanto en el replay como en el primer ciclo en vivo, así que BTC suma **22 ciclos de decisión y 21 velas distintas** (≥ 20 en ambos casos).
+**Replay (separado de la conexión en vivo).** BTC tiene además 10 ciclos de replay (velas del 5 al 14 nov), guardados con `modo = 'replay'` en su propia sección de la base. El replay no puede empezar dentro del conjunto de prueba (TE) de un activo. En BTC, el TE termina el 4 nov. La vela del 14 nov está tanto en el replay como en el primer ciclo en vivo, así que BTC suma **23 ciclos de decisión y 22 velas distintas** (≥ 20 en ambos casos).
 
 Los otros 14 activos no tienen replay. Su periodo posterior al TE (desde el 17 o el 19 nov) coincide con sus ciclos en vivo, y un replay de esas velas duplicaría observaciones. No se aceleró la frecuencia diaria.
 
@@ -93,6 +93,8 @@ Por indicación del profesor, la interfaz dejó de mostrar saldos, porque el sis
 - El LLM no dispara avisos, porque en vivo no aportó valor (sección 8).
 - La simulación Paper se conserva por dentro solo para la comparación que pide el bloque 16; las cifras de las secciones 7 a 10 salen de ella.
 - Hay 22 pruebas nuevas (119 en total).
+- **Primer aviso real:** en la vela del 26 nov la estrategia del modelo compró ZECUSDT a 682.27. El correo salió a las 7:04 pm (hora de México) con el pronóstico (+0.986 % frente a δ = 0.186 %) y el stop sugerido (602.52), y Gmail lo entregó. Captura: `agente/evidencia/capturas/08_correo_senal_ZEC_vela26.png`.
+- **PnL simulado (v2.1):** la entrega pide mostrar operaciones y PnL. La pestaña Operaciones volvió como **PnL simulado**, con un aviso de que son cifras de la simulación interna con capital virtual, no compras reales ni saldos de una cuenta. Abre en la cartera sin LLM, que es la que dispara los avisos.
 
 ## 5. Riesgo y control humano
 
@@ -100,13 +102,13 @@ Los límites están fijados en `config/agente.json` antes de la prueba. El LLM n
 
 | Control | Regla | Activaciones en vivo |
 |---|---|---|
-| Stop móvil | Nivel = cierre × (1 − 2 × vol20); solo sube; se revisa al cierre | 10 ventas forzadas: 9 con LLM y 1 sin LLM (SOL, 20 nov) |
-| Pérdida diaria máxima | Caída de 3 % o más del patrimonio entre dos cierres → se bloquean las compras hasta rearmar | 22 carteras-día: 20 nov (15), 21 nov (1) y 24 nov (6) |
+| Stop móvil | Nivel = cierre × (1 − 2 × vol20); solo sube; se revisa al cierre | 11 ventas forzadas: 10 con LLM y 1 sin LLM (SOL, 20 nov) |
+| Pérdida diaria máxima | Caída de 3 % o más del patrimonio entre dos cierres → se bloquean las compras hasta rearmar | 23 carteras-día: 20 nov (15), 21 nov (1), 24 nov (6) y 26 nov (1, ZEC con LLM tras caer 11.5 %) |
 | Antigüedad máxima del dato | 26 h | Ninguna (las velas tenían de 0.08 a 20.3 h; la de 20.3 h fue el primer ciclo de BTC, el 15 nov) |
-| Validación de acciones | Acción no permitida → MANTENER | 18 compras del LLM con posición ya abierta |
+| Validación de acciones | Acción no permitida → MANTENER | 22 compras del LLM con posición ya abierta |
 | Detener ≠ liquidar | Detener bloquea nuevas órdenes y conserva las posiciones; liquidar es una acción aparte | Escenario del botón de detención (sección 6) |
 
-**Regla de rearme** (fijada el 20 nov, antes de ver los ciclos posteriores): después de cada ciclo se rearman todos los activos bloqueados con el botón «Rearmar todos los bloqueados». Cada rearme queda como evento de control (`origen: rearmar_todos`); hubo 19 rearmes por activo, en tres días.
+**Regla de rearme** (fijada el 20 nov, antes de ver los ciclos posteriores): después de cada ciclo se rearman todos los activos bloqueados con el botón «Rearmar todos los bloqueados». Cada rearme queda como evento de control (`origen: rearmar_todos`); hubo 20 rearmes por activo, en cuatro días.
 
 ## 6. Errores y persistencia
 
@@ -130,63 +132,64 @@ Los nueve escenarios (aquí en el orden del protocolo; el archivo de evidencia l
 
 | Activo | Velas en vivo | Sin LLM | Con LLM | Comprar y mantener | DD sin LLM | DD con LLM | DD comprar y mantener |
 |---|---|---|---|---|---|---|---|
-| BTCUSDT | 14 a 25 nov (12) | 0.00 % | −7.72 % | −5.75 % | 0.00 % | −10.36 % | −9.79 % |
-| ETHUSDT | 17 a 25 nov (9) | +3.86 % | −10.69 % | −7.24 % | 0.00 % | −11.36 % | −11.06 % |
-| SOLUSDT | 17 a 25 nov (9) | −8.14 % | −8.14 % | −6.25 % | −9.12 % | −9.12 % | −8.39 % |
-| XRPUSDT | 19 a 25 nov (7) | 0.00 % | −2.32 % | −2.32 % | 0.00 % | −5.13 % | −5.13 % |
-| BNBUSDT | 19 a 25 nov (7) | +1.43 % | −5.84 % | −4.50 % | 0.00 % | −6.78 % | −6.76 % |
-| ADAUSDT | 19 a 25 nov (7) | 0.00 % | −3.95 % | −3.95 % | 0.00 % | −5.73 % | −5.73 % |
-| LTCUSDT | 19 a 25 nov (7) | 0.00 % | +1.16 % | +1.16 % | 0.00 % | −5.91 % | −5.91 % |
-| TRXUSDT | 19 a 25 nov (7) | 0.00 % | −2.06 % | −2.06 % | 0.00 % | −2.71 % | −2.71 % |
-| DOGEUSDT | 19 a 25 nov (7) | 0.00 % | −3.78 % | −3.78 % | 0.00 % | −6.53 % | −6.53 % |
-| MXUSDT | 19 a 25 nov (7) | 0.00 % | −0.18 % | −0.18 % | 0.00 % | −0.70 % | −0.70 % |
-| FILUSDT | 19 a 25 nov (7) | 0.00 % | −10.81 % | −4.89 % | 0.00 % | −12.81 % | −9.76 % |
-| BCHUSDT | 19 a 25 nov (7) | −0.29 % | −0.29 % | −0.29 % | −5.57 % | −5.57 % | −5.57 % |
-| ZECUSDT | 19 a 25 nov (7) | +7.11 % | −16.05 % | −13.77 % | 0.00 % | −19.49 % | −17.29 % |
-| NEARUSDT | 19 a 25 nov (7) | 0.00 % | −6.18 % | −4.77 % | 0.00 % | −11.24 % | −11.13 % |
-| DOTUSDT | 19 a 25 nov (7) | 0.00 % | −8.71 % | −7.56 % | 0.00 % | −9.19 % | −8.47 % |
+| BTCUSDT | 14 a 26 nov (13) | 0.00 % | −7.56 % | −5.59 % | 0.00 % | −10.36 % | −9.79 % |
+| ETHUSDT | 17 a 26 nov (10) | +3.86 % | −10.84 % | −7.40 % | 0.00 % | −11.36 % | −11.06 % |
+| SOLUSDT | 17 a 26 nov (10) | −7.44 % | −7.44 % | −5.53 % | −9.12 % | −9.12 % | −8.39 % |
+| XRPUSDT | 19 a 26 nov (8) | 0.00 % | −1.70 % | −1.70 % | 0.00 % | −5.13 % | −5.13 % |
+| BNBUSDT | 19 a 26 nov (8) | +1.43 % | −5.83 % | −4.49 % | 0.00 % | −6.78 % | −6.76 % |
+| ADAUSDT | 19 a 26 nov (8) | 0.00 % | −2.11 % | −2.11 % | 0.00 % | −5.73 % | −5.73 % |
+| LTCUSDT | 19 a 26 nov (8) | +2.38 % | +3.57 % | +3.57 % | 0.00 % | −5.91 % | −5.91 % |
+| TRXUSDT | 19 a 26 nov (8) | 0.00 % | −2.06 % | −2.06 % | 0.00 % | −2.71 % | −2.71 % |
+| DOGEUSDT | 19 a 26 nov (8) | 0.00 % | −2.96 % | −2.96 % | 0.00 % | −6.53 % | −6.53 % |
+| MXUSDT | 19 a 26 nov (8) | 0.00 % | −0.20 % | −0.20 % | 0.00 % | −0.70 % | −0.70 % |
+| FILUSDT | 19 a 26 nov (8) | 0.00 % | −12.22 % | −6.40 % | 0.00 % | −12.81 % | −9.76 % |
+| BCHUSDT | 19 a 26 nov (8) | +1.75 % | +1.75 % | +1.75 % | −5.57 % | −5.57 % | −5.57 % |
+| ZECUSDT | 19 a 26 nov (8) | +7.11 % | −25.74 % | −23.71 % | 0.00 % | −25.74 % | −23.71 % |
+| NEARUSDT | 19 a 26 nov (8) | 0.00 % | −6.32 % | −4.92 % | 0.00 % | −11.24 % | −11.13 % |
+| DOTUSDT | 19 a 26 nov (8) | 0.00 % | −6.71 % | −5.54 % | 0.00 % | −9.19 % | −8.47 % |
 
 | Activo | Órdenes sin / con LLM | Cerradas (ganadas) sin LLM | Cerradas (ganadas) con LLM | Rechazadas con LLM | LLM propone COMPRAR | …sin señal del modelo | Latencia LLM media / máx. |
 |---|---|---|---|---|---|---|---|
-| BTCUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 12 | 2 | 16.7 / 23.9 s |
-| ETHUSDT | 2 / 3 | 1 (1) | 1 (0) | 1 | 3 de 9 | 2 | 11.9 / 19.8 s |
-| SOLUSDT | 3 / 3 | 1 (0) | 1 (0) | 7 | 9 de 9 | 0 | 10.9 / 13.6 s |
-| XRPUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 7 | 1 | 11.0 / 14.7 s |
-| BNBUSDT | 2 / 3 | 1 (1) | 1 (0) | 1 | 3 de 7 | 2 | 11.5 / 16.2 s |
-| ADAUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 7 | 1 | 10.4 / 11.9 s |
-| LTCUSDT | 1 / 1 | 0 | 0 | 1 | 2 de 7 | 1 | 10.8 / 12.8 s |
-| TRXUSDT | 0 / 2 | 0 | 1 (0) | 1 | 1 de 7 | 1 | 11.0 / 12.9 s |
-| DOGEUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 7 | 1 | 11.8 / 13.0 s |
-| MXUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 7 | 1 | 10.9 / 11.6 s |
-| FILUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 7 | 2 | 10.8 / 11.1 s |
-| BCHUSDT | 1 / 1 | 0 | 0 | 6 | 7 de 7 | 0 | 11.9 / 13.5 s |
-| ZECUSDT | 4 / 3 | 2 (2) | 1 (0) | 2 | 4 de 7 | 2 | 11.9 / 14.0 s |
-| NEARUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 7 | 2 | 11.8 / 12.8 s |
-| DOTUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 7 | 2 | 13.3 / 28.1 s |
+| BTCUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 13 | 2 | 16.5 / 23.9 s |
+| ETHUSDT | 2 / 3 | 1 (1) | 1 (0) | 1 | 3 de 10 | 2 | 11.7 / 19.8 s |
+| SOLUSDT | 3 / 3 | 1 (0) | 1 (0) | 8 | 10 de 10 | 0 | 11.0 / 13.6 s |
+| XRPUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 8 | 1 | 11.3 / 14.7 s |
+| BNBUSDT | 2 / 3 | 1 (1) | 1 (0) | 1 | 3 de 8 | 2 | 11.8 / 16.2 s |
+| ADAUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 8 | 1 | 10.5 / 11.9 s |
+| LTCUSDT | 1 / 1 | 0 | 0 | 2 | 3 de 8 | 1 | 11.2 / 14.0 s |
+| TRXUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 8 | 2 | 10.9 / 12.9 s |
+| DOGEUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 8 | 1 | 11.6 / 13.0 s |
+| MXUSDT | 0 / 1 | 0 | 0 | 0 | 1 de 8 | 1 | 10.9 / 11.6 s |
+| FILUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 8 | 2 | 10.7 / 11.1 s |
+| BCHUSDT | 1 / 1 | 0 | 0 | 7 | 8 de 8 | 0 | 11.8 / 13.5 s |
+| ZECUSDT | 5 / 4 | 2 (2) | 2 (0) | 3 | 5 de 8 | 2 | 12.2 / 14.0 s |
+| NEARUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 8 | 2 | 12.0 / 13.0 s |
+| DOTUSDT | 0 / 3 | 0 | 1 (0) | 1 | 2 de 8 | 2 | 13.2 / 28.1 s |
 
 **Latencia:** el LLM tardó 12.0 s de media por ciclo (mediana 11.1 s, mínimo 8.9 s, máximo 28.1 s). Los 15 activos se procesan uno tras otro en unos 3 minutos.
 
 **Interpretación.**
-- **Sin LLM:** el mercado cayó en todo el periodo; en los 114 ciclos el cierre estuvo por debajo de la SMA20. El modelo dio solo 21 señales de compra en 114 ciclos, concentradas en SOL (9) y BCH (7). Por eso la cartera sin LLM pasó la mayor parte del tiempo en efectivo y evitó la caída de 4 % a 15 % del 20 nov. Sus 5 operaciones cerradas dieron 4 ganancias (BNB, ETH y dos de ZEC) y una pérdida por stop (SOL).
-- **Con LLM:** en el primer ciclo de cada activo el LLM propuso COMPRAR, así que hasta el 19 nov su cartera fue idéntica a comprar y mantener. En XRP, ADA, LTC, DOGE, MX y BCH sigue siéndolo; en TRX lo fue hasta que el stop vendió el 25 nov. El 20 nov los stops vendieron en 6 activos en el punto bajo. Al día siguiente el LLM volvió a comprar en los 6 a precios más altos: BTC de 58,954.52 a 60,212.44, ETH de 1,623.12 a 1,685.70, SOL de 68.88 a 70.30, BNB de 540.91 a 548.62, ZEC de 759.52 a 780.22 y NEAR de 2.8508 a 2.8935. Esa combinación de stop y recompra explica por qué la cartera con LLM quedó por debajo de comprar y mantener. Sus 9 operaciones cerradas terminaron todas por stop y con pérdida.
-- **Comprar y mantener:** refleja la caída del mercado (−4.41 % en total, −5.75 % en BTC desde el 14 nov).
-- **Muestra pequeña:** con 7 a 12 ciclos por activo y 14 operaciones cerradas en total, el Win Rate y el profit factor no son estadísticamente concluyentes. Solo describen este periodo.
+- **Sin LLM:** el mercado cayó en todo el periodo; en los 129 ciclos el cierre estuvo por debajo de la SMA20. El modelo dio solo 25 señales de compra en 129 ciclos, concentradas en SOL (10) y BCH (8). Por eso la cartera sin LLM pasó la mayor parte del tiempo en efectivo y evitó la caída de 4 % a 15 % del 20 nov. Sus 5 operaciones cerradas dieron 4 ganancias (BNB, ETH y dos de ZEC) y una pérdida por stop (SOL). El 26 nov volvió a comprar ZEC a 682.27, después de haberlo vendido a 771.25 el día anterior. Superó a comprar y mantener en 12 de 15 activos y lo igualó en BCH.
+- **Con LLM:** en el primer ciclo de cada activo el LLM propuso COMPRAR, así que hasta el 19 nov su cartera fue idéntica a comprar y mantener. En XRP, ADA, LTC, DOGE, MX y BCH sigue siéndolo. En TRX el stop vendió el 25 nov a 0.3041 y el LLM recompró el 26 nov al mismo precio, contra la señal del modelo, así que vuelve a coincidir. El 20 nov los stops vendieron en 6 activos en el punto bajo. Al día siguiente el LLM volvió a comprar en los 6 a precios más altos: BTC de 58,954.52 a 60,212.44, ETH de 1,623.12 a 1,685.70, SOL de 68.88 a 70.30, BNB de 540.91 a 548.62, ZEC de 759.52 a 780.22 y NEAR de 2.8508 a 2.8935. Esa combinación de stop y recompra explica por qué la cartera con LLM quedó por debajo de comprar y mantener. El 26 nov ZEC cayó 11.5 % y el stop vendió la posición recomprada el 21 nov (780.22 → 682.27). Sus 10 operaciones cerradas terminaron todas por stop y con pérdida.
+- **Comprar y mantener:** refleja la caída del mercado (−4.49 % en total, −5.59 % en BTC desde el 14 nov).
+- **Muestra pequeña:** con 8 a 13 ciclos por activo y 15 operaciones cerradas en total, el Win Rate y el profit factor no son estadísticamente concluyentes. Solo describen este periodo.
 
 ## 8. ¿El LLM aporta valor? Análisis de sus propuestas y justificaciones
 
 Se comparó cada justificación guardada con los datos del ciclo, que también están guardados en la columna `observacion` de `ciclos.csv`.
 
-- **Nunca propuso VENDER.** En 114 ciclos propuso 41 veces COMPRAR, 73 veces MANTENER y ninguna vez VENDER. Todas las salidas de la cartera con LLM fueron por stop.
-- **Sesgo a COMPRAR.** Propuso COMPRAR en los 21 ciclos con señal de compra del modelo y en 20 ciclos sin ella (49 % de sus compras). El caso más claro es la vela del 19 nov, primer ciclo de 12 activos (los 10 del lote 2, DOT y XRP): propuso COMPRAR en los 12, aunque el modelo solo daba compra en BCH. En 18 ocasiones propuso COMPRAR con la posición ya abierta, una acción no permitida que la validación cambió a MANTENER.
+- **Nunca propuso VENDER.** En 129 ciclos propuso 46 veces COMPRAR, 83 veces MANTENER y ninguna vez VENDER. Todas las salidas de la cartera con LLM fueron por stop.
+- **Sesgo a COMPRAR.** Propuso COMPRAR en los 25 ciclos con señal de compra del modelo y en 21 ciclos sin ella (46 % de sus compras). El caso más claro es la vela del 19 nov, primer ciclo de 12 activos (los 10 del lote 2, DOT y XRP): propuso COMPRAR en los 12, aunque el modelo solo daba compra en BCH. En 22 ocasiones propuso COMPRAR con la posición ya abierta, una acción no permitida que la validación cambió a MANTENER.
 - **Comparaciones falsas con números reales.** Ejemplos:
   - BCH: «200.60 es mayor que 224.73 → tendencia subida» (23 nov).
   - ETH: «1710.95 es mayor que 1949.66 → ascendente» (23 nov).
   - ZEC: «777.13 es mayor que 996.44 → subir» (23 nov).
   - DOT: «0.6637 es mayor que 0.8287» (20 nov).
   - NEAR: «2.851 es mayor que 3.528» (20 nov).
+  - BCH: «209.90 es mayor que 214.47» y SOL: «71.03 es superior a 75.97» (26 nov).
 - **«Cerca de la SMA20» con distancias grandes.** Lo dijo de FIL estando 26 % abajo (20 nov) y 22.9 % abajo (22 nov), y de BTC estando 17 % abajo (20 nov).
-- **Calificaciones contradictorias.** Llamó «baja» a una volatilidad de 4.27 % en FIL y «moderada» a una de 4.50 %. Llamó «alta» a una de 2.77 % en BNB y «moderada» a una de 2.73 %.
-- **Números inventados y caracteres raros.** En BTC escribió «cierre ´5412.44 mayor al SMA20 ·0193.41» (21 nov); los datos reales eran 60,212.44 y 70,193.41. En SOL y DOGE aparecieron «ÓDelta» y «°0.2779%». El detector de números inventados marcó 4 justificaciones de 114 en vivo (y 3 de 10 en replay). El detector no reconoce comparaciones falsas hechas con números reales, y en MX marcó dos redondeos.
+- **Calificaciones contradictorias.** Llamó «baja» a una volatilidad de 4.27 % en FIL y «moderada» a una de 4.50 %. Llamó «alta» a una de 2.77 % en BNB y «moderada» a una de 2.73 %. El 26 nov dijo que ZEC, 25 % debajo de su SMA20, estaba en «sobrecompra».
+- **Números inventados y caracteres raros.** En BTC escribió «cierre ´5412.44 mayor al SMA20 ·0193.41» (21 nov); los datos reales eran 60,212.44 y 70,193.41. En SOL y DOGE aparecieron «ÓDelta» y «°0.2779%». El detector de números inventados marcó 5 justificaciones de 129 en vivo (y 3 de 10 en replay). El detector no reconoce comparaciones falsas hechas con números reales, y en MX marcó tres redondeos.
 - **Repetición.** En BTC y DOGE el texto se repite casi palabra por palabra de un día a otro aunque cambien los datos.
 
 **Conclusión:** `llama3.2:3b` no razona de forma confiable sobre los datos que recibe. No agrega información que el modelo no tenga y su sesgo a comprar empeora el resultado. El diseño lo contiene: el LLM no recibe claves, no puede saltarse el motor de riesgo ni cambiar la configuración, y sus acciones no válidas se rechazan. No se cambió de modelo ni de prompt durante la prueba, para no ajustar el agente a los resultados observados.
@@ -220,9 +223,9 @@ La sección 2 del protocolo pide «rentabilidad positiva +20 %» y verificar que
 |---|---|---|
 | TE de BTC (ago 2025 – nov 2026, costo 0.10 %) | −3.25 % (estrategia D) | −31.57 % |
 | Replay de BTC (5–14 nov) | 0.00 % (sin LLM) | −15.70 % |
-| En vivo, 15 activos (14–25 nov, costo 0 %) | +0.26 % (sin LLM) | −4.41 % |
+| En vivo, 15 activos (14–26 nov, costo 0 %) | +0.60 % (sin LLM) | −4.49 % |
 
-**Por qué no se llegó.** Los tres periodos coincidieron con un mercado bajista. En TE, BTC cayó 31.6 %, y en los 114 ciclos en vivo el cierre estuvo por debajo de su SMA20. El protocolo solo permite posiciones compradas o efectivo (sin ventas en corto ni apalancamiento). Con esa restricción, en un mercado que cae lo mejor que puede hacer una estrategia es quedarse en efectivo, no ganar 20 %.
+**Por qué no se llegó.** Los tres periodos coincidieron con un mercado bajista. En TE, BTC cayó 31.6 %, y en los 129 ciclos en vivo el cierre estuvo por debajo de su SMA20. El protocolo solo permite posiciones compradas o efectivo (sin ventas en corto ni apalancamiento). Con esa restricción, en un mercado que cae lo mejor que puede hacer una estrategia es quedarse en efectivo, no ganar 20 %.
 
 **Lo que sí funcionó:**
 - **El modelo profundo superó a la regresión lineal**, que es la otra mitad del requisito de la sección 2:
@@ -233,18 +236,18 @@ La sección 2 del protocolo pide «rentabilidad positiva +20 %» y verificar que
   - En TE de BTC perdió 28.3 puntos menos (−3.25 % frente a −31.57 %).
   - En TE superó a comprar y mantener en 12 de 15 activos, y fue positivo en SOL (+6.74 %), ZEC (+12.70 %) y NEAR (+6.73 %).
   - En el replay evitó la caída de −15.70 %.
-- **En vivo, la cartera del modelo sin LLM fue la única positiva:** +0.26 % frente a −4.41 % de comprar y mantener, con drawdown de −0.93 % frente a −7.04 %. Ganó 4 de sus 5 operaciones cerradas (80 %) y evitó la caída de 4 % a 15 % del 20 nov al estar en efectivo.
+- **En vivo, la cartera del modelo sin LLM fue la única positiva:** +0.60 % frente a −4.49 % de comprar y mantener, con drawdown de −0.93 % frente a −7.04 %. Ganó 4 de sus 5 operaciones cerradas (80 %) y evitó la caída de 4 % a 15 % del 20 nov al estar en efectivo.
 - **El motor de riesgo funcionó como se diseñó:**
-  - Rechazó las 18 compras no permitidas del LLM y forzó las ventas por stop.
+  - Rechazó las 22 compras no permitidas del LLM y forzó las ventas por stop.
   - Bloqueó compras tras pérdidas de 3 % o más.
   - Ningún error produjo operaciones indebidas.
 - **La ingeniería del agente cumple todos los componentes del protocolo:** datos de MEXC, modelo versionado, LLM local con API privada, UI, persistencia, nueve errores demostrados y 119 pruebas automatizadas.
 
 ## 11. Limitaciones
 
-- El periodo en vivo es corto (7 a 12 ciclos por activo) y estuvo dominado por un mercado bajista, así que los resultados no se pueden generalizar.
+- El periodo en vivo es corto (8 a 13 ciclos por activo) y estuvo dominado por un mercado bajista, así que los resultados no se pueden generalizar.
 - Los activos empezaron en fechas distintas (14, 17 o 19 nov). La comparación entre carteras es justa dentro de cada activo; el total suma periodos distintos.
-- El costo es de 0 % y el deslizamiento supuesto de 0 %, como pide el protocolo. Con costos reales, la cartera con LLM, que opera más (32 órdenes frente a 13), saldría aún peor.
+- El costo es de 0 % y el deslizamiento supuesto de 0 %, como pide el protocolo. Con costos reales, la cartera con LLM, que opera más (34 órdenes frente a 14), saldría aún peor.
 - Se usó un LLM pequeño (3 mil millones de parámetros) por el hardware de 8 GB. Un modelo mayor podría razonar mejor, pero se mantuvo el mismo durante toda la prueba.
 - La cartera con LLM usa el mismo control de riesgo que la del modelo. Por eso la diferencia entre ambas mide la decisión de entrada del LLM, no un riesgo distinto.
 
@@ -266,4 +269,4 @@ Archivos de `agente/registros/`:
 - `serie_patrimonio_total.csv`: patrimonio diario de cada cartera.
 - `ciclos.csv`, `decisiones.csv`, `ordenes.csv`, `eventos.csv` y `patrimonio.csv`: los registros completos.
 
-El historial de cambios del agente (v1.0 a v2.0) está en `agente/CHANGELOG.md`. La versión con la que se procesó cada vela queda guardada en su ciclo.
+El historial de cambios del agente (v1.0 a v2.1) está en `agente/CHANGELOG.md`. La versión con la que se procesó cada vela queda guardada en su ciclo.
