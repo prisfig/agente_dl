@@ -347,6 +347,9 @@ def contenido_alerta(simbolo: str, tipo: str, fecha_vela: str, obs: dict, dec: i
     if tipo == "compra" and sugerencia:
         sugeridos.append(f"Take profit sugerido: {_num(sugerencia['take_profit'], dec)} USDT "
                          f"(relación {sugerencia['r']:g}:1 sobre el stop).")
+        if sugerencia.get("dias_maximos"):
+            sugeridos.append(f"Tiempo máximo sugerido: {sugerencia['dias_maximos']} días "
+                             "(si no toca el stop ni el take profit, salir a mano).")
         if sugerencia.get("tamano") is not None:
             sugeridos.append(f"Tamaño sugerido: {sugerencia['tamano'] * 100:.1f} % del capital "
                              f"({sugerencia['kelly_motivo']}; acierto en validación {sugerencia['win_rate_va'] * 100:.0f} %).")

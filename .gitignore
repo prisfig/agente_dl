@@ -16,3 +16,7 @@ __pycache__/
 
 # Archivos del sistema
 .DS_Store
+
+# v2.4: salida temporal de las pruebas de indicadores
+agente/frontend/.prueba/
+agente/logs/

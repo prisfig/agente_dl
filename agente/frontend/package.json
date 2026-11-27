@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "tsc -p tsconfig.pruebas.json && node --test pruebas/indicadores.test.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

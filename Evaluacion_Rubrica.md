@@ -1,10 +1,10 @@
 # Evaluación del sistema frente a la rúbrica «Proyecto de App de Trading con IA»
 
-**Actualizado el 27 nov (v2.3).** Después de la revisión del profesor se agregaron, sin cambiar el modelo ni las reglas de la simulación: niveles sugeridos de take profit y tamaño (Kelly fraccional con datos de validación), métricas completas, líneas base al azar y técnicas, sensibilidad a costos, análisis por régimen, monitor de deriva, diagramas de arquitectura y de decisión, tabla de la API, bitácora con hash encadenado e integración continua. Los indicadores marcados abajo ya lo reflejan; lo que sigue faltando conserva su justificación.
+**Actualizado el 27 nov (v2.3 y v2.4).** Después de la revisión del profesor se agregaron, sin cambiar el modelo ni las reglas de la simulación: niveles sugeridos de take profit y tamaño (Kelly fraccional con datos de validación), métricas completas, líneas base al azar y técnicas, sensibilidad a costos, análisis por régimen, monitor de deriva, diagramas de arquitectura y de decisión, tabla de la API, bitácora con hash encadenado e integración continua; en la v2.4, velas japonesas, arranque con un solo comando, pruebas de los indicadores y tiempo máximo sugerido. Los indicadores marcados abajo ya lo reflejan; lo que sigue faltando conserva su justificación.
 
 El 26 de noviembre de 2026 el profesor compartió la rúbrica «Proyecto de App de Trading con IA» y pidió evaluar si el sistema cumple con ella. También aclaró que no es obligatorio cumplir todo. Este documento revisa cada indicador contra lo que ya está en el repositorio. Donde falta algo, explica por qué **no se agregó** antes de la entrega del 27 de noviembre.
 
-Versión evaluada: **v2.3** (laboratorio de señales con avisos por correo y pestaña PnL simulado), con datos hasta la vela del 26 nov 2026.
+Versión evaluada: **v2.4** (laboratorio de señales con avisos por correo y pestaña PnL simulado), con datos hasta la vela del 26 nov 2026.
 
 ## Por qué no se agregan los puntos que siguen faltando
 
@@ -20,19 +20,19 @@ Leyenda: **Cumple**, **Parcial** (está, pero le falta una parte del nivel más 
 | Indicador | Estado | Qué tiene el sistema | Por qué no se completa |
 |---|---|---|---|
 | Arquitectura | Cumple | Frontend React + TypeScript, backend FastAPI, gateway propio del LLM y MEXC como fuente, en capas separadas; el navegador nunca llama a MEXC. Diagramas Mermaid de componentes y del flujo de decisión en el README (sección «Arquitectura y flujo de decisión») | — |
-| FrontEnd | Parcial | Datos en vivo de MEXC; Señales por activo con gráfica de precio (SMA20, SMA50, Bollinger), pronóstico frente a δ, RSI e indicadores; Mercado compara los 15 pares; mensajes de «sin conexión», clave incorrecta y error de la API | No hay gráfico de velas japonesas: el modelo decide solo con cierres diarios. La interfaz está pensada para escritorio |
+| FrontEnd | Cumple | Datos en vivo de MEXC; Señales por activo con **velas japonesas** o líneas (SMA20, SMA50, Bollinger), pronóstico frente a δ, RSI e indicadores; Mercado compara los 15 pares; mensajes de «sin conexión», clave incorrecta y error de la API | Pensada para escritorio |
 | BackEnd / API | Cumple | Tabla de rutas en el README y documentación OpenAPI en `/docs`; cada orden simulada se valida (saldo, paso de cantidad y monto mínimo); reintentos con espera creciente; nueve escenarios de error demostrados | — |
 | Tiempo real | No | La interfaz consulta al backend cada 5 a 30 s | La señal se calcula una vez al día, 5 minutos después del cierre de 00:00 UTC. Un WebSocket de precios por segundo no cambia ninguna decisión y agrega un punto de falla |
 | Seguridad | Cumple | Claves solo en `agente/.env` (fuera de Git); `.env.example` sin valores; gateway del LLM con su propia clave; no existe ninguna ruta de órdenes reales y el bloqueo está probado (`enviar_orden_real` lanza error y las rutas no permitidas se rechazan) | La clave de acceso a la app se escribe en el navegador al entrar y vive solo en esa pestaña. No es una clave del broker: el sistema no usa ninguna clave de MEXC |
 | Persistencia y trazabilidad | Cumple | Base SQLite por activo exportada a CSV; **hash encadenado** de toda la bitácora (`agente/bitacora_hash.py`, `registros/cadena_hash.csv`): si se altera una fila, la verificación falla; SHA-256 de la configuración en cada ciclo y de cada modelo al cargarlo | — |
-| Calidad y entrega | Parcial | README con instalación, ejecución y pruebas; 122 pruebas; **CI en GitHub Actions** (`.github/workflows/ci.yml`): tipos y compilación de la interfaz, compilación del backend, verificación de la bitácora y pytest en cada push | El arranque usa tres terminales (gateway, backend e interfaz), no un solo comando |
+| Calidad y entrega | Cumple | **Arranque con un solo comando** (`./iniciar.sh`); README con instalación, ejecución y pruebas; 122 pruebas del backend y 7 de indicadores; **CI en GitHub Actions** (interfaz, pruebas de indicadores, backend, bitácora y pytest en cada push) | — |
 
 ## 2 · Consideraciones financieras
 
 | Indicador | Estado | Qué tiene el sistema | Por qué no se completa |
 |---|---|---|---|
 | Velas y datos | Cumple | Velas diarias OHLCV de MEXC; solo velas cerradas de 00:00 UTC; antigüedad máxima de 26 h; validación de fechas y de orden; no se rellenan velas perdidas | — |
-| Análisis técnico | Parcial | SMA20 (filtro de la estrategia D) y volatilidad de 20 días (stop) en el modelo; en la interfaz, además, SMA50, Bandas de Bollinger, RSI (14) y ATR (14), cada uno con su lectura y marcado como referencia | Los indicadores de referencia no tienen pruebas automatizadas propias ni entran al modelo, porque no se validaron en la práctica |
+| Análisis técnico | Cumple | SMA20 (filtro de la estrategia D) y volatilidad de 20 días (stop) en el modelo; en la interfaz, además, SMA50, Bandas de Bollinger, RSI (14) y ATR (14), cada uno con su lectura y su porqué, y **con pruebas automatizadas** (`npm test`) | Los indicadores de referencia no entran al modelo, porque no se validaron en la práctica |
 | Métricas de desempeño | Cumple | Rendimiento neto, drawdown, Win Rate con **intervalo de Wilson**, **Sharpe**, **Sortino**, **expectativa por operación**, profit factor, operaciones, exposición, acciones rechazadas y latencia ([`Analisis_Complementario.md`](Analisis_Complementario.md)) | — |
 | Costos | Cumple | TE con comisión de 0.10 % y **sensibilidad** a comisión de 0 a 0.30 % y deslizamiento de 0.05 %, con el **costo de equilibrio** (0.036 % por operación) | En vivo el costo es de 0 % por protocolo |
 | Stop Loss y Take Profit | Cumple | Cada señal trae stop (2 × vol20) y **take profit sugerido** con relación 1.5:1 sobre el stop, en la pestaña Señales y en el correo | La simulación del protocolo sigue saliendo por señal o stop; el take profit es para la compra manual |
@@ -69,9 +69,9 @@ Leyenda: **Cumple**, **Parcial** (está, pero le falta una parte del nivel más 
 |---|---|---|---|
 | Tesis de la estrategia | Cumple | Seguir el impulso de corto plazo con filtro de tendencia; **análisis por régimen** en el TE de BTC: en régimen alcista +3.91 % (comprar y mantener +4.73 %), en bajista −1.93 % frente a −37.00 %. Funciona como protección en mercados bajistas | — |
 | Entry | Parcial | Condiciones objetivas y medibles (pronóstico > δ, cierre > SMA20 en D); orden a mercado al cierre diario, que en MEXC es igual a la apertura siguiente | No hay órdenes límite ni expiración, porque se decide una vez al día con la vela cerrada |
-| Long | Cumple | Señal, confirmación (SMA20 en la estrategia D), stop móvil y take profit sugerido | Sin tiempo máximo en la posición |
+| Long | Cumple | Señal, confirmación (SMA20 en la estrategia D), stop móvil, take profit y **tiempo máximo** sugeridos | — |
 | Short | Cumple | Solo compras, justificado: cripto spot sin préstamo de activos y un protocolo que permite solo compras o efectivo | — |
-| Salidas | Parcial | Señal contraria, stop móvil con prioridad sobre la señal y el LLM, y take profit sugerido para la compra manual | Sin tiempo máximo |
+| Salidas | Cumple | Señal contraria, stop móvil con prioridad sobre la señal y el LLM; para la compra manual, take profit y **tiempo máximo de 10 días** sugeridos | En la simulación del protocolo no hay take profit ni tiempo máximo |
 | Ejecución | Parcial | Órdenes simuladas a mercado, redondeadas al paso del par, con monto mínimo y saldo; el aviso trae stop y take profit para armar la orden a mano | No hay órdenes bracket u OCO porque no hay broker: el protocolo prohíbe órdenes reales y la demo de MEXC sigue en revisión |
 | Consistencia backtest ↔ paper | Parcial | Las mismas reglas y el mismo modelo en el TE y en vivo; el modelo de BTC da en la Mac las mismas predicciones que en Colab (diferencia máxima 7.2e-10 en 444 pronósticos) | El deslizamiento real no se puede medir, porque no hay ejecución real |
 

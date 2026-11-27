@@ -227,6 +227,7 @@ def test_niveles_sugeridos_tp_y_kelly_con_validacion():
     texto, params = contenido_alerta("AAAUSDT", "compra", "2026-11-27", {"cierre": 100.0, "pronostico": 0.01, "delta": 0.001},
                                      2, 96.0, "", s)
     assert "Take profit sugerido: 106.00" in texto and "Tamaño sugerido: 16.7 %" in texto and len(params) == 7
+    assert s["dias_maximos"] == 10 and "Tiempo máximo sugerido: 10 días" in texto
 
 
 def test_config_real_tiene_sugerencias_de_los_15_activos_desde_va(cfg_completa):

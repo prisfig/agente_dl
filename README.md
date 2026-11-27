@@ -2,7 +2,7 @@
 
 Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico de BTC/USDT, y el **proyecto final**: un sistema de IA que analiza cada día 15 pares de MEXC con el modelo LSTM de cada activo, un LLM local (Ollama), controles de riesgo deterministas y una interfaz web.
 
-> **Versión actual: v2.3, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales. Desde la v2.2, **Señales** muestra un activo a la vez con sus gráficos e indicadores financieros, y **Mercado** permite comparar los 15 pares. La v2.3 agrega a cada señal un plan sugerido para la compra manual (stop, take profit y tamaño con Kelly fraccional) y el [análisis complementario](Analisis_Complementario.md) pedido en la rúbrica.
+> **Versión actual: v2.4, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales. Desde la v2.2, **Señales** muestra un activo a la vez con sus gráficos e indicadores financieros, y **Mercado** permite comparar los 15 pares. La v2.3 agrega a cada señal un plan sugerido para la compra manual (stop, take profit y tamaño con Kelly fraccional) y el [análisis complementario](Analisis_Complementario.md) pedido en la rúbrica.
 >
 > El sistema **no envía órdenes reales**. Solo lee datos públicos de MEXC; la simulación Paper sigue por dentro para evaluar la señal. Las claves y las direcciones de correo no están en el repositorio.
 
@@ -186,7 +186,8 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | v2.0 | 26 nov 2026 | **Laboratorio de señales:** avisos por correo cuando el modelo compra o vende (WhatsApp queda como alternativa); pestaña Señales; la interfaz ya no muestra saldos (indicación del profesor). La simulación sigue por dentro solo para evaluar | 119 |
 | v2.1 | 26 nov 2026 | Pestaña **PnL simulado** (la antigua Operaciones) para presentar operaciones y PnL, marcada como simulación con capital virtual: no son compras reales ni saldos de una cuenta. Solo cambia la interfaz | 119 |
 | v2.2 | 27 nov 2026 | Por revisión del profesor: **Señales** muestra solo el activo elegido, con gráfica de precio (SMA20, SMA50, Bollinger), pronóstico frente a δ, RSI, tabla de indicadores financieros e historial de su señal y avisos; **Mercado** agrega la comparación de los 15 pares (rendimiento base 100, tabla ordenable y correlaciones). Ruta nueva de solo lectura `GET /api/historial_senal` | 120 |
-| **v2.3** | 27 nov 2026 | De la rúbrica del profesor: **plan sugerido** en cada señal (stop, take profit 1.5:1 y tamaño con ½ Kelly de validación) en Señales y en el correo; **análisis complementario** (Sharpe, Sortino, Wilson, líneas base al azar y técnicas, costos, régimen, deriva); **bitácora con hash encadenado**; **CI** en GitHub Actions; diagramas y tabla de la API en el README. No cambia el modelo, las señales ni la simulación | 122 |
+| v2.3 | 27 nov 2026 | De la rúbrica del profesor: **plan sugerido** en cada señal (stop, take profit 1.5:1 y tamaño con ½ Kelly de validación) en Señales y en el correo; **análisis complementario** (Sharpe, Sortino, Wilson, líneas base al azar y técnicas, costos, régimen, deriva); **bitácora con hash encadenado**; **CI** en GitHub Actions; diagramas y tabla de la API en el README. No cambia el modelo, las señales ni la simulación | 122 |
+| **v2.4** | 27 nov 2026 | **Velas japonesas** en Señales (selector Líneas / Velas); **arranque con un solo comando** (`./iniciar.sh`); **pruebas de los indicadores** (SMA, Bollinger, RSI, ATR, correlación) en `npm test` y en la CI; **tiempo máximo sugerido** (10 días) en el plan de cada señal y en el correo | 122 + 7 |
 
 ---
 
@@ -206,7 +207,7 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | 14–26 nov 2026 | Ciclos diarios en vivo: 129 ciclos válidos en los 15 activos, más 10 de replay en BTC |
 | 25 nov 2026 | Exportación de registros, evidencia de Ollama local y pruebas, capturas, informe final y repositorio público |
 | 26 nov 2026 | Presentación ejecutiva; README con versiones, avances, datos de MEXC, operaciones y PnL. Por indicación del profesor, v2.0: laboratorio de señales sin saldos y con avisos por correo. La conexión con la cuenta demo de MEXC queda pendiente (en revisión con el profesor). Primer aviso real por correo (compra de ZEC, vela del 26 nov). v2.1: pestaña PnL simulado. Evaluación frente a la rúbrica del profesor |
-| 27 nov 2026 | Revisión del profesor. v2.2: Señales por activo con sus gráficos e indicadores financieros, y Mercado para comparar los 15 pares. v2.3: lo que se pudo agregar de la rúbrica (plan sugerido, análisis complementario, bitácora encadenada y CI) |
+| 27 nov 2026 | Revisión del profesor. v2.2: Señales por activo con sus gráficos e indicadores financieros, y Mercado para comparar los 15 pares. v2.3: lo que se pudo agregar de la rúbrica (plan sugerido, análisis complementario, bitácora encadenada y CI). v2.4: velas japonesas, arranque único, pruebas de indicadores y tiempo máximo sugerido |
 
 Las fechas de los avances de la práctica son las de su ejecución en Colab T4 (UTC), registradas en [`evidencia_t4/`](evidencia_t4/).
 
@@ -335,7 +336,10 @@ pip install -r agente/backend/requirements.txt
 cp agente/.env.example agente/.env      # dos claves propias y, opcional, los datos del correo para los avisos (ver el archivo)
 ollama pull llama3.2:3b
 
-# 2. Gateway del LLM y backend (dos terminales, en agente/backend)
+# 2. Todo con un solo comando (v2.4): gateway, backend e interfaz; Ctrl+C detiene los tres
+./iniciar.sh                             # http://127.0.0.1:5173 · registros en agente/logs/
+
+# 2b. O por separado: gateway del LLM y backend (dos terminales, en agente/backend)
 uvicorn gateway.main:app --host 127.0.0.1 --port 8001
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 
@@ -343,8 +347,10 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000
 npm install && npm run dev               # http://127.0.0.1:5173
 
 # Pruebas y registros
-cd agente/backend && python -m pytest    # 122 pruebas automatizadas
+cd agente/backend && python -m pytest    # 122 pruebas automatizadas del backend
+cd agente/frontend && npm test           # 7 pruebas de los indicadores financieros
 python agente/exportar_registros.py      # exporta las bases a CSV y calcula las métricas del informe
+python agente/bitacora_hash.py generar   # encadena la bitácora exportada (verificar: ... verificar)
 ```
 
 ---
@@ -356,7 +362,7 @@ python agente/exportar_registros.py      # exporta las bases a CSV y calcula las
 | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
 | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) | Presentación ejecutiva del sistema |
 | [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) | Evaluación del sistema frente a la rúbrica del profesor (26 nov) y justificación de lo que no se agregó |
-| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.3) |
+| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.4) |
 | [`agente/registros/`](agente/registros/) | Registros del agente en CSV (ciclos, decisiones, órdenes, patrimonio y eventos) y métricas calculadas |
 | [`agente/evidencia/`](agente/evidencia/) | Verificación de los modelos en la computadora local, replay histórico de BTC y demostración de los nueve errores |
 | [`notebooks/`](notebooks/) | Notebooks de Colab: avances de la práctica (`practica/`) y entrenamiento de los activos extra |

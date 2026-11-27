@@ -11,7 +11,7 @@ on:
 
 jobs:
   interfaz:
-    name: Interfaz (tipos y compilación)
+    name: Interfaz (tipos, compilación y pruebas de indicadores)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -25,6 +25,7 @@ jobs:
           cache-dependency-path: agente/frontend/package-lock.json
       - run: npm ci
       - run: npm run build          # tsc --noEmit + vite build
+      - run: npm test               # pruebas de los indicadores financieros (node:test)
 
   verificaciones:
     name: Backend compila y bitácora íntegra

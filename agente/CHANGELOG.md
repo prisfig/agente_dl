@@ -3,6 +3,19 @@
 Cada modificación al programa sube la versión (1.1, 1.2, …). El número está en `config/agente.json` (`"version"`),
 aparece en la barra superior de la interfaz y se guarda en cada ciclo (campo `version` de la observación) y en el evento de arranque.
 
+## v2.4 — 27 de noviembre de 2026
+
+**Lo que quedaba de la rúbrica con riesgo bajo.** No cambia el modelo, las señales, el riesgo ni la simulación.
+
+- **Velas japonesas** en Señales (`GraficaVelas` en `componentes/Graficas.tsx`): selector Líneas / Velas, OHLC con SMA20, SMA50, stop y
+  entradas y salidas de la señal; al pasar el cursor muestra apertura, máximo, mínimo y cierre.
+- **Arranque con un solo comando:** `./iniciar.sh` en la raíz levanta gateway, backend e interfaz, revisa `.venv`, `.env` y Ollama, y
+  Ctrl+C detiene los tres. Registros en `agente/logs/` (fuera de Git).
+- **Pruebas de los indicadores financieros:** `frontend/pruebas/indicadores.test.mjs` (node:test, sin dependencias nuevas) compara SMA,
+  Bollinger, RSI, ATR, rendimientos, caída máxima, correlación y el resumen contra valores calculados a mano; `npm test` y CI.
+- **Tiempo máximo sugerido** (`sugerencias.dias_maximos` = 10): si en 10 días no tocó ni el stop ni el take profit, salir a mano.
+  Aparece en el plan de Señales y en el correo de compra. Prueba ampliada.
+
 ## v2.3 — 27 de noviembre de 2026
 
 **Lo que se pudo agregar de la rúbrica del profesor**, sin cambiar el modelo, las señales ni la simulación del protocolo.

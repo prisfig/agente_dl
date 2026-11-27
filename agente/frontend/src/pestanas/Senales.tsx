@@ -3,7 +3,7 @@
  *  (v2.0–v2.1 mostraba una tabla con los 15 activos; el profesor pidió ver solo el activo con sus gráficos e indicadores.) */
 import { useState } from "react";
 import { enviar, useConsulta } from "../api";
-import { GraficaLineas, type Marcador } from "../componentes/Graficas";
+import { GraficaLineas, GraficaVelas, type Marcador } from "../componentes/Graficas";
 import { Acc, Kpi, MensajeError, Tarjeta } from "../componentes/Ui";
 import { hace, horaLocal, pct, precio } from "../formato";
 import { resumenIndicadores } from "../indicadores";
@@ -17,7 +17,7 @@ interface FilaSenal {
   sugerencia?: Sugerencia | null;
 }
 /** v2.3: niveles sugeridos para la compra manual (no cambian decisiones). */
-interface Sugerencia { stop: number; take_profit: number; r: number; riesgo_pct: number; beneficio_pct: number; kelly_completo: number | null;
+interface Sugerencia { stop: number; take_profit: number; r: number; dias_maximos?: number; riesgo_pct: number; beneficio_pct: number; kelly_completo: number | null;
   tamano: number | null; win_rate_va: number | null; operaciones_va: number | null; kelly_motivo: string }
 interface EstadoAvisos { estado: string; canal?: string; proveedor?: string; destino?: string | null; avisar_ventas?: boolean; disparador?: string;
   secretos_requeridos?: string[] }
@@ -35,6 +35,7 @@ const lecturaRsi = (r: number | null) => (r == null ? "—" : r >= 70 ? "sobreco
 
 export default function Senales({ estado }: { estado: Estado | null }) {
   const [dias, setDias] = useState(90);
+  const [tipoGrafica, setTipoGrafica] = useState<"lineas" | "velas">("lineas");
   const [ocupado, setOcupado] = useState(false);
   const [mensaje, setMensaje] = useState<{ texto: string; tipo: "azul" | "rojo" } | null>(null);
   const s = useConsulta<RespSenales>("/api/senales", 15_000);
@@ -124,7 +125,7 @@ export default function Senales({ estado }: { estado: Estado | null }) {
         <Tarjeta titulo="Plan sugerido para operar a mano · stop, take profit y tamaño" estilo={{ marginTop: 14 }}>
           <div className="rejilla r4">
             <Kpi valor={precio(f.sugerencia.stop)} etiqueta="Stop loss sugerido" sub={`−${pct(f.sugerencia.riesgo_pct, 2, false)} · cierre × (1 − 2 × vol20)`} />
-            <Kpi valor={precio(f.sugerencia.take_profit)} etiqueta="Take profit sugerido" sub={`+${pct(f.sugerencia.beneficio_pct, 2, false)} · relación ${f.sugerencia.r}:1 sobre el stop`} />
+            <Kpi valor={precio(f.sugerencia.take_profit)} etiqueta="Take profit sugerido" sub={`+${pct(f.sugerencia.beneficio_pct, 2, false)} · relación ${f.sugerencia.r}:1 sobre el stop${f.sugerencia.dias_maximos ? ` · salir a mano a los ${f.sugerencia.dias_maximos} días si no toca ninguno` : ""}`} />
             <Kpi valor={f.sugerencia.tamano == null ? "—" : pct(f.sugerencia.tamano, 1, false)} etiqueta="Tamaño sugerido (Kelly fraccional)"
               sub={f.sugerencia.kelly_motivo} />
             <Kpi valor={f.sugerencia.win_rate_va == null ? "—" : pct(f.sugerencia.win_rate_va, 0, false)} etiqueta="Acierto de la estrategia en validación"
@@ -139,9 +140,19 @@ export default function Senales({ estado }: { estado: Estado | null }) {
       )}
 
       <div className="seccion">Gráficos de {activo}</div>
-      <Tarjeta titulo={`Precio diario · cierre, SMA20, SMA50 y Bandas de Bollinger`} extra={
-        <span className="selector">{[60, 90, 180].map((d) => <button key={d} className={dias === d ? "activo" : ""} onClick={() => setDias(d)}>{d} d</button>)}</span>}>
-        {ind ? (
+      <Tarjeta titulo={tipoGrafica === "velas" ? "Precio diario · velas japonesas (OHLC), SMA20 y SMA50" : "Precio diario · cierre, SMA20, SMA50 y Bandas de Bollinger"} extra={
+        <span style={{ display: "flex", gap: 8 }}>
+          <span className="selector">{(["lineas", "velas"] as const).map((t) => <button key={t} className={tipoGrafica === t ? "activo" : ""} onClick={() => setTipoGrafica(t)}>{t === "lineas" ? "Líneas" : "Velas"}</button>)}</span>
+          <span className="selector">{[60, 90, 180].map((d) => <button key={d} className={dias === d ? "activo" : ""} onClick={() => setDias(d)}>{d} d</button>)}</span>
+        </span>}>
+        {ind && tipoGrafica === "velas" ? (
+          <GraficaVelas velas={v} alto={380} formato={(x) => precio(x)} marcadores={marcadores}
+            lineas={[
+              { nombre: "SMA20", valores: corta(ind.series.s20), color: "var(--ambar)", discontinua: true, grosor: 1.6 },
+              { nombre: "SMA50", valores: corta(ind.series.s50), color: "var(--violeta)", discontinua: true, grosor: 1.4 },
+              ...(f?.senal_activa && f.stop ? [{ nombre: "Stop sugerido", valores: v.map(() => f.stop as number), color: "var(--rojo)", discontinua: true, grosor: 1 }] : []),
+            ]} />
+        ) : ind ? (
           <GraficaLineas etiquetas={etiquetas} alto={360} formato={(x) => precio(x)} marcadores={marcadores}
             series={[
               { nombre: "Cierre", valores: v.map((x) => x.close), color: "var(--cian)", grosor: 2.2 },

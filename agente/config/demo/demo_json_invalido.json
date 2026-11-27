@@ -1,5 +1,5 @@
 {
-  "version": "2.3",
+  "version": "2.4",
   "descripcion": "Configuración de DEMOSTRACIÓN de errores (protocolo, sección de errores). Base de datos aparte; no afecta los ciclos en vivo.",
   "mercado": {
     "url_base": "https://api.mexc.com",

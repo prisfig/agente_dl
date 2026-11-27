@@ -5,6 +5,8 @@ solo se muestran en la pestaña Señales y en el correo, para quien decide compr
 
 - Stop: el mismo stop móvil del motor de riesgo, cierre × (1 − k × vol20).
 - Take profit: relación riesgo/beneficio fija R (1.5 por defecto) sobre la distancia al stop: cierre + R × (cierre − stop).
+- Tiempo máximo: si en `dias_maximos` días (10 por defecto) el precio no tocó ni el stop ni el take profit, salir a mano:
+  la tesis de corto plazo (pronóstico del día siguiente) ya no aplica. (v2.4)
 - Tamaño: Kelly para una apuesta que gana R veces lo que arriesga, f* = W − (1 − W) / R, con W = acierto de la estrategia
   elegida de ese activo en VALIDACIÓN (VA; nunca en la prueba, TE). Se usa una fracción de Kelly (½) con tope (25 %) y solo
   si hubo un mínimo de operaciones en VA; si f* ≤ 0, el tamaño sugerido es 0 % (Kelly negativo: la ventaja no alcanza).
@@ -20,7 +22,7 @@ def niveles_sugeridos(cfg_sug: dict | None, simbolo: str, cierre: float | None, 
     va = (cfg_sug.get("va_por_activo") or {}).get(simbolo)
     fraccion, tope = float(cfg_sug.get("kelly_fraccion", 0.5)), float(cfg_sug.get("kelly_tope", 0.25))
     minimo = int(cfg_sug.get("kelly_min_operaciones", 15))
-    salida = {"stop": stop, "take_profit": take_profit, "r": r, "riesgo_pct": k_stop * vol20, "beneficio_pct": r * k_stop * vol20,
+    salida = {"stop": stop, "take_profit": take_profit, "r": r, "dias_maximos": int(cfg_sug.get("dias_maximos", 10)), "riesgo_pct": k_stop * vol20, "beneficio_pct": r * k_stop * vol20,
               "kelly_completo": None, "tamano": None, "win_rate_va": None, "operaciones_va": None, "kelly_motivo": "sin datos de VA"}
     if va:
         w, n = float(va["win_rate"]), int(va["operaciones"])
