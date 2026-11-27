@@ -3,6 +3,24 @@
 Cada modificación al programa sube la versión (1.1, 1.2, …). El número está en `config/agente.json` (`"version"`),
 aparece en la barra superior de la interfaz y se guarda en cada ciclo (campo `version` de la observación) y en el evento de arranque.
 
+## v2.3 — 27 de noviembre de 2026
+
+**Lo que se pudo agregar de la rúbrica del profesor**, sin cambiar el modelo, las señales ni la simulación del protocolo.
+
+- **Plan sugerido para la compra manual** (`backend/app/sugerencias.py`, sección `sugerencias` de la configuración): cada señal trae
+  stop (2 × vol20), **take profit** con relación 1.5:1 sobre el stop y **tamaño** = ½ Kelly (W − (1 − W)/R) con el acierto de la
+  estrategia de cada activo en **validación** (nunca en la prueba), tope de 25 % y mínimo de 15 operaciones; Kelly negativo → 0 %.
+  Se muestra en la pestaña Señales («Plan sugerido para operar a mano»), en `GET /api/senales` y en el correo de compra.
+- **Análisis complementario** (`analisis/analisis_complementario.py` → `Analisis_Complementario.md`, `resultados/analisis_complementario/`):
+  Sharpe, Sortino, expectativa, profit factor e intervalo de Wilson; líneas base (regla técnica, cruce de medias y azar con
+  10,000 permutaciones); sensibilidad a costos y deslizamiento con costo de equilibrio; resultado por régimen; deriva en vivo y
+  regla de reentrenamiento. Hallazgo reportado: en el TE de BTC la estrategia D coincidió día por día con la regla cierre > SMA20.
+- **Bitácora con hash encadenado** (`agente/bitacora_hash.py generar | verificar`, `registros/cadena_hash.csv`).
+- **Integración continua** (`.github/workflows/ci.yml`): interfaz (tipos y compilación), backend (compilación, bitácora,
+  configuración sin secretos) y pytest en cada push.
+- **README:** diagramas Mermaid de arquitectura y del flujo de decisión, y tabla de la API.
+- El ciclo guarda `vol20` también en el resultado que usa el aviso. Dos pruebas nuevas: 122 en total.
+
 ## v2.2 — 27 de noviembre de 2026
 
 **Señales por activo y Mercado para comparar** (revisión del profesor del 27 nov).

@@ -14,7 +14,7 @@ from app.ajustes import activos_de
 from app.db import Base
 from app.main import crear_app
 from app.modelo import ModeloPronostico
-from app.notificaciones import (CredencialesCorreo, CredencialesWhatsApp, NotificadorCorreo, NotificadorWhatsApp,
+from app.notificaciones import (contenido_alerta, CredencialesCorreo, CredencialesWhatsApp, NotificadorCorreo, NotificadorWhatsApp,
                                 construir_notificador, notificar_ciclo)
 from tests.conftest import CLAVE_BACKEND, MercadoFalso, crear_llm, generar_velas
 
@@ -207,6 +207,32 @@ def test_api_historial_senal_de_un_activo_sin_saldos(cfg_completa, secretos, tmp
         for clave in ("efectivo", "patrimonio", "saldo", "carteras"):
             assert clave not in f and clave not in d
         assert cli.get("/api/historial_senal?simbolo=BTCUSDT&modo=replay", headers=H).json()["filas"] == []
+
+
+def test_niveles_sugeridos_tp_y_kelly_con_validacion():
+    """v2.3: take profit y tamaño (½ Kelly con el acierto de VA) para la compra manual."""
+    from app.sugerencias import niveles_sugeridos
+    cfg = {"r_tp": 1.5, "kelly_fraccion": 0.5, "kelly_tope": 0.25, "kelly_min_operaciones": 15,
+           "va_por_activo": {"AAAUSDT": {"win_rate": 0.6, "operaciones": 30}, "BBBUSDT": {"win_rate": 0.35, "operaciones": 20},
+                             "CCCUSDT": {"win_rate": 0.9, "operaciones": 3}, "DDDUSDT": {"win_rate": 0.99, "operaciones": 50}}}
+    s = niveles_sugeridos(cfg, "AAAUSDT", 100.0, 0.02, 2.0)
+    assert abs(s["stop"] - 96.0) < 1e-9 and abs(s["take_profit"] - 106.0) < 1e-9
+    assert abs(s["kelly_completo"] - (0.6 - 0.4 / 1.5)) < 1e-9 and abs(s["tamano"] - 0.5 * (0.6 - 0.4 / 1.5)) < 1e-9
+    assert niveles_sugeridos(cfg, "BBBUSDT", 100.0, 0.02, 2.0)["tamano"] == 0.0          # Kelly negativo → 0 %
+    c = niveles_sugeridos(cfg, "CCCUSDT", 100.0, 0.02, 2.0)
+    assert c["tamano"] is None and "mínimo" in c["kelly_motivo"]                            # pocas operaciones en VA
+    assert niveles_sugeridos(cfg, "DDDUSDT", 100.0, 0.02, 2.0)["tamano"] == 0.25          # tope
+    assert niveles_sugeridos(cfg, "ZZZUSDT", 100.0, 0.02, 2.0)["tamano"] is None
+    assert niveles_sugeridos(None, "AAAUSDT", 100.0, 0.02, 2.0) is None
+    texto, params = contenido_alerta("AAAUSDT", "compra", "2026-11-27", {"cierre": 100.0, "pronostico": 0.01, "delta": 0.001},
+                                     2, 96.0, "", s)
+    assert "Take profit sugerido: 106.00" in texto and "Tamaño sugerido: 16.7 %" in texto and len(params) == 7
+
+
+def test_config_real_tiene_sugerencias_de_los_15_activos_desde_va(cfg_completa):
+    s = cfg_completa["sugerencias"]
+    assert s["r_tp"] == 1.5 and 0 < s["kelly_fraccion"] <= 1 and s["kelly_tope"] <= 0.25
+    assert set(s["va_por_activo"]) == {a["simbolo"] for a in cfg_completa["activos"]}
 
 
 def test_api_prueba_sin_configurar_responde_409(cfg_completa, secretos, tmp_path, gateway):

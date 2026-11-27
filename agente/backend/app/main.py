@@ -32,6 +32,7 @@ from .operaciones import CARTERAS as CARTERAS_OPERACIONES, comparacion_carteras,
 from .mexc import ClienteMEXC, ErrorMercado
 from .modelo import ErrorDatos, ModeloPronostico, calcular_variables
 from .notificaciones import construir_notificador as _construir_notificador, contenido_alerta
+from .sugerencias import niveles_sugeridos
 
 Modo = Literal["vivo", "replay"]
 
@@ -450,6 +451,9 @@ def crear_app(cfg: dict | None = None, secretos: Secretos | None = None, agente:
                     "precio_entrada": c.precio_entrada if c and c.en_posicion else None,
                     "stop": c.stop if c and c.en_posicion else None,
                     "alerta": alerta[0] if alerta else None,
+                    # v2.3: stop, take profit y tamaño sugeridos para la compra manual (no cambian decisiones)
+                    "sugerencia": niveles_sugeridos(a.cfg.get("sugerencias"), a.simbolo, o.get("cierre"), o.get("vol20"),
+                                                    a.limites.stop_movil_k_vol),
                 })
             filas.append(fila)
         notif = getattr(request.app.state, "notificador", None)

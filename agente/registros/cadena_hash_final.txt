@@ -1,0 +1,2 @@
+491d37fd66b325a82ca209dd84c8505a1b791fd28593059e1cab25d139512e9f
+1125 filas encadenadas (ciclos, decisiones, ordenes, eventos)

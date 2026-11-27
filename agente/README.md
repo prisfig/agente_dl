@@ -116,7 +116,7 @@ como evento de control en la base del activo.
 cd agente/backend && python -m pytest
 ```
 
-120 pruebas. Cubren los controles de riesgo, el simulador, la autenticación y los nueve escenarios de error del protocolo:
+122 pruebas. Cubren los controles de riesgo, el simulador, la autenticación y los nueve escenarios de error del protocolo:
 MEXC sin respuesta o con límite de solicitudes, dato atrasado, Ollama detenido, JSON inválido, clave incorrecta,
 saldo insuficiente, evento duplicado, reinicio del backend y botón de detención. Desde la v1.3 también el funcionamiento
 multi-activo (estrategias C y D, control independiente, ciclos uno tras otro, huellas de los modelos) y que los modelos

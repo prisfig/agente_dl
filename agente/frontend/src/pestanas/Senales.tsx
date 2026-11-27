@@ -14,7 +14,11 @@ interface FilaSenal {
   simbolo: string; estado: string; estrategia: string; delta: number; decimales: number;
   fecha_vela?: string; cierre?: number; pronostico?: number; senal?: string; cierre_sobre_sma20?: boolean; dist_sma20?: number;
   accion?: string; motivos?: string[]; senal_activa?: boolean; precio_entrada?: number | null; stop?: number | null; alerta?: Alerta | null;
+  sugerencia?: Sugerencia | null;
 }
+/** v2.3: niveles sugeridos para la compra manual (no cambian decisiones). */
+interface Sugerencia { stop: number; take_profit: number; r: number; riesgo_pct: number; beneficio_pct: number; kelly_completo: number | null;
+  tamano: number | null; win_rate_va: number | null; operaciones_va: number | null; kelly_motivo: string }
 interface EstadoAvisos { estado: string; canal?: string; proveedor?: string; destino?: string | null; avisar_ventas?: boolean; disparador?: string;
   secretos_requeridos?: string[] }
 interface RespSenales { senales: FilaSenal[]; avisos: EstadoAvisos; proximo_ciclo_utc: string }
@@ -115,6 +119,24 @@ export default function Senales({ estado }: { estado: Estado | null }) {
         <Kpi valor={f?.senal_activa ? precio(f.precio_entrada) : "—"} etiqueta={f?.senal_activa ? "Señal activa · entrada" : "Sin señal activa"}
           sub={f?.senal_activa ? <span><span className={signo(ganancia)}>{pct(ganancia, 1)}</span> desde la entrada · stop {precio(f.stop)} ({pct(aStop, 1)})</span> : "esperando señal de compra"} />
       </div>
+
+      {f?.sugerencia && (
+        <Tarjeta titulo="Plan sugerido para operar a mano · stop, take profit y tamaño" estilo={{ marginTop: 14 }}>
+          <div className="rejilla r4">
+            <Kpi valor={precio(f.sugerencia.stop)} etiqueta="Stop loss sugerido" sub={`−${pct(f.sugerencia.riesgo_pct, 2, false)} · cierre × (1 − 2 × vol20)`} />
+            <Kpi valor={precio(f.sugerencia.take_profit)} etiqueta="Take profit sugerido" sub={`+${pct(f.sugerencia.beneficio_pct, 2, false)} · relación ${f.sugerencia.r}:1 sobre el stop`} />
+            <Kpi valor={f.sugerencia.tamano == null ? "—" : pct(f.sugerencia.tamano, 1, false)} etiqueta="Tamaño sugerido (Kelly fraccional)"
+              sub={f.sugerencia.kelly_motivo} />
+            <Kpi valor={f.sugerencia.win_rate_va == null ? "—" : pct(f.sugerencia.win_rate_va, 0, false)} etiqueta="Acierto de la estrategia en validación"
+              sub={f.sugerencia.operaciones_va == null ? "sin datos" : `${f.sugerencia.operaciones_va} operaciones en VA · Kelly completo ${pct(f.sugerencia.kelly_completo, 1)}`} />
+          </div>
+          <div className="tenue chico" style={{ marginTop: 8 }}>
+            Calculado con el cierre de hoy. Kelly = W − (1 − W) / R, con W = acierto de la estrategia de este activo en validación (nunca en la prueba) y
+            R = {f.sugerencia.r}; se sugiere la mitad, con tope de 25 %. Si el Kelly sale negativo, el tamaño sugerido es 0 %: la ventaja medida no alcanza.
+            Son sugerencias para la compra manual en MEXC: no cambian la señal, la simulación ni los avisos.
+          </div>
+        </Tarjeta>
+      )}
 
       <div className="seccion">Gráficos de {activo}</div>
       <Tarjeta titulo={`Precio diario · cierre, SMA20, SMA50 y Bandas de Bollinger`} extra={

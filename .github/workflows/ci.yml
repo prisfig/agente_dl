@@ -1,0 +1,56 @@
+# v2.3 · Integración continua: en cada push y pull request a main.
+# No usa claves ni se conecta a MEXC, Ollama ni Gmail: las pruebas usan dobles (mercado, LLM y correo falsos).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  interfaz:
+    name: Interfaz (tipos y compilación)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agente/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: agente/frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build          # tsc --noEmit + vite build
+
+  verificaciones:
+    name: Backend compila y bitácora íntegra
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m compileall -q agente/backend/app agente/backend/gateway agente/backend/tests
+      - run: python agente/bitacora_hash.py verificar
+      - name: Configuración válida y sin secretos
+        run: |
+          python -c "import json; c=json.load(open('agente/config/agente.json')); print('versión', c['version'], '·', len(c['activos']), 'activos')"
+          test ! -f agente/.env
+
+  pruebas:
+    name: Pruebas del backend (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: agente/backend/requirements.txt
+      - run: pip install -r agente/backend/requirements.txt
+      - run: python -m pytest -q
+        working-directory: agente/backend

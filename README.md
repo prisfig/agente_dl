@@ -2,7 +2,7 @@
 
 Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico de BTC/USDT, y el **proyecto final**: un sistema de IA que analiza cada día 15 pares de MEXC con el modelo LSTM de cada activo, un LLM local (Ollama), controles de riesgo deterministas y una interfaz web.
 
-> **Versión actual: v2.2, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales. Desde la v2.2, **Señales** muestra un activo a la vez con sus gráficos e indicadores financieros, y **Mercado** permite comparar los 15 pares.
+> **Versión actual: v2.3, laboratorio de señales.** Por indicación del profesor, el sistema no maneja saldos: en realidad no compra nada. Cuando el modelo de un activo da señal de compra (o de venta) y pasa los controles de riesgo, **envía un aviso por correo** para que el usuario decida si compra a mano en MEXC. Ver [Laboratorio de señales y avisos por correo](#laboratorio-de-señales-y-avisos-por-correo-v20). La pestaña **PnL simulado** (v2.1) muestra cómo le habría ido a la señal, marcada como simulación: no son compras reales. Desde la v2.2, **Señales** muestra un activo a la vez con sus gráficos e indicadores financieros, y **Mercado** permite comparar los 15 pares. La v2.3 agrega a cada señal un plan sugerido para la compra manual (stop, take profit y tamaño con Kelly fraccional) y el [análisis complementario](Analisis_Complementario.md) pedido en la rúbrica.
 >
 > El sistema **no envía órdenes reales**. Solo lee datos públicos de MEXC; la simulación Paper sigue por dentro para evaluar la señal. Las claves y las direcciones de correo no están en el repositorio.
 
@@ -10,7 +10,7 @@ Este repositorio reúne la **práctica** del curso, con el modelo de pronóstico
 
 **Presentación ejecutiva:** [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf).
 
-**Evaluación frente a la rúbrica del 26 nov:** [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) (qué cumple el sistema y por qué no se agregaron los puntos que faltan).
+**Evaluación frente a la rúbrica:** [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) (qué cumple el sistema, qué se agregó en la v2.3 y por qué no lo demás) · **Análisis complementario:** [`Analisis_Complementario.md`](Analisis_Complementario.md) (métricas completas, líneas base, costos, régimen y deriva).
 
 ---
 
@@ -185,7 +185,8 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | v1.9 | 20 nov 2026 | Botón «Rearmar todos los bloqueados» y regla diaria de rearme del límite de pérdida | 97 |
 | v2.0 | 26 nov 2026 | **Laboratorio de señales:** avisos por correo cuando el modelo compra o vende (WhatsApp queda como alternativa); pestaña Señales; la interfaz ya no muestra saldos (indicación del profesor). La simulación sigue por dentro solo para evaluar | 119 |
 | v2.1 | 26 nov 2026 | Pestaña **PnL simulado** (la antigua Operaciones) para presentar operaciones y PnL, marcada como simulación con capital virtual: no son compras reales ni saldos de una cuenta. Solo cambia la interfaz | 119 |
-| **v2.2** | 27 nov 2026 | Por revisión del profesor: **Señales** muestra solo el activo elegido, con gráfica de precio (SMA20, SMA50, Bollinger), pronóstico frente a δ, RSI, tabla de indicadores financieros e historial de su señal y avisos; **Mercado** agrega la comparación de los 15 pares (rendimiento base 100, tabla ordenable y correlaciones). Ruta nueva de solo lectura `GET /api/historial_senal` | 120 |
+| v2.2 | 27 nov 2026 | Por revisión del profesor: **Señales** muestra solo el activo elegido, con gráfica de precio (SMA20, SMA50, Bollinger), pronóstico frente a δ, RSI, tabla de indicadores financieros e historial de su señal y avisos; **Mercado** agrega la comparación de los 15 pares (rendimiento base 100, tabla ordenable y correlaciones). Ruta nueva de solo lectura `GET /api/historial_senal` | 120 |
+| **v2.3** | 27 nov 2026 | De la rúbrica del profesor: **plan sugerido** en cada señal (stop, take profit 1.5:1 y tamaño con ½ Kelly de validación) en Señales y en el correo; **análisis complementario** (Sharpe, Sortino, Wilson, líneas base al azar y técnicas, costos, régimen, deriva); **bitácora con hash encadenado**; **CI** en GitHub Actions; diagramas y tabla de la API en el README. No cambia el modelo, las señales ni la simulación | 122 |
 
 ---
 
@@ -205,7 +206,7 @@ Cada modificación al programa sube la versión. El número está en [`agente/co
 | 14–26 nov 2026 | Ciclos diarios en vivo: 129 ciclos válidos en los 15 activos, más 10 de replay en BTC |
 | 25 nov 2026 | Exportación de registros, evidencia de Ollama local y pruebas, capturas, informe final y repositorio público |
 | 26 nov 2026 | Presentación ejecutiva; README con versiones, avances, datos de MEXC, operaciones y PnL. Por indicación del profesor, v2.0: laboratorio de señales sin saldos y con avisos por correo. La conexión con la cuenta demo de MEXC queda pendiente (en revisión con el profesor). Primer aviso real por correo (compra de ZEC, vela del 26 nov). v2.1: pestaña PnL simulado. Evaluación frente a la rúbrica del profesor |
-| 27 nov 2026 | Revisión del profesor. v2.2: Señales por activo con sus gráficos e indicadores financieros, y Mercado para comparar los 15 pares |
+| 27 nov 2026 | Revisión del profesor. v2.2: Señales por activo con sus gráficos e indicadores financieros, y Mercado para comparar los 15 pares. v2.3: lo que se pudo agregar de la rúbrica (plan sugerido, análisis complementario, bitácora encadenada y CI) |
 
 Las fechas de los avances de la práctica son las de su ejecución en Colab T4 (UTC), registradas en [`evidencia_t4/`](evidencia_t4/).
 
@@ -246,6 +247,83 @@ BTC, ETH, SOL, XRP, BNB, ADA, LTC, TRX, DOGE, MX, FIL, BCH, ZEC, NEAR y DOT cont
 
 ---
 
+## Arquitectura y flujo de decisión
+
+Diagrama de componentes. El navegador solo habla con el backend; el backend es el único que llama a MEXC, al LLM y al correo.
+
+```mermaid
+flowchart LR
+  subgraph Navegador
+    UI["Interfaz React + TypeScript<br/>(Vite, 127.0.0.1:5173)"]
+  end
+  subgraph Mac["Computadora del usuario"]
+    API["Backend FastAPI<br/>127.0.0.1:8000 · X-API-Key"]
+    AG["Agente por activo ×15<br/>(ciclo diario)"]
+    MOD["Ensambles LSTM<br/>(huellas SHA-256)"]
+    RIE["Motor de riesgo<br/>determinista"]
+    SIM["Simulador Paper<br/>(evaluación interna)"]
+    DB[("SQLite por activo<br/>bitácora")]
+    GW["Gateway del LLM<br/>127.0.0.1:8001 · X-API-Key"]
+    OLL["Ollama local<br/>llama3.2:3b"]
+  end
+  MEXC[("API pública de MEXC<br/>solo lectura")]
+  MAIL[("Gmail SMTP<br/>TLS")]
+  UI -- "REST (JSON) cada 5–60 s" --> API
+  API --> AG
+  AG -- "velas cerradas 1d" --> MEXC
+  AG --> MOD
+  AG --> GW --> OLL
+  AG --> RIE --> SIM --> DB
+  AG -- "aviso de compra/venta" --> MAIL
+  API --> DB
+```
+
+Flujo de decisión de cada ciclo (una vez al día, 5 minutos después del cierre de 00:00 UTC):
+
+```mermaid
+flowchart TD
+  A["Vela diaria cerrada de MEXC"] --> B{"¿Dato válido y con<br/>menos de 26 h?"}
+  B -- no --> X["Pausa sin operar<br/>(evento de error)"]
+  B -- sí --> C["20 rezagos, SMA20, vol20"]
+  C --> D["Ensamble LSTM:<br/>pronóstico del día siguiente"]
+  D --> E{"¿Pronóstico > δ?<br/>(D: y cierre > SMA20)"}
+  E -- sí --> F["Señal del modelo: COMPRAR"]
+  E -- no --> G["Señal del modelo: efectivo"]
+  C --> L["LLM local propone<br/>(JSON validado)"]
+  F --> R{"Motor de riesgo:<br/>stop móvil, pérdida diaria,<br/>posición, dato fresco"}
+  G --> R
+  L --> R
+  R -- "veta o fuerza venta" --> S["Acción final por cartera"]
+  R -- aprueba --> S
+  S --> P["Simulación Paper y bitácora (SQLite)"]
+  S --> Q{"¿La señal del modelo<br/>compra o vende?"}
+  Q -- sí --> M["Correo con stop, take profit<br/>y tamaño sugeridos"]
+  Q -- no --> N["Sin aviso"]
+```
+
+### API del backend
+
+Todas las rutas piden la cabecera `X-API-Key` (salvo `/api/salud`) y aceptan `?simbolo=ETHUSDT` cuando son de un activo; la documentación interactiva (OpenAPI) está en `http://127.0.0.1:8000/docs` con el backend corriendo.
+
+| Método y ruta | Qué devuelve o hace |
+|---|---|
+| `GET /api/salud` | Estado del backend (sin clave) |
+| `GET /api/estado` | Estado del activo: último ciclo, decisiones, carteras, riesgo, modelo y versión |
+| `GET /api/activos` | Resumen de los 15 activos (selector y tabla) |
+| `GET /api/senales` | Señal del modelo de cada activo, señal activa, aviso y niveles sugeridos (stop, take profit, tamaño) |
+| `GET /api/historial_senal` | Señal del modelo de un activo en cada ciclo (v2.2) |
+| `GET /api/notificaciones` · `POST /api/notificaciones/prueba` | Historial de avisos · envía un aviso de prueba |
+| `GET /api/mercado` | Velas de MEXC, SMA20 y órdenes simuladas del activo |
+| `GET /api/escaner` | Variables de los 15 pares (caché de 5 min) |
+| `GET /api/operaciones` | Operaciones y PnL de la simulación interna (pestaña PnL simulado) |
+| `GET /api/decisiones` · `GET /api/ordenes` · `GET /api/patrimonio` · `GET /api/eventos` · `GET /api/metricas` | Bitácora y métricas del activo |
+| `GET /api/red` · `GET /api/sistema` · `GET /api/evidencia` · `GET /api/config` | Red neuronal en vivo, salud, evidencia y configuración (sin secretos) |
+| `POST /api/agente/iniciar` · `pausar` · `detener` · `liquidar` | Control humano del agente (Detener = kill switch) |
+| `POST /api/riesgo/rearmar` · `POST /api/riesgo/rearmar_todos` | Rearme del control de pérdida diaria (acción humana registrada) |
+| `POST /api/ciclo` · `POST /api/replay` · `GET /api/replay` | Ciclo manual y replay histórico (separado del vivo) |
+
+No existe ninguna ruta de órdenes reales: `mexc.py` solo permite rutas públicas de lectura y `enviar_orden_real` lanza un error (probado).
+
 ## Ejecutarlo
 
 Requisitos: Python 3.13, Node.js y [Ollama](https://ollama.com) con el modelo `llama3.2:3b`. Las instrucciones completas están en [`agente/README.md`](agente/README.md).
@@ -265,7 +343,7 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000
 npm install && npm run dev               # http://127.0.0.1:5173
 
 # Pruebas y registros
-cd agente/backend && python -m pytest    # 120 pruebas automatizadas
+cd agente/backend && python -m pytest    # 122 pruebas automatizadas
 python agente/exportar_registros.py      # exporta las bases a CSV y calcula las métricas del informe
 ```
 
@@ -278,7 +356,7 @@ python agente/exportar_registros.py      # exporta las bases a CSV y calcula las
 | [`Informe_Proyecto_Final_Agente_IA.md`](Informe_Proyecto_Final_Agente_IA.md) · [`Informe_Proyecto_Final_Agente_IA.pdf`](Informe_Proyecto_Final_Agente_IA.pdf) | Informe del proyecto final (bloques 14–16 del protocolo) |
 | [`Presentacion_Ejecutiva_Agente_IA.pdf`](Presentacion_Ejecutiva_Agente_IA.pdf) | Presentación ejecutiva del sistema |
 | [`Evaluacion_Rubrica.md`](Evaluacion_Rubrica.md) | Evaluación del sistema frente a la rúbrica del profesor (26 nov) y justificación de lo que no se agregó |
-| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.2) |
+| [`agente/`](agente/) | El agente: `backend/` (FastAPI + gateway de Ollama + pruebas), `frontend/` (React + TypeScript), `config/` (configuración de riesgo, LLM, activos y avisos), [`README.md`](agente/README.md) y [`CHANGELOG.md`](agente/CHANGELOG.md) (versiones v1.0 a v2.3) |
 | [`agente/registros/`](agente/registros/) | Registros del agente en CSV (ciclos, decisiones, órdenes, patrimonio y eventos) y métricas calculadas |
 | [`agente/evidencia/`](agente/evidencia/) | Verificación de los modelos en la computadora local, replay histórico de BTC y demostración de los nueve errores |
 | [`notebooks/`](notebooks/) | Notebooks de Colab: avances de la práctica (`practica/`) y entrenamiento de los activos extra |

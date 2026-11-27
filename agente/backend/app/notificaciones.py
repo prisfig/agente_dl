@@ -334,7 +334,7 @@ def _num(v, dec: int) -> str:
 
 
 def contenido_alerta(simbolo: str, tipo: str, fecha_vela: str, obs: dict, dec: int, stop: float | None,
-                     motivo: str) -> tuple[str, list[str]]:
+                     motivo: str, sugerencia: dict | None = None) -> tuple[str, list[str]]:
     """Texto libre del aviso y los 7 parámetros de la plantilla (una línea cada uno, sin saltos)."""
     pron, delta = obs.get("pronostico"), obs.get("delta")
     pron_txt = "—" if pron is None else f"{pron * 100:+.3f} %"
@@ -343,13 +343,22 @@ def contenido_alerta(simbolo: str, tipo: str, fecha_vela: str, obs: dict, dec: i
              else f"Motivo: {motivo}." if tipo == "venta" else "Sin stop sugerido.")
     etiqueta = "COMPRA" if tipo == "compra" else "VENTA" if tipo == "venta" else tipo.upper()
     params = [etiqueta, simbolo, fecha_vela, _num(obs.get("cierre"), dec), pron_txt, delta_txt, extra]
+    sugeridos = []   # v2.3: take profit y tamaño sugeridos para la compra manual (no cambian ninguna decisión)
+    if tipo == "compra" and sugerencia:
+        sugeridos.append(f"Take profit sugerido: {_num(sugerencia['take_profit'], dec)} USDT "
+                         f"(relación {sugerencia['r']:g}:1 sobre el stop).")
+        if sugerencia.get("tamano") is not None:
+            sugeridos.append(f"Tamaño sugerido: {sugerencia['tamano'] * 100:.1f} % del capital "
+                             f"({sugerencia['kelly_motivo']}; acierto en validación {sugerencia['win_rate_va'] * 100:.0f} %).")
+        else:
+            sugeridos.append(f"Tamaño sugerido: sin cálculo ({sugerencia['kelly_motivo']}).")
     texto = "\n".join([f"*Laboratorio DL · señal de {etiqueta}*", f"{simbolo} · vela {fecha_vela} (UTC)",
                        f"Cierre: {params[3]} USDT", f"Pronóstico del modelo: {pron_txt} (umbral {delta_txt})", extra,
-                       "Operación manual opcional en MEXC. El laboratorio no envía órdenes."])
+                       *sugeridos, "Operación manual opcional en MEXC. El laboratorio no envía órdenes."])
     return texto, params
 
 
-def notificar_ciclo(notificador, db, simbolo: str, dec: int, r: dict) -> dict | None:
+def notificar_ciclo(notificador, db, simbolo: str, dec: int, r: dict, sugerencia: dict | None = None) -> dict | None:
     """Llamada después de un ciclo en vivo completo. Nunca lanza excepciones hacia el ciclo."""
     if notificador is None or r.get("resultado") != "completo" or r.get("modo") != "vivo":
         return None
@@ -363,7 +372,7 @@ def notificar_ciclo(notificador, db, simbolo: str, dec: int, r: dict) -> dict | 
         return {"estado": "duplicada"}
     motivo = "señal del modelo" if d.get("propuesta") == "VENDER" else "stop móvil o control de riesgo"
     texto, params = contenido_alerta(simbolo, tipo, fecha, r.get("observacion", {}), dec,
-                                     (r.get("stops") or {}).get("sin_llm"), motivo)
+                                     (r.get("stops") or {}).get("sin_llm"), motivo, sugerencia)
     try:
         if not notificador.activo:
             ok, detalle, intentos = False, "avisos " + notificador.estado()["estado"], 0

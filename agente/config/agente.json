@@ -1,5 +1,5 @@
 {
-  "version": "2.2",
+  "version": "2.3",
   "descripcion": "Configuración del agente. El LLM no puede modificarla; solo se cambia editando este archivo con el backend apagado. Su SHA-256 se guarda en cada ciclo.",
   "mercado": {
     "url_base": "https://api.mexc.com",
@@ -28,6 +28,75 @@
     "stop_movil_k_vol": 2.0,
     "antiguedad_maxima_horas": 26,
     "nota": "exposicion_maxima: fracción máxima del patrimonio de cada cartera en el activo (sin apalancamiento, ≤ 1). perdida_diaria_maxima: si el patrimonio cae esta fracción entre dos cierres, se bloquean nuevas compras hasta que el usuario rearme el control. Las ventas que reducen riesgo siguen permitidas. stop_movil: nivel = cierre × (1 − k·vol20); solo sube; se revisa al cierre y se ejecuta en la apertura siguiente."
+  },
+  "sugerencias": {
+    "r_tp": 1.5,
+    "kelly_fraccion": 0.5,
+    "kelly_tope": 0.25,
+    "kelly_min_operaciones": 15,
+    "va_por_activo": {
+      "BTCUSDT": {
+        "win_rate": 0.35,
+        "operaciones": 20
+      },
+      "ETHUSDT": {
+        "win_rate": 0.529412,
+        "operaciones": 34
+      },
+      "SOLUSDT": {
+        "win_rate": 0.4375,
+        "operaciones": 32
+      },
+      "XRPUSDT": {
+        "win_rate": 0.542857,
+        "operaciones": 35
+      },
+      "BNBUSDT": {
+        "win_rate": 0.5,
+        "operaciones": 44
+      },
+      "ADAUSDT": {
+        "win_rate": 0.59375,
+        "operaciones": 32
+      },
+      "LTCUSDT": {
+        "win_rate": 0.378788,
+        "operaciones": 66
+      },
+      "TRXUSDT": {
+        "win_rate": 0.52,
+        "operaciones": 25
+      },
+      "DOGEUSDT": {
+        "win_rate": 0.552632,
+        "operaciones": 38
+      },
+      "MXUSDT": {
+        "win_rate": 0.44186,
+        "operaciones": 43
+      },
+      "FILUSDT": {
+        "win_rate": 0.357143,
+        "operaciones": 14
+      },
+      "BCHUSDT": {
+        "win_rate": 0.375,
+        "operaciones": 16
+      },
+      "ZECUSDT": {
+        "win_rate": 0.511628,
+        "operaciones": 43
+      },
+      "NEARUSDT": {
+        "win_rate": 0.5,
+        "operaciones": 2
+      },
+      "DOTUSDT": {
+        "win_rate": 0.6,
+        "operaciones": 15
+      }
+    },
+    "nota": "v2.3: niveles SUGERIDOS para la compra manual (pestaña Señales y correo). No cambian la simulación ni las decisiones. Take profit = cierre + r_tp × (cierre − stop). Tamaño = kelly_fraccion × Kelly (W − (1 − W)/r_tp) con tope, usando el acierto (win_rate) y las operaciones de la estrategia elegida de cada activo en VALIDACIÓN (resultados/comparacion_C_D_VA_cap11.csv y activos_extra*/resultados/comparacion_estrategias_VA.csv); nunca datos de prueba (TE)."
   },
   "llm": {
     "url_gateway": "http://127.0.0.1:8001",

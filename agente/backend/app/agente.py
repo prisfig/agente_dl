@@ -18,6 +18,7 @@ from .llm import ClienteLLM, ErrorLLM, herramientas_para
 from .mexc import DIA_MS, ClienteMEXC, ErrorMercado, Vela, ahora_ms, verificar_antiguedad
 from .modelo import ErrorDatos, ModeloPronostico, calcular_variables
 from .notificaciones import notificar_ciclo
+from .sugerencias import niveles_sugeridos
 from .paper import COMPRAR, MANTENER, VENDER, Cartera, MotorPaper, ResultadoOrden
 from .riesgo import DecisionRiesgo, LimitesRiesgo, accion_estrategia, evaluar, nuevo_stop
 
@@ -125,7 +126,10 @@ class Agente:
                 self.db.cambiar_estado("corriendo", "ciclo completado", errores=0)
                 # v2.0: aviso (correo) si la estrategia del modelo compra o vende. Un fallo no cambia nada del ciclo.
                 try:
-                    r["alerta"] = notificar_ciclo(self.notificador, self.db, self.simbolo, self.dec, r)
+                    o = r.get("observacion") or {}
+                    sug = niveles_sugeridos(self.cfg.get("sugerencias"), self.simbolo, o.get("cierre"), o.get("vol20"),
+                                            self.limites.stop_movil_k_vol)
+                    r["alerta"] = notificar_ciclo(self.notificador, self.db, self.simbolo, self.dec, r, sug)
                 except Exception as e:
                     self.db.evento("aviso", "notificacion_fallo", f"Error inesperado al preparar el aviso: {e!r}", "vivo")
             return r
@@ -240,7 +244,7 @@ class Agente:
                 "decisiones": {c.nombre: {"propuesta": p, "final": d.accion, "aprobada": d.aprobada, "motivos": d.motivos}
                                for c, p, d, _ in registros},
                 "observacion": {"cierre": obs.cierre, "pronostico": obs.pronostico, "delta": obs.delta, "sma20": obs.sma20,
-                                "senal": obs.senal, "estrategia": obs.estrategia},
+                                "senal": obs.senal, "estrategia": obs.estrategia, "vol20": obs.vol20},
                 "stops": {c.nombre: c.stop for c, _, _, _ in registros},
                 "latencia_llm_s": round(res.latencia_s, 2)}
 
