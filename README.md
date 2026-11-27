@@ -55,6 +55,10 @@ Operación manual opcional en MEXC. El laboratorio no envía órdenes.
 - **Servicio:** correo por Gmail (SMTP con TLS) con una contraseña de aplicación. Configuración en [`agente/README.md`](agente/README.md#avisos-por-correo-v20). Primero se intentó WhatsApp; se cambió a correo porque el bot gratuito (CallMeBot) tenía el cupo lleno y la API de Meta necesita una plantilla aprobada. El código de WhatsApp se conserva como alternativa deshabilitada.
 - **Seguridad:** el usuario, la contraseña de aplicación y el destino solo viven en `agente/.env`; el backend solo se conecta a servidores SMTP permitidos con TLS y nunca guarda la contraseña ni las direcciones completas en la bitácora.
 - **Sin duplicados ni efectos en el ciclo:** cada aviso se guarda en la base del activo y no se repite para la misma vela; si el correo falla, el agente sigue igual y lo registra.
+Pestaña **Señales** (v2.1) después del ciclo del 26 nov: ZEC con señal de compra y aviso enviado; LTC y BCH con señales activas (precio de entrada y stop sugerido); abajo, el historial de avisos.
+
+![Pestaña Señales de la v2.1, vela 2026-11-26](agente/evidencia/capturas/09_pestana_senales_v21.png)
+
 - **Interfaz:** nueva pestaña **Señales** con las señales del día, las señales activas, el estado de los avisos (con aviso de prueba) y el historial de avisos. Se quitaron los saldos de la barra, del Resumen y de Estrategia; desde la v2.1 la pestaña **PnL simulado** muestra la evaluación de la señal, con un aviso de que no son compras reales ni saldos de una cuenta.
 
 ---
@@ -87,7 +91,7 @@ Ver la sección 10 del [informe](Informe_Proyecto_Final_Agente_IA.md).
 
 ### Capturas de la interfaz
 
-Capturas de la v1.9 (25 nov). La pestaña Operaciones de la captura es la que en la v2.1 se llama **PnL simulado**, ahora con el aviso de que son cifras simuladas. El aviso por correo de la v2.0 está en la sección [Laboratorio de señales](#laboratorio-de-señales-y-avisos-por-correo-v20).
+La captura de la pestaña **Señales** (v2.1) y la del aviso por correo están en la sección [Laboratorio de señales](#laboratorio-de-señales-y-avisos-por-correo-v20). Las de abajo son de la v1.9 (25 nov); su pestaña Operaciones es la que en la v2.1 se llama **PnL simulado**, ahora con el aviso de que son cifras simuladas.
 
 | Operaciones (v1.9, 15 activos, modo Paper) | Cerebro (flujo de módulos) |
 |---|---|
